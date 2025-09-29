@@ -5,7 +5,7 @@ Virtual Escape Room
 Project Information  
 Team: The Tetragram  
     Members: Winston Jiang Li, Adrian Alvarez, Jaylin Huges, Laurence Zhang  
-    Date: August 28, 2025
+    Date: September 28, 2025
 
 Description:  
     The game lets players experience a desktop escape room adventure by guiding them through enigmatic spaces while they solve problems and find objects to reveal hidden information for their escape. The game uses a tile-based movement system and dialogue interactions to guide players through its multiple levels which grow progressively challenging.
