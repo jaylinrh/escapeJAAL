@@ -1,0 +1,34 @@
+{
+  "dialogue_files": [
+    {
+      "dialogueId": "intro_dialogue",
+      "dialogueFile": "intro.txt",
+      "dialogues": [
+        "Welcome to the Escape Room",
+        "Make sure to have fun",
+        "Now go and escape!",
+        "Ciao!"
+      ]
+    },
+    {
+      "dialogueId": "library_dialogue",
+      "dialogueFile": "library_dialogue.txt",
+      "dialogues": [
+        "You enter a vast library...",
+        "Ancient books line the walls.",
+        "Something feels wrong here.",
+        "You must find the way forward."
+      ]
+    },
+    {
+      "dialogueId": "chamber_dialogue",
+      "dialogueFile": "chamber_dialogue.txt",
+      "dialogues": [
+        "The chamber grows darker...",
+        "You hear whispers in the shadows.",
+        "The exit must be nearby.",
+        "Keep moving forward."
+      ]
+    }
+  ]
+}

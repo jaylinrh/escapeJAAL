@@ -1,0 +1,32 @@
+{
+  "game_config": {
+    "display": {
+      "originalTileSize": 16,
+      "scale": 3,
+      "tileSize": 48,
+      "maxScreenCol": 16,
+      "maxScreenRow": 12,
+      "screenWidth": 768,
+      "screenHeight": 576
+    },
+    "world": {
+      "maxWorldCol": 50,
+      "maxWorldRow": 50,
+      "worldWidth": 2400,
+      "worldHeight": 2400
+    },
+    "gameplay": {
+      "fps": 60,
+      "gameStates": {
+        "playState": 1,
+        "pauseState": 2,
+        "dialogueState": 3
+      }
+    },
+    "defaultPuzzle": {
+      "map": "map2.txt",
+      "level": 1,
+      "music": "default_ambient.mp3"
+    }
+  }
+}

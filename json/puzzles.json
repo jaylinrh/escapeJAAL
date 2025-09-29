@@ -1,0 +1,24 @@
+{
+  "puzzles": [
+    {
+      "puzzleId": "puzzle_001",
+      "title": "The Forgotten Library",
+      "description": "A mysterious library filled with ancient tomes and hidden secrets. Find the way through the knowledge.",
+      "music": "library_ambient.mp3",
+      "map": "map2.txt",
+      "level": 1,
+      "isSolved": false,
+      "dialogueFile": "library_dialogue.txt"
+    },
+    {
+      "puzzleId": "puzzle_002",
+      "title": "The Cursed Chamber",
+      "description": "A dark chamber where shadows whisper secrets. Navigate the maze of darkness to find the truth.",
+      "music": "chamber_dark.mp3",
+      "map": "map4.txt",
+      "level": 2,
+      "isSolved": false,
+      "dialogueFile": "chamber_dialogue.txt"
+    }
+  ]
+}
