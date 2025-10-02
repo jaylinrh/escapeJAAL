@@ -1,0 +1,38 @@
+# Compiled class files
+*.class
+
+# Jar files
+*.jar
+*.war
+*.ear
+
+# Native executables (if using jpackage)
+*.exe
+*.dmg;
+*.deb
+*.rpm
+
+# IDE-specific files
+.idea/
+.vscode/
+.project
+.classpath
+.settings/
+*.iml
+
+# Build directories
+target/
+build/
+bin/
+
+
+# Log files
+*.log
+
+# System files
+.DS_Store       # macOS
+Thumbs.db       # Windows
+
+# Temporary files
+temp/
+tmp/
