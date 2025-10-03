@@ -27,6 +27,22 @@ public class Player {
 	public int getLevel () {
 		return currentLevel;
 	}
+
+	public UUID getId() {
+		return UserID;
+	}
+
+	public String getUserName() {
+		return username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getCurrentRoomID() {
+		return currentRoomId;
+	}
 	
 	public void addLevel() {
 		currentLevel++;
@@ -35,7 +51,7 @@ public class Player {
 	public void setLevel(int a) {
 		currentLevel = a;
 	}
-	
+
 	public void update() {
 		
 	}
