@@ -34,7 +34,9 @@ public class DataWriter extends DataConstants {
         userDetails.put(USER_USERNAME, player.getUserName());
         userDetails.put(USER_PASSWORD, player.getPassword());
         userDetails.put(USER_LEVEL, Integer.toString(player.getLevel()));
-        userDetails.put(User_CURRENT_ROOM_ID, player.getCurrentRoomID());
+        userDetails.put(USER_CURRENT_ROOM_ID, player.getCurrentRoomID());
+
+        return userDetails;
     }
     public static void saveGame() {
         
@@ -42,5 +44,6 @@ public class DataWriter extends DataConstants {
     public static void main(String[] args) {
         DataWriter.saveUsers();
         DataWriter.saveGame();
+        
     }
 }
