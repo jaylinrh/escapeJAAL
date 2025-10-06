@@ -1,7 +1,6 @@
 package com.escape.Model;
 import java.util.ArrayList;
 
-import com.escape.Model.DataConstants.Inventory.Item;
 
 public class Inventory {
     private String inventoryId;
