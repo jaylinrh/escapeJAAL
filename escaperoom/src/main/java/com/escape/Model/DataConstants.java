@@ -2,6 +2,7 @@ package com.escape.Model;
 
 public class DataConstants {
 
+    //Contains the users.json file.
     protected static final String USER_FILE_NAME = "json/users.json";
     protected static final String USER_TEMP_FILE_NAME = "json/tempusers.json";
 
@@ -46,4 +47,60 @@ public class DataConstants {
     public static final String NAME = "name";
     public static final String HINT = "hint";
     public static final String DESCRIPTION = "description";
+
+    //contains the rooms.json file
+    protected static final String ROOM_FILE_NAME = "json/rooms.json";
+    protected static final String ROOM_TEMP_FILE_NAME = "json/temprooms.json";
+
+    protected static final String GAME_CONFIG = "game_config";
+    protected static final String TILE_ARRAY = "tiles";
+    protected static final String ROOMS_ARRAY = "rooms";
+
+    protected static final String DISPLAY = "display";
+    protected static final String ORIGINAL_TILE_SIZE = "originalTileSize";
+    protected static final String SCALE = "scale";
+    protected static final String TITLE_SIZE = "titleSize";
+    protected static final String MAX_SCREEN_COL = "maxScreenCol";
+    protected static final String MAX_SCREEN_ROW = "maxScreenRow";
+    protected static final String SCREEN_WIDTH = "screenWidth";
+    protected static final String SCREEN_HEIGHT = " screenHeight";
+
+    protected static final String WORLD = "world";
+    protected static final String MAX_WORLD_COL = "maxWorldCol";
+    protected static final String MAX_WORLD_ROW = "maxWorldRow";
+    protected static final String WORLD_WIDTH = "worldWidth";
+    protected static final String WORLD_HEIGHT = "worldHeight";
+
+    protected static final String GAMEPLAY = "gameplay";
+    protected static final String FPS = "fps";
+    protected static final String GAME_STATES = "gameStates";
+    protected static final String PLAY_STATE = "playState";
+    protected static final String PAUSE_STATE = "pauseState";
+    protected static final String DIALOUGUE_STATE = "dialogueState";
+
+    protected static final String TILE_ID = "titleId";
+    protected static final String TILE_NAME = "name";
+    protected static final String IMAGE_PATH = "imagePath";
+    protected static final String COLLISION = "collision";
+    protected static final String IS_SPECIAL = "isSpecial";
+    
+    protected static final String ROOM_ID = "roomId";
+    protected static final String ROOM_NAME = "name";
+    protected static final String ROOM_DESCRIPTION = "description";
+    protected static final String MAP_FILE = "mapFile";
+    protected static final String MUSIC = "music";
+    protected static final String PUZZLE = "puzzle";
+    protected static final String DIALOGUE = "dialouge";
+    protected static final String AVAILABLE_ITEMS = "availableItems";
+
+    protected static final String PUZZLE_ID = "puzzleId";
+    protected static final String PUZZLE_TITLE = "title";
+    protected static final String PUZZLE_DESCRIPTION = "description";
+    protected static final String PUZZLE_LEVEL = "level";
+    protected static final String IS_SOLVED = "isSolved";
+
+    protected static final String DIALOGUE_ID = "dialogueId";
+    protected static final String DIALOGUE_FILE = "dialogueFile";
+    protected static final String DIALOUGES = "dialouges";
+
 }
