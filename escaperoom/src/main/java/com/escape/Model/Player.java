@@ -6,7 +6,7 @@ public class Player {
 	private String username;
 	private String password;
 	private UUID UserID;
-	private String currentRoomdId;
+	private String currentRoomId;
 
 	
 	int currentLevel;
