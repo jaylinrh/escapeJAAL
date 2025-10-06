@@ -10,7 +10,6 @@ public class Player {
 
 	
 	int currentLevel;
-	 String currentRoomId;
 	
 	public Player (String username, String password) {
 		this.username = username;
