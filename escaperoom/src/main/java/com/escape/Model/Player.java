@@ -7,6 +7,8 @@ public class Player {
 	private String password;
 	private UUID UserID;
 	private String currentRoomId;
+	PlayerState playerState;
+	Inventory inventory;
 
 	
 	int currentLevel;
@@ -16,12 +18,14 @@ public class Player {
 		this.password = password;
 		this.UserID = UUID.randomUUID();
 	}
-	public Player(UUID id, String username, String password, int level, String currentRoomId) {
+	public Player(UUID id, String username, String password, int level, String currentRoomId, PlayerState playerState, Inventory inventory) {
 		this.UserID = id;
 		this.username = username;
 		this.password = password;
 		this.currentLevel = level;
 		this.currentRoomId = currentRoomId;
+		this.playerState = playerState;
+		this.inventory = inventory;
 	}
 	
 	public int getLevel () {
@@ -43,6 +47,14 @@ public class Player {
 	public String getCurrentRoomID() {
 		return currentRoomId;
 	}
+
+	public PlayerState getPlayerState() {
+		return playerState;
+	}
+
+	public Inventory getInventory() {
+		return inventory;
+	}
 	
 	public void addLevel() {
 		currentLevel++;
@@ -56,5 +68,9 @@ public class Player {
 		
 	}
 	
+	@Override
+	public String toString() {
+		return "Player: " + username + " (Level " +currentLevel + ", Room: " + currentRoomId + ")";
+	}
 	
 }

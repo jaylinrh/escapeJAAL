@@ -29,50 +29,59 @@ public class DataLoader extends DataConstants{
 
                     JSONObject playerStateJSON = (JSONObject) userJSON.get(USER_PLAYER_STATE);
 
-                    int worldX = ((Long) playerStateJSON.get(PlayerState.WORLD_X)).intValue();
-                    int worldY = ((Long) playerStateJSON.get(PlayerState.WORLD_Y)).intValue();
-                    int speed = ((Long) playerStateJSON.get(PlayerState.SPEED)).intValue();
-                    String direction = (String) playerStateJSON.get(PlayerState.DIRECTION);
-                    boolean collisionOn = (Boolean) playerStateJSON.get(PlayerState.COLLISION_ON);
+                    int worldX = ((Long) playerStateJSON.get(WORLD_X)).intValue();
+                    int worldY = ((Long) playerStateJSON.get(WORLD_Y)).intValue();
+                    int speed = ((Long) playerStateJSON.get(SPEED)).intValue();
+                    String direction = (String) playerStateJSON.get(DIRECTION);
+                    boolean collisionOn = (Boolean) playerStateJSON.get(COLLISION_ON);
 
-                    JSONObject solidAreaJSON = (JSONObject) playerStateJSON.get(PlayerState.SOLID_AREA);
+                    JSONObject solidAreaJSON = (JSONObject) playerStateJSON.get(SOLID_AREA);
 
-                    int solidX = ((Long) solidAreaJSON.get(PlayerState.SolidArea.X)).intValue();
-                    int SolidY = ((Long) solidAreaJSON.get(PlayerState.SolidArea.Y)).intValue();
-                    int solidWidth = ((Long) solidAreaJSON.get(PlayerState.SolidArea.WIDTH)).intValue();
-                    int solidHeight = ((Long) solidAreaJSON.get(PlayerState.SolidArea.HEIGHT)).intValue();
+                    int solidX = ((Long) solidAreaJSON.get(X)).intValue();
+                    int solidY = ((Long) solidAreaJSON.get(Y)).intValue();
+                    int solidWidth = ((Long) solidAreaJSON.get(WIDTH)).intValue();
+                    int solidHeight = ((Long) solidAreaJSON.get(HEIGHT)).intValue();
+                    SolidArea solidArea = new SolidArea(solidX, solidY, solidWidth, solidHeight);
 
-                    JSONObject spriteImagesJSON = (JSONObject) playerStateJSON.get(PlayerState.SPRITE_IMAGES);
+                    JSONObject spriteImagesJSON = (JSONObject) playerStateJSON.get(SPRITE_IMAGES);
 
-                    String u1 = (String) spriteImagesJSON.get(PlayerState.SpriteImages.U1);
-                    String u2 = (String) spriteImagesJSON.get(PlayerState.SpriteImages.U2);
-                    String d1 = (String) spriteImagesJSON.get(PlayerState.SpriteImages.D1);
-                    String d2 = (String) spriteImagesJSON.get(PlayerState.SpriteImages.D2);
-                    String l1 = (String) spriteImagesJSON.get(PlayerState.SpriteImages.L1);
-                    String l2 = (String) spriteImagesJSON.get(PlayerState.SpriteImages.L2);
-                    String r1 = (String) spriteImagesJSON.get(PlayerState.SpriteImages.R1);
-                    String r2 = (String) spriteImagesJSON.get(PlayerState.SpriteImages.R2);
+                    String u1 = (String) spriteImagesJSON.get(U1);
+                    String u2 = (String) spriteImagesJSON.get(U2);
+                    String d1 = (String) spriteImagesJSON.get(D1);
+                    String d2 = (String) spriteImagesJSON.get(D2);
+                    String l1 = (String) spriteImagesJSON.get(L1);
+                    String l2 = (String) spriteImagesJSON.get(L2);
+                    String r1 = (String) spriteImagesJSON.get(R1);
+                    String r2 = (String) spriteImagesJSON.get(R2);
+
+                    SpriteImages spriteImages = new SpriteImages(u1, u2, d1, d2, l1, l2, r1, r2);
+
+                    PlayerState playerState = new PlayerState(worldX, worldY, speed, direction, solidArea, collisionOn, spriteImages);
 
                     JSONObject inventoryJSON = (JSONObject) userJSON.get(USER_INVENTORY);
-                    String inventoryId = (String) inventoryJSON.get(Inventory.INVENTORY_ID);
-                    int maxCapacity = ((Long) inventoryJSON.get(Inventory.MAX_CAPACITY)).intValue();
+                    String inventoryId = (String) inventoryJSON.get(INVENTORY_ID);
+                    int maxCapacity = ((Long) inventoryJSON.get(MAX_CAPACITY)).intValue();
+
+                    Inventory inventory = new Inventory(inventoryId, maxCapacity);
 
                    
-                    JSONArray itemsJSON = (JSONArray) inventoryJSON.get(Inventory.ITEMS);
-                    ArrayList<Item> items = new ArrayList<Item>();
+                    JSONArray itemsJSON = (JSONArray) inventoryJSON.get(ITEMS);
+                    
 
                     for (int j = 0; j < itemsJSON.size(); j++) {
                         JSONObject itemJSON = (JSONObject) itemsJSON.get(j);
-                        String itemId = (String) itemsJSON.get(Inventory.Item.ITEM_ID);
-                        String itemName = (String) itemsJSON.get(Inventory.Item.NAME);
-                        String itemHint = (String) itemsJSON.get(Inventory.Item.HINT);
-                        String itemDesc = (String) itemJSON.get(Inventory.Item.DESCRIPTION);
+                        String itemId = (String) itemJSON.get(ITEM_ID);
+                        String itemName = (String) itemJSON.get(NAME);
+                        String itemHint = (String) itemJSON.get(HINT);
+                        String itemDesc = (String) itemJSON.get(DESCRIPTION);
 
-                        items.add(new Item(itemId, itemName, itemHint, itemDesc));
+                       Item item = new Item(itemId, itemName, itemHint, itemDesc);
+                       inventory.addItem(item);
                     }
 
 
-                    users.add(new Player(id, username, password, level, currentRoomId));
+                    Player player = new Player(id, username, password, level, currentRoomId, playerState, inventory);
+                    users.add(player);
                 } 
                 return users;
 
