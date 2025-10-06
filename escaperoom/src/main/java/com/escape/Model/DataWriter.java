@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+@SuppressWarnings("unchecked")
 public class DataWriter extends DataConstants {
 
     public static void saveUsers() {
@@ -44,6 +45,5 @@ public class DataWriter extends DataConstants {
     public static void main(String[] args) {
         DataWriter.saveUsers();
         DataWriter.saveGame();
-        
     }
 }

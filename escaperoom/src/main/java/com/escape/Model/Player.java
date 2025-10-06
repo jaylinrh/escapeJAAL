@@ -3,9 +3,9 @@ package com.escape.Model;
 import java.util.UUID;
 
 public class Player {
-	String username;
-	String password;
-	UUID UserID;
+	private String username;
+	private String password;
+	private UUID UserID;
 	String currentRoomdId;
 	
 	int currentLevel;
