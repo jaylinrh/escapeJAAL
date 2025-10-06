@@ -102,7 +102,8 @@ public class DataLoader extends DataConstants{
 
         if(users == null || users.isEmpty()) {
             System.out.println("error");
-        }  else {
+            return;
+        }  
                 System.out.println(" IT WORKS! " + users.size() + " users:\n");
 
                 for (int i = 0; i < users.size(); i++) {
@@ -113,8 +114,29 @@ public class DataLoader extends DataConstants{
                     System.out.println(" Password: " + player.getPassword());
                     System.out.println(" Level: " + player.getLevel());
                     System.out.println(" Current Room: " + player.getCurrentRoomID());
+
+                    if(player.getPlayerState() != null) {
+                        PlayerState ps = player.getPlayerState();
+                        System.out.println("\n --Player state-- ");
+                        System.out.println("Position:" + ps.getWorldX() + ", " + ps.getWorldY());
+                        System.out.println("Speed: " + ps.getSpeed());
+                        System.out.println("Direction: " + ps.getDirection());
+                        System.out.println("Collision: " + ps.getCollision());
+
+                        if(ps.getSolidArea() != null) {
+                            System.out.println("Solid Area: Present");
+                        }
+
+                        if(ps.getSpriteImages() != null) {
+                            System.out.println("Sprite Images: present");
+                        }
+
+                        if(player.getInventory() != null) {
+                            System.out.println("\n --Inventory--");
+                            System.out.println("Inventory loaded!");
+                        }
+                    }
                 }
             }
     
     }
-}
