@@ -1,7 +1,6 @@
 package com.escape.Model;
 import java.util.ArrayList;
 
-import com.escape.Model.DataConstants.Inventory.Item;
 
 public class Inventory {
     private String inventoryId;
@@ -26,5 +25,10 @@ public class Inventory {
 
     public void removeItem(Item item) {
         Items.remove(item);
+    }
+    @Override
+    public String toString() {
+        return String.format("{\"inventoryId\":\"%s\",\"maxCapacity\":%d,\"items\":%s}", 
+        inventoryId, maxCapacity, Items.toString());
     }
 }

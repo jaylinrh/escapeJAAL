@@ -12,4 +12,10 @@ public class Item {
         this.hint = hint;
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return String.format("{\"itemID\":\"%s\",\"name\":\"%s\",\"hint\":\"%s\",\"description\":\"%s\"}", 
+        itemId, name, hint, description);
+    }
 }

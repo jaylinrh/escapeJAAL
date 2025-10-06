@@ -74,4 +74,19 @@ public class PlayerState {
     public void setSpriteImages(SpriteImages spriteImages) {
         this.spriteImages = spriteImages;
     }
+
+   @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        sb.append("\"worldx\":").append(worldX).append(",");
+        sb.append("\"worldy\":").append(worldY).append(",");
+        sb.append("\"speed\":").append(speed).append(",");
+        sb.append("\"direction\":\"").append(direction).append("\",");
+        sb.append("\"collisionOn\":").append(collisionOn).append(",");
+        sb.append("\"solidArea\":").append(solidArea.toString()).append(",");
+        sb.append("\"spriteImages\":").append(spriteImages.toString());
+        sb.append("}");
+        return sb.toString();
+    }
 }

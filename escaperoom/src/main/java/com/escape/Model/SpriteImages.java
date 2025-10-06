@@ -20,4 +20,20 @@ public class SpriteImages {
         this.r1 = r1;
         this.r2 = r2;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        sb.append("\"u1\":\"").append(u1).append("\",");
+        sb.append("\"u2\":\"").append(u2).append("\",");
+        sb.append("\"d1\":\"").append(d1).append("\",");
+        sb.append("\"d2\":\"").append(d2).append("\",");
+        sb.append("\"l1\":\"").append(l1).append("\",");
+        sb.append("\"l2\":\"").append(l2).append("\",");
+        sb.append("\"r1\":\"").append(r1).append("\",");
+        sb.append("\"r2\":\"").append(r2).append("\"");
+        sb.append("}");
+        return sb.toString();
+    }
 }
