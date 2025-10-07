@@ -2,7 +2,7 @@ package com.escape.Model;
 
 import java.util.UUID;
 
-public class Player {
+public class User {
 	private String username;
 	private String password;
 	private UUID UserID;
@@ -13,12 +13,12 @@ public class Player {
 	
 	int currentLevel;
 	
-	public Player (String username, String password) {
+	public User (String username, String password) {
 		this.username = username;
 		this.password = password;
 		this.UserID = UUID.randomUUID();
 	}
-	public Player(UUID id, String username, String password, int level, String currentRoomId, PlayerState playerState, Inventory inventory) {
+	public User(UUID id, String username, String password, int level, String currentRoomId, PlayerState playerState, Inventory inventory) {
 		this.UserID = id;
 		this.username = username;
 		this.password = password;

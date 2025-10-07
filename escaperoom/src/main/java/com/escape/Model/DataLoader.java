@@ -8,10 +8,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class DataLoader extends DataConstants{
+public class DataLoader extends DataConstants {
     
-    public static ArrayList<Player> getUsers() {
-        ArrayList<Player> users = new ArrayList<Player>();
+    public static ArrayList<User> getUsers() {
+        ArrayList<User> users = new ArrayList<User>();
 
             try {
                 FileReader reader = new FileReader(USER_FILE_NAME);
@@ -80,7 +80,7 @@ public class DataLoader extends DataConstants{
                     }
 
 
-                    Player player = new Player(id, username, password, level, currentRoomId, playerState, inventory);
+                    User player = new User(id, username, password, level, currentRoomId, playerState, inventory);
                     users.add(player);
                 } 
                 return users;
@@ -100,7 +100,7 @@ public class DataLoader extends DataConstants{
     
     public static void main(String[] args) {
         System.out.println("Testing dataLoader with current constants \n");
-        ArrayList<Player> users = DataLoader.getUsers();
+        ArrayList<User> users = DataLoader.getUsers();
 
         if(users == null || users.isEmpty()) {
             System.out.println("error");
@@ -109,7 +109,7 @@ public class DataLoader extends DataConstants{
                 System.out.println(" IT WORKS! " + users.size() + " users:\n");
 
                 for (int i = 0; i < users.size(); i++) {
-                    Player player = users.get(i);
+                    User player = users.get(i);
                     System.out.println(" User #" + (i+1) + ":");
                     System.out.println(" ID: " + player.getId());
                     System.out.println(" Username: " + player.getUserName());
