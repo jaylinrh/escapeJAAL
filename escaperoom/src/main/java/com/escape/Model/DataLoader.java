@@ -96,6 +96,8 @@ public class DataLoader extends DataConstants{
          * This is a Tester method so I can see if the dataLoader is working for the current constants.
          * @param args
          */
+    
+    
     public static void main(String[] args) {
         System.out.println("Testing dataLoader with current constants \n");
         ArrayList<Player> users = DataLoader.getUsers();
