@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class Login {
     public static void Login(String username, String password) {
-        ArrayList<Player> users = DataLoader.getUsers();
+        ArrayList<User> users = DataLoader.getUsers();
         boolean loggedIn = false;
         while(!loggedIn) {
-            for(Player user:users) {
+            for(User user:users) {
             if(user.getUserName().equals(username) && user.getPassword().equals(password)) {
                 loggedIn = true;
                 System.out.println("Success");
