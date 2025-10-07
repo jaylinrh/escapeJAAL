@@ -1,18 +1,18 @@
 package com.escape.Model;
 import java.util.ArrayList;
 
-public class Rooms {
-    private static Rooms instance;
+public class RoomList {
+    private static RoomList instance;
     private ArrayList<Room> roomList;
     
-    private Rooms() {
+    private RoomList() {
         roomList = new ArrayList<>();
         createRooms();
     }
     
-    public static Rooms getInstance() {
+    public static RoomList getInstance() {
         if (instance == null) {
-            instance = new Rooms();
+            instance = new RoomList();
         }
         return instance;
     }
