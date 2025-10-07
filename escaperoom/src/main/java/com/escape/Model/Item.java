@@ -12,6 +12,22 @@ public class Item {
         this.hint = hint;
         this.description = description;
     }
+    
+    public String getItemId() {
+        return itemId;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public String getHint() {
+        return hint;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
 
     @Override
     public String toString() {
