@@ -10,8 +10,8 @@ import org.json.simple.JSONObject;
 public class DataWriter extends DataConstants {
 
     public static void saveUsers() {
-        Players players = Players.getInstance();
-        ArrayList<Player> playerList = players.getPlayers();
+        UserList players = UserList.getInstance();
+        ArrayList<User> playerList = players.getUsers();
 
         JSONArray jsonUsers = new JSONArray();
 
@@ -29,7 +29,7 @@ public class DataWriter extends DataConstants {
         }
     }
 
-    public static JSONObject getUserJSON(Player player) {
+    public static JSONObject getUserJSON(User player) {
         JSONObject userDetails = new JSONObject();
         userDetails.put(USER_ID, player.getId().toString());
         userDetails.put(USER_USERNAME, player.getUserName());
