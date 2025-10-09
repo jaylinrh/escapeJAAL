@@ -92,6 +92,94 @@ public class DataLoader extends DataConstants {
             return users;
         
     } 
+
+    public static ArrayList<Tile> getTiles() {
+        ArrayList<Tile> tiles = new ArrayList<Tile>();
+
+        try {
+            FileReader reader = new FileReader(ROOM_FILE_NAME);
+            JSONObject jsonObject = (JSONObject) new JSONParser().parse(reader);
+            JSONArray tilesJSON = (JSONArray) jsonObject.get(TILES_ARRAY);
+
+            for(int i = 0; i < tiles.JSON.size(); i++) {
+                JSONObject tileJSON = (JSONObject) tilesJSON.get(i);
+
+                int tileId = ((Long) tileJSON.get(TILE_ID)).intValue();
+                String tileName = (String) tileJSON.get(TILE_NAME);
+                String imagePath = (String) tileJSON.get(IMAGE_PATH);
+                boolean collision = (Boolean) tileJSON.get(COLLISION);
+                boolean isSpecial = (Boolean) tileJSON.get(IS_SPECIAL);
+
+                Tile tile = new Tile(tileId, tileName, imagePath, collision, isSpecial);
+                tile.add(tile);
+            }
+            return tiles;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return tiles;
+    }
+
+    public static ArrayList<Room> getRooms() {
+        ArrayList<Room> rooms = new ArrayList<Room>();
+
+        try {
+            FileReader reader = new FileReader(ROOM_FILE_NAME);
+            JSONObject jsonObject = (JSONObject) new JSONParser().parse(reader);
+            JSONArray roomsJSON = (JSONArray) jsonObject.get(ROOMS_ARRAY);
+
+            for(int i = 0; i < roomsJSON.size(); i++) {
+                JSONObject roomJSON = (JSONObject) roomsJSON.get(i);
+
+                String roomId = (String) roomJSON.get(ROOM_ID);
+                String roomName = (String) roomJSON.get(ROOM_NAME);
+                String roomDescription = (String) roomJSON.get(ROOM_DESCRIPTION);
+                String mapFile = (String) roomJSON.get(MAP_FILE);
+                String music = (String) roomJSON.get(MUSIC);
+
+                JSONObject puzzleJSON = (JSONObject) roomJSON.get(PUZZLE);
+                String puzzleId = (String) puzzleJSON.get(PUZZLE_ID);
+                String puzzleTitle = (String) puzzleJSON.get(PUZZLE_TITLE);
+                String puzzleDescription = (String) puzzleJSON.get(PUZZLE_DESCRIPTION);
+                int puzzleLevel = ((Long) puzzleJSON.get(PUZZLE_LEVEL)).intValue();
+                boolean isSolved = (Boolean) puzzleJSON.get(IS_SOLVED);
+
+                JSONObject dialogueJSON = (JSONObject) roomJSON.get(DIALOGUE);
+                String dialogueId = (String) dialogueJSON.get(DIALOGUE_ID);
+                String dialogueFile = (String) dialogueJSON.get(DIALOGUE_FILE);
+                JSONArray dialoguesArray = (JSONArray) dialogueJSON.get(DIALOGUES);
+                ArrayList<String> dialogues = new ArrayList<String>();
+                for (int j = 0; j < dialoguesArray.size(); j++) {
+                    dialogues.add((String) dialoguesArray.get(j));
+                }
+
+                JSONArray availableItemsJSON = (JSONArray) roomJSON.get(AVAILABLE_ITEMS);
+                ArrayList<String> availableItems = new ArrayList<String>();
+                for (int j = 0; j < availableItemsJSON.size(); j++) {
+                    availableItems.add((String) availableItemsJSON.get(j));
+                }
+
+                Room room = new Room(roomId, roomName, roomDescription, mapFile, music,
+                                    puzzleId, puzzleTitle, puzzleDescription, puzzleLevel, isSolved,
+                                    dialogueId, dialogueFile, dialogues, availableItems);
+                rooms.add(room);
+        }
+        return rooms;
+    } catch(Exception e) {
+        e.printStackTrace();
+    }
+
+    return rooms;
+    }
+    
+
+
+
+
+
+
+
         /**
          * This is a Tester method so I can see if the dataLoader is working for the current constants.
          * @param args
