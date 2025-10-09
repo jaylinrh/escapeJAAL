@@ -9,19 +9,25 @@ public class Room {
     private String mapFile;
     private String music;
     private Puzzle puzzle;
-    private Dialogue dialogue;
+    private boolean hasPuzzle;
     private ArrayList<String> availableItemIds;
-    
+
+
     public Room(String roomId, String name, String description, String mapFile, 
-                String music, Puzzle puzzle, Dialogue dialogue, ArrayList<String> availableItemIds) {
+                String music, String[] dialogues, boolean hasPuzzle) {
         this.roomId = roomId;
         this.name = name;
         this.description = description;
         this.mapFile = mapFile;
         this.music = music;
-        this.puzzle = puzzle;
-        this.dialogue = dialogue;
-        this.availableItemIds = availableItemIds;
+        this.hasPuzzle = hasPuzzle;
+        
+
+         if (this.hasPuzzle) {
+            this.puzzle = new Puzzle("a", "puzzle", "a puzzle", 3, false);
+        } else {
+            this.puzzle = null;
+        }
     }
     
     public String getRoomId() {
@@ -48,9 +54,7 @@ public class Room {
         return puzzle;
     }
     
-    public Dialogue getDialogue() {
-        return dialogue;
-    }
+ 
     
     public ArrayList<String> getAvailableItemIds() {
         return availableItemIds;
@@ -81,9 +85,7 @@ public class Room {
         this.puzzle = puzzle;
     }
     
-    public void setDialogue(Dialogue dialogue) {
-        this.dialogue = dialogue;
-    }
+
     
     public void setAvailableItemIds(ArrayList<String> availableItemIds) {
         this.availableItemIds = availableItemIds;
@@ -111,9 +113,7 @@ public class Room {
         return puzzle != null;
     }
     
-    public boolean hasDialogue() {
-        return dialogue != null;
-    }
+
     
     public boolean isPuzzleSolved() {
         return puzzle != null && puzzle.isSolved();
@@ -125,8 +125,7 @@ public class Room {
             "Room: %s (ID: %s)\nDescription: %s\nMap: %s\nMusic: %s\nItems: %d\nPuzzle: %s\nDialogue: %s",
             name, roomId, description, mapFile, music, 
             availableItemIds.size(),
-            (puzzle != null ? puzzle.getTitle() : "None"),
-            (dialogue != null ? dialogue.getDialogueId() : "None")
+            (puzzle != null ? puzzle.getTitle() : "None")
         );
     }
 }

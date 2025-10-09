@@ -13,7 +13,10 @@ public class Puzzle {
         this.description = description;
         this.level = level;
         this.isSolved = isSolved;
+        
+        System.out.println("Puzzle generated");
     }
+    
     
     public String getPuzzleId() {
         return puzzleId;
