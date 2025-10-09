@@ -101,6 +101,6 @@ public class DataConstants {
 
     protected static final String DIALOGUE_ID = "dialogueId";
     protected static final String DIALOGUE_FILE = "dialogueFile";
-    protected static final String DIALOUGES = "dialouges";
+    protected static final String DIALOGUES = "dialogues";
 
 }
