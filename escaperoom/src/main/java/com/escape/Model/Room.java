@@ -9,6 +9,15 @@ public class Room {
     private String mapFile;
     private String music;
     private Puzzle puzzle;
+    private String puzzleId;
+    private String puzzleTitle;
+    private String puzzleDescription;
+    private int puzzleLevel;
+    private boolean isSolved;
+    private String dialogueId;
+    private String dialogueFile;
+
+    private ArrayList<String> dialogues;
     private boolean hasPuzzle;
     private ArrayList<String> availableItemIds;
 
@@ -28,6 +37,31 @@ public class Room {
         } else {
             this.puzzle = null;
         }
+    }
+
+
+    public Room(String roomdId, String name, String description, String mapFile, String music,
+                String puzzleId, String puzzleTitle, String puzzleDescription, int puzzleLevel,
+                boolean isSolved, String dialogueId, String dialogueFile, ArrayList<String> dialogues,
+                ArrayList<String> availableItems) {
+           this.roomId = roomdId;
+           this.name = name;
+           this.description = description;
+           this.mapFile = mapFile;
+           this.music = music;
+           this.puzzleId = puzzleId;
+           this.puzzleTitle = puzzleTitle;
+           this.puzzleDescription = puzzleDescription;
+           this.puzzleLevel = puzzleLevel;
+           this.isSolved = isSolved;
+           this.dialogueId = dialogueId;
+           this.dialogueFile = dialogueFile;
+           this.dialogues = dialogues;
+           this.availableItemIds = availableItems;
+           this.hasPuzzle = true;
+
+           this.puzzle = new Puzzle(puzzleId, puzzleTitle, puzzleDescription, puzzleLevel, isSolved);
+        
     }
     
     public String getRoomId() {
@@ -58,6 +92,30 @@ public class Room {
     
     public ArrayList<String> getAvailableItemIds() {
         return availableItemIds;
+    }
+
+    public String getPuzzleId() {
+        return puzzleId;
+    }
+
+    public String getPuzzleTitle() {
+        return puzzleTitle;
+    }
+
+    public int getPuzzleLevel() {
+        return puzzleLevel;
+    }
+
+    public boolean getIsSolved() {
+        return isSolved;
+    }
+
+    public String getDialogueFile() {
+        return dialogueFile;
+    }
+
+    public ArrayList<String> getDialogues() {
+        return dialogues;
     }
     
 
