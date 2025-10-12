@@ -172,6 +172,46 @@ public class DataLoader extends DataConstants {
 
     return rooms;
     }
+
+    public static GameConfig getGameConfig() {
+
+        try {
+            FileReader reader = new FileReader(ROOM_FILE_NAME);
+            JSONObject jsonObject = (JSONObject) new JSONParser().parse(reader);
+            JSONObject configJSON = (JSONObject) jsonObject.get(GAME_CONFIG);
+
+            JSONObject displayJSON = (JSONObject) configJSON.get(DISPLAY);
+            int originalTileSIze = ((Long) displayJSON.get(ORIGINAL_TILE_SIZE)).intValue();
+            int scale = ((Long) displayJSON.get(SCALE)).intValue();
+            int tileSize = ((Long) displayJSON.get(TILE_SIZE)).intValue();
+            int maxScreenCol = ((Long) displayJSON.get(MAX_SCREEN_COL)).intValue();
+            int maxScreenRow = ((Long) displayJSON.get(MAX_SCREEN_ROW)).intValue();
+            int screenWidth = ((Long) displayJSON.get(SCREEN_WIDTH)).intValue();
+            int screenHeight = ((Long) displayJSON.get(SCREEN_HEIGHT)).intValue();
+
+            JSONObject worldJSON = (JSONObject) configJSON.get(WORLD);
+            int maxWorldCol =((Long) worldJSON.get(MAX_WORLD_COL)).intValue();
+            int maxWorldRow = ((Long) worldJSON.get(MAX_WORLD_ROW)).intValue();
+            int worldWidth = ((Long) worldJSON.get(WORLD_WIDTH)).intValue();
+            int worldHeight = ((Long) worldJSON.get(WORLD_WIDTH)).intValue();
+
+            JSONObject gameplayJSON = (JSONObject) configJSON.get(GAMEPLAY);
+            int fps = ((Long) gameplayJSON.get(FPS)).intValue();
+            JSONObject gameStatesJSON = (JSONObject) gameplayJSON.get(GAME_STATES);
+            int playState = ((Long) gameStatesJSON.get(PLAY_STATE)).intValue();
+            int pauseState = ((Long) gameStatesJSON.get(PAUSE_STATE)).intValue();
+            int dialogueState = ((Long) gameStatesJSON.get(DIALOGUE_STATE)).intValue();
+
+            GameConfig config = new GameConfig(originalTileSIze, scale, tileSize, maxScreenCol, maxScreenRow,
+                                                screenWidth, screenHeight, maxWorldCol, maxWorldRow, worldWidth,
+                                                worldHeight, fps, playState, pauseState, dialogueState);
+            return config;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
     
 
 

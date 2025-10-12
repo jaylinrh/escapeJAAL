@@ -59,7 +59,7 @@ public class DataConstants {
     protected static final String DISPLAY = "display";
     protected static final String ORIGINAL_TILE_SIZE = "originalTileSize";
     protected static final String SCALE = "scale";
-    protected static final String TITLE_SIZE = "titleSize";
+    protected static final String TILE_SIZE = "tileSize";
     protected static final String MAX_SCREEN_COL = "maxScreenCol";
     protected static final String MAX_SCREEN_ROW = "maxScreenRow";
     protected static final String SCREEN_WIDTH = "screenWidth";
@@ -76,7 +76,7 @@ public class DataConstants {
     protected static final String GAME_STATES = "gameStates";
     protected static final String PLAY_STATE = "playState";
     protected static final String PAUSE_STATE = "pauseState";
-    protected static final String DIALOUGUE_STATE = "dialogueState";
+    protected static final String DIALOGUE_STATE = "dialogueState";
 
     protected static final String TILE_ID = "titleId";
     protected static final String TILE_NAME = "name";
