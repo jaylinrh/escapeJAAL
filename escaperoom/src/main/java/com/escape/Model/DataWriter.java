@@ -59,25 +59,23 @@ public class DataWriter extends DataConstants {
         }
     }
 
-    public static JSONObject getRoomsJSON(Room game) {
-        JSONObject roomDetails = new JSONObject();
-        roomDetails.put(ROOM_ID, game.getRoomId().toString());
-        roomDetails.put(ROOM_NAME, game.getName());
-        roomDetails.put(ROOM_DESCRIPTION, game.getDescription());
-        roomDetails.put(MAP_FILE, game.getMapFile());
-        roomDetails.put(MUSIC, game.getMusic());
-        roomDetails.put(PUZZLE, game.getPuzzle()); //////////
-        roomDetails.put(PUZZLE_ID, game.getPuzzleId());
-        roomDetails.put(PUZZLE_TITLE, game.getPuzzleTitle());
-        roomDetails.put(PUZZLE_DESCRIPTION, game.getPuzzleDescription());
-        roomDetails.put(PUZZLE_LEVEL, game.getPuzzleLevel());
-        roomDetails.put(IS_SOLVED, game.getIsSolved());
-        roomDetails.put(DIALOGUES, game.getDialogues());
-        roomDetails.put(DIALOGUE_FILE, game.getDialogueFile());
-        roomDetails.put(DIALOGUE_ID, game.getDialogueId());
-        roomDetails.put(AVAILABLE_ITEMS, game.getAvailableItemIds());
-        return roomDetails;
-    }
+public static JSONObject getRoomsJSON(Room game) {
+    JSONObject roomDetails = new JSONObject();
+    roomDetails.put(ROOM_ID, game.getRoomId().toString());
+    roomDetails.put(ROOM_NAME, game.getName());
+    roomDetails.put(ROOM_DESCRIPTION, game.getDescription());
+    roomDetails.put(MAP_FILE, game.getMapFile());
+    roomDetails.put(MUSIC, game.getMusic());
+    roomDetails.put(PUZZLE, game.getPuzzle());
+    JSONObject dialogueObj = new JSONObject();
+    dialogueObj.put(DIALOGUE_ID, game.getDialogueId());
+    dialogueObj.put(DIALOGUE_FILE, game.getDialogueFile());
+    dialogueObj.put(DIALOGUES, game.getDialogues());
+    roomDetails.put(DIALOGUE, dialogueObj);
+    roomDetails.put(AVAILABLE_ITEMS, game.getAvailableItemIds());
+    
+    return roomDetails;
+}
 
     public static void main(String[] args) {
         DataWriter.saveUsers();
