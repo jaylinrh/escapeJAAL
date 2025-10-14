@@ -99,7 +99,7 @@ public class DataLoader extends DataConstants {
         try {
             FileReader reader = new FileReader(ROOM_FILE_NAME);
             JSONObject jsonObject = (JSONObject) new JSONParser().parse(reader);
-            JSONArray tilesJSON = (JSONArray) jsonObject.get(TILES_ARRAY);
+            JSONArray tilesJSON = (JSONArray) jsonObject.get(TILE_ARRAY);
 
             for(int i = 0; i < tiles.JSON.size(); i++) {
                 JSONObject tileJSON = (JSONObject) tilesJSON.get(i);
@@ -202,9 +202,12 @@ public class DataLoader extends DataConstants {
             int pauseState = ((Long) gameStatesJSON.get(PAUSE_STATE)).intValue();
             int dialogueState = ((Long) gameStatesJSON.get(DIALOGUE_STATE)).intValue();
 
-            GameConfig config = new GameConfig(originalTileSIze, scale, tileSize, maxScreenCol, maxScreenRow,
-                                                screenWidth, screenHeight, maxWorldCol, maxWorldRow, worldWidth,
-                                                worldHeight, fps, playState, pauseState, dialogueState);
+            GameConfig config = new GameConfig(
+                originalTileSize, scale, tileSize, maxScreenCol, maxScreenRow,
+                screenWidth, screenHeight, maxWorldCol, maxWorldRow, worldWidth,
+                worldHeight, fps, playState, pauseState, dialogueState, inventoryState
+            );
+            
             return config;
         } catch (Exception e) {
             e.printStackTrace();
@@ -212,61 +215,4 @@ public class DataLoader extends DataConstants {
 
         return null;
     }
-    
-
-
-
-
-
-
-
-        /**
-         * This is a Tester method so I can see if the dataLoader is working for the current constants.
-         * @param args
-         */
-
-    
-    public static void main(String[] args) {
-        System.out.println("Testing dataLoader with current constants \n");
-        ArrayList<User> users = DataLoader.getUsers();
-
-        if(users == null || users.isEmpty()) {
-            System.out.println("error");
-            return;
-        }  
-                System.out.println(" IT WORKS! " + users.size() + " users:\n");
-
-                for (int i = 0; i < users.size(); i++) {
-                    User player = users.get(i);
-                    System.out.println(" User #" + (i+1) + ":");
-                    System.out.println(" ID: " + player.getId());
-                    System.out.println(" Username: " + player.getUserName());
-                    System.out.println(" Password: " + player.getPassword());
-                    System.out.println(" Level: " + player.getLevel());
-                    System.out.println(" Current Room: " + player.getCurrentRoomID());
-
-                    if(player.getPlayerState() != null) {
-                        PlayerState ps = player.getPlayerState();
-                        System.out.println("\n --Player state-- ");
-                        System.out.println("Position:" + ps.getWorldX() + ", " + ps.getWorldY());
-                        System.out.println("Speed: " + ps.getSpeed());
-                        System.out.println("Direction: " + ps.getDirection());
-                        System.out.println("Collision: " + ps.getCollision());
-
-                        if(ps.getSolidArea() != null) {
-                            System.out.println("Solid Area: Present");
-                        }
-
-                        if(ps.getSpriteImages() != null) {
-                            System.out.println("Sprite Images: present");
-                        }
-
-                        if(player.getInventory() != null) {
-                            System.out.println("\n --Inventory--");
-                            System.out.println("Inventory loaded!");
-                        }
-                    }
-                }
-            }
-    
-    }
+}
