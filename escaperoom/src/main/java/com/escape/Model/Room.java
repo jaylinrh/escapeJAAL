@@ -106,6 +106,10 @@ public class Room {
         return puzzleLevel;
     }
 
+    public String getPuzzleDescription() {
+        return puzzleDescription;
+    }
+
     public boolean getIsSolved() {
         return isSolved;
     }
@@ -118,6 +122,9 @@ public class Room {
         return dialogues;
     }
     
+    public String getDialogueId() {
+        return dialogueId;
+    }
 
     public void setRoomId(String roomId) {
         this.roomId = roomId;
