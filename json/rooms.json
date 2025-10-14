@@ -1,82 +1,288 @@
 {
+  "game_config": {
+    "display": {
+      "originalTileSize": 16,
+      "scale": 3,
+      "tileSize": 48,
+      "maxScreenCol": 16,
+      "maxScreenRow": 12,
+      "screenWidth": 768,
+      "screenHeight": 576
+    },
+    "world": {
+      "maxWorldCol": 50,
+      "maxWorldRow": 50,
+      "worldWidth": 2400,
+      "worldHeight": 2400
+    },
+    "gameplay": {
+      "fps": 60,
+      "gameStates": {
+        "playState": 1,
+        "pauseState": 2,
+        "dialogueState": 3,
+        "inventoryState": 4
+      }
+    }
+  },
+  "tiles": [
+    {
+      "tileId": 0,
+      "name": "worn floor",
+      "imagePath": "/tiles/tile_worn_floor.png",
+      "collision": false,
+      "isSpecial": false
+    },
+    {
+      "tileId": 1,
+      "name": "tattered rug",
+      "imagePath": "/tiles/tile_tattered_rug.png",
+      "collision": false,
+      "isSpecial": false
+    },
+    {
+      "tileId": 2,
+      "name": "crime scene",
+      "imagePath": "/tiles/tile_crime_scene.png",
+      "collision": false,
+      "isSpecial": true
+    },
+    {
+      "tileId": 3,
+      "name": "manor wall",
+      "imagePath": "/tiles/tile_manor_wall.png",
+      "collision": true,
+      "isSpecial": false
+    },
+    {
+      "tileId": 4,
+      "name": "bookshelf",
+      "imagePath": "/tiles/tile_bookshelf.png",
+      "collision": true,
+      "isSpecial": false
+    },
+    {
+      "tileId": 5,
+      "name": "wooden table",
+      "imagePath": "/tiles/tile_wooden_table.png",
+      "collision": true,
+      "isSpecial": false
+    },
+    {
+      "tileId": 6,
+      "name": "portrait wall",
+      "imagePath": "/tiles/tile_portrait_wall.png",
+      "collision": true,
+      "isSpecial": false
+    },
+    {
+      "tileId": 7,
+      "name": "overgrown floor",
+      "imagePath": "/tiles/tile_overgrown_floor.png",
+      "collision": false,
+      "isSpecial": false
+    },
+    {
+      "tileId": 8,
+      "name": "broken glass",
+      "imagePath": "/tiles/tile_broken_glass.png",
+      "collision": true,
+      "isSpecial": false
+    },
+    {
+      "tileId": 9,
+      "name": "stage floor",
+      "imagePath": "/tiles/tile_stage_floor.png",
+      "collision": false,
+      "isSpecial": false
+    }
+  ],
   "rooms": [
     {
-      "roomId": "room_library",
-      "name": "The Forgotten Library",
-      "description": "A mysterious library filled with ancient tomes and hidden secrets. Find the way through the knowledge.",
-      "mapFile": "map2.txt",
-      "music": "library_ambient.mp3",
+      "roomId": "room_exterior",
+      "name": "Manor Exterior",
+      "description": "Dark woods surround you. Rain pours down. The manor looms ahead.",
+      "mapFile": "exterior.txt",
+      "music": "rain_ambience.mp3",
       "puzzle": {
-        "puzzleId": "puzzle_001",
-        "title": "The Forgotten Library",
-        "description": "A mysterious library filled with ancient tomes and hidden secrets. Find the way through the knowledge.",
+        "puzzleId": "puzzle_none",
+        "title": "None",
+        "description": "No puzzle here",
+        "level": 0,
+        "isSolved": true
+      },
+      "dialogue": {
+        "dialogueId": "dialogue_exterior_intro",
+        "dialogueFile": "exterior_dialogue.txt",
+        "dialogues": [
+          "...",
+          "Your eyes flutter open.",
+          "Cold. Wet. The rain is relentless.",
+          "Where... where are you?",
+          "Trees surround you — twisted, skeletal silhouettes against the night.",
+          "Your body aches. You can't remember how you got here.",
+          "In the distance, through the downpour, a light flickers.",
+          "A manor. Old. Enormous. The only shelter for miles.",
+          "You have no choice.",
+          "You must reach it.",
+          "Press WASD to move."
+        ]
+      },
+      "availableItems": []
+    },
+    {
+      "roomId": "room_foyer",
+      "name": "Foyer",
+      "description": "A grand entrance hall, now cold and abandoned.",
+      "mapFile": "foyer.txt",
+      "music": "foyer_ambience.mp3",
+      "puzzle": {
+        "puzzleId": "puzzle_foyer_ledger",
+        "title": "Ledger Reassembly",
+        "description": "Collect torn ledger pages scattered around the room",
         "level": 1,
         "isSolved": false
       },
       "dialogue": {
-        "dialogueId": "library_dialogue",
-        "dialogueFile": "library_dialogue.txt",
+        "dialogueId": "dialogue_foyer_entry",
+        "dialogueFile": "foyer_dialogue.txt",
         "dialogues": [
-          "You enter a vast library...",
-          "Ancient books line the walls.",
-          "Something feels wrong here.",
-          "You must find the way forward."
+          "*SLAM*",
+          "The door shuts violently behind you. You spin around — locked.",
+          "There's no going back now.",
+          "The air is thick with dust and decay. It clings to your lungs.",
+          "Torn pages litter the floor like fallen leaves.",
+          "Something moves in the corner of your vision — a shadow near the stairs.",
+          "*CRACKLE* — An old intercom hums to life.",
+          "\"You shouldn't have woken up...\"",
+          "The voice cuts out. Silence returns, heavier than before.",
+          "The pages on the floor... dates. Names. Victims.",
+          "You need to find them all."
         ]
       },
       "availableItems": [
-        "550e8400-e29b-41d4-a716-446655440010",
-        "550e8400-e29b-41d4-a716-446655440013"
+        "item_ledger_page_1",
+        "item_ledger_page_2",
+        "item_ledger_page_3",
+        "item_ledger_page_4"
       ]
     },
     {
-      "roomId": "room_chamber",
-      "name": "The Cursed Chamber",
-      "description": "A dark chamber where shadows whisper secrets. Navigate the maze of darkness to find the truth.",
-      "mapFile": "map4.txt",
-      "music": "chamber_dark.mp3",
+      "roomId": "room_parlor",
+      "name": "Parlor",
+      "description": "A dusty room filled with portraits. Their eyes have been gouged out.",
+      "mapFile": "parlor.txt",
+      "music": "parlor_ambient.mp3",
       "puzzle": {
-        "puzzleId": "puzzle_002",
-        "title": "The Cursed Chamber",
-        "description": "A dark chamber where shadows whisper secrets. Navigate the maze of darkness to find the truth.",
+        "puzzleId": "puz_parlor",
+        "title": "Portrait Eyes",
+        "description": "Rearrange items to unlock the safe behind the portrait",
         "level": 2,
         "isSolved": false
       },
       "dialogue": {
-        "dialogueId": "chamber_dialogue",
-        "dialogueFile": "chamber_dialogue.txt",
+        "dialogueId": "dlg_parlor",
+        "dialogueFile": "parlor_dialogue.txt",
         "dialogues": [
-          "The chamber grows darker...",
-          "You hear whispers in the shadows.",
-          "The exit must be nearby.",
-          "Keep moving forward."
+          "The portraits stare with hollow, empty eyes.",
+          "A shadow moves across the balcony above...",
+          "You're not alone."
         ]
       },
-      "availableItems": [
-        "550e8400-e29b-41d4-a716-446655440011",
-        "550e8400-e29b-41d4-a716-446655440012"
-      ]
+      "availableItems": []
     },
     {
-      "roomId": "room_entrance",
-      "name": "Entrance Hall",
-      "description": "The starting point of your escape room adventure. Welcome messages guide you forward.",
-      "mapFile": "map1.txt",
-      "music": "intro_ambient.mp3",
+      "roomId": "room_library",
+      "name": "Library",
+      "description": "Shelves lined with rotting books. A phonograph plays a warped lullaby.",
+      "mapFile": "library.txt",
+      "music": "library_ambient.mp3",
       "puzzle": {
-        "puzzleId": "puzzle_000",
-        "title": "Welcome Challenge",
-        "description": "Learn the basics of the escape room.",
-        "level": 0,
+        "puzzleId": "puz_library",
+        "title": "Ciphered Diary",
+        "description": "Decode the burned diary using the phonograph's cipher",
+        "level": 3,
         "isSolved": false
       },
       "dialogue": {
-        "dialogueId": "intro_dialogue",
-        "dialogueFile": "intro.txt",
+        "dialogueId": "dlg_library",
+        "dialogueFile": "library_dialogue.txt",
         "dialogues": [
-          "Welcome to the Escape Room",
-          "Make sure to have fun",
-          "Now go and escape!",
-          "Ciao!"
+          "A phonograph plays endlessly, its melody distorted.",
+          "The diary lies half-burned on the desk.",
+          "On the window, words appear: 'You're next.'"
+        ]
+      },
+      "availableItems": []
+    },
+    {
+      "roomId": "room_kitchen",
+      "name": "Kitchen",
+      "description": "A dining table set for six. Chairs overturned, cutlery scattered.",
+      "mapFile": "kitchen.txt",
+      "music": "kitchen_ambient.mp3",
+      "puzzle": {
+        "puzzleId": "puz_kitchen",
+        "title": "Missing Knives",
+        "description": "Reconstruct the table settings to find the hidden clue",
+        "level": 3,
+        "isSolved": false
+      },
+      "dialogue": {
+        "dialogueId": "dlg_kitchen",
+        "dialogueFile": "kitchen_dialogue.txt",
+        "dialogues": [
+          "The table was set for dinner.",
+          "But one knife is missing...",
+          "Footsteps echo in the hall. Approaching, but never arriving."
+        ]
+      },
+      "availableItems": []
+    },
+    {
+      "roomId": "room_greenhouse",
+      "name": "Greenhouse",
+      "description": "Creeping vines and broken glass. Mannequins staged like murder victims.",
+      "mapFile": "greenhouse.txt",
+      "music": "greenhouse_ambient.mp3",
+      "puzzle": {
+        "puzzleId": "puz_greenhouse",
+        "title": "Victim Pattern",
+        "description": "Use the ledger to solve who was killed with what weapon and when",
+        "level": 4,
+        "isSolved": false
+      },
+      "dialogue": {
+        "dialogueId": "dlg_greenhouse",
+        "dialogueFile": "greenhouse_dialogue.txt",
+        "dialogues": [
+          "The mannequins are posed like victims.",
+          "Each holds a marionette token.",
+          "A whisper in your ear: 'You're almost part of the performance.'"
+        ]
+      },
+      "availableItems": []
+    },
+    {
+      "roomId": "room_cellar",
+      "name": "Cellar - The Marionette Room",
+      "description": "A stage-like space. Ropes hanging. A grand marionette at the center.",
+      "mapFile": "cellar.txt",
+      "music": "cellar_ambient.mp3",
+      "puzzle": {
+        "puzzleId": "puz_cellar",
+        "title": "Final Performance",
+        "description": "Place the marionette tokens in the correct order",
+        "level": 5,
+        "isSolved": false
+      },
+      "dialogue": {
+        "dialogueId": "dlg_cellar",
+        "dialogueFile": "cellar_dialogue.txt",
+        "dialogues": [
+          "The marionette stage awaits.",
+          "All your collected tokens fit into slots around the chamber.",
+          "This is where it all ends... or begins."
         ]
       },
       "availableItems": []
