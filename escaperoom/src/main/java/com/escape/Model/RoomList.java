@@ -18,7 +18,8 @@ public class RoomList {
     }
     
     private void createRooms() {
-        
+        ArrayList<Room> loadedRooms = DataLoader.getRooms();
+        roomList.addAll(loadedRooms);
     }
     
     public boolean hasRoom(String roomId) {
