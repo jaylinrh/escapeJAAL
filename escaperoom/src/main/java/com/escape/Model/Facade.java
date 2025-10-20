@@ -201,7 +201,7 @@ public class Facade {
         return currentUser != null ? currentUser.getInventory() : null;
     }
     
-    public PlayerState getCurrentUserPlayerState() {
+    public Player getCurrentUserPlayerState() {
         return currentUser != null ? currentUser.getPlayerState() : null;
     }
     

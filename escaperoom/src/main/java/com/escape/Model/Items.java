@@ -7,7 +7,8 @@ public class Items {
     private static Items instance;
     private HashMap<String, Item> itemMap;
     
-    private Items() {
+
+    public Items() {
         itemMap = new HashMap<>();
         createItems();
     }

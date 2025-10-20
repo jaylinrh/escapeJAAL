@@ -7,7 +7,7 @@ public class User {
 	private String password;
 	private UUID UserID;
 	private String currentRoomId;
-	PlayerState playerState;
+	Player playerState;
 	Inventory inventory;
 
 	
@@ -18,13 +18,12 @@ public class User {
 		this.password = password;
 		this.UserID = UUID.randomUUID();
 	}
-	public User(UUID id, String username, String password, int level, String currentRoomId, PlayerState playerState, Inventory inventory) {
+	public User(UUID id, String username, String password, int level, String currentRoomId, Player playerState, Inventory inventory) {
 		this.UserID = id;
 		this.username = username;
 		this.password = password;
 		this.currentLevel = level;
 		this.currentRoomId = currentRoomId;
-		this.playerState = playerState;
 		this.inventory = inventory;
 	}
 	
@@ -48,7 +47,7 @@ public class User {
 		return currentRoomId;
 	}
 
-	public PlayerState getPlayerState() {
+	public Player getPlayerState() {
 		return playerState;
 	}
 
