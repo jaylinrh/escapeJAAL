@@ -56,7 +56,7 @@ public class DataLoader extends DataConstants {
 
                     SpriteImages spriteImages = new SpriteImages(u1, u2, d1, d2, l1, l2, r1, r2);
 
-                    PlayerState playerState = new PlayerState(worldX, worldY, speed, direction, solidArea, collisionOn, spriteImages);
+                   // PlayerState playerState = new PlayerState(worldX, worldY, speed, direction, solidArea, collisionOn, spriteImages);
 
                     JSONObject inventoryJSON = (JSONObject) userJSON.get(USER_INVENTORY);
                     String inventoryId = (String) inventoryJSON.get(INVENTORY_ID);
