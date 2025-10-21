@@ -101,7 +101,7 @@ public class DataLoader extends DataConstants {
             JSONObject jsonObject = (JSONObject) new JSONParser().parse(reader);
             JSONArray tilesJSON = (JSONArray) jsonObject.get(TILE_ARRAY);
 
-            for(int i = 0; i < tiles.JSON.size(); i++) {
+            for(int i = 0; i < tilesJSON.size(); i++) {
                 JSONObject tileJSON = (JSONObject) tilesJSON.get(i);
 
                 int tileId = ((Long) tileJSON.get(TILE_ID)).intValue();
@@ -111,7 +111,7 @@ public class DataLoader extends DataConstants {
                 boolean isSpecial = (Boolean) tileJSON.get(IS_SPECIAL);
 
                 Tile tile = new Tile(tileId, tileName, imagePath, collision, isSpecial);
-                tile.add(tile);
+                tiles.add(tile);
             }
             return tiles;
         } catch (Exception e) {
@@ -181,7 +181,7 @@ public class DataLoader extends DataConstants {
             JSONObject configJSON = (JSONObject) jsonObject.get(GAME_CONFIG);
 
             JSONObject displayJSON = (JSONObject) configJSON.get(DISPLAY);
-            int originalTileSIze = ((Long) displayJSON.get(ORIGINAL_TILE_SIZE)).intValue();
+            int originalTileSize = ((Long) displayJSON.get(ORIGINAL_TILE_SIZE)).intValue();
             int scale = ((Long) displayJSON.get(SCALE)).intValue();
             int tileSize = ((Long) displayJSON.get(TILE_SIZE)).intValue();
             int maxScreenCol = ((Long) displayJSON.get(MAX_SCREEN_COL)).intValue();
@@ -193,7 +193,7 @@ public class DataLoader extends DataConstants {
             int maxWorldCol =((Long) worldJSON.get(MAX_WORLD_COL)).intValue();
             int maxWorldRow = ((Long) worldJSON.get(MAX_WORLD_ROW)).intValue();
             int worldWidth = ((Long) worldJSON.get(WORLD_WIDTH)).intValue();
-            int worldHeight = ((Long) worldJSON.get(WORLD_WIDTH)).intValue();
+            int worldHeight = ((Long) worldJSON.get(WORLD_HEIGHT)).intValue();
 
             JSONObject gameplayJSON = (JSONObject) configJSON.get(GAMEPLAY);
             int fps = ((Long) gameplayJSON.get(FPS)).intValue();
