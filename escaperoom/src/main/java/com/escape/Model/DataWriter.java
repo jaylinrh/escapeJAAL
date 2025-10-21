@@ -3,6 +3,7 @@ package com.escape.Model;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -58,27 +59,68 @@ public class DataWriter extends DataConstants {
             e.printStackTrace();
         }
     }
-
-public static JSONObject getRoomsJSON(Room game) {
-    JSONObject roomDetails = new JSONObject();
-    roomDetails.put(ROOM_ID, game.getRoomId().toString());
-    roomDetails.put(ROOM_NAME, game.getName());
-    roomDetails.put(ROOM_DESCRIPTION, game.getDescription());
-    roomDetails.put(MAP_FILE, game.getMapFile());
-    roomDetails.put(MUSIC, game.getMusic());
-    roomDetails.put(PUZZLE, game.getPuzzle());
-    JSONObject dialogueObj = new JSONObject();
-    dialogueObj.put(DIALOGUE_ID, game.getDialogueId());
-    dialogueObj.put(DIALOGUE_FILE, game.getDialogueFile());
-    dialogueObj.put(DIALOGUES, game.getDialogues());
-    roomDetails.put(DIALOGUE, dialogueObj);
-    roomDetails.put(AVAILABLE_ITEMS, game.getAvailableItemIds());
     
-    return roomDetails;
-}
+    public static JSONObject getRoomsJSON(Room game) {
+        JSONObject roomDetails = new JSONObject();
+        roomDetails.put(ROOM_ID, game.getRoomId().toString());
+        roomDetails.put(ROOM_NAME, game.getName());
+        roomDetails.put(ROOM_DESCRIPTION, game.getDescription());
+        roomDetails.put(MAP_FILE, game.getMapFile());
+        roomDetails.put(MUSIC, game.getMusic());
+        roomDetails.put(PUZZLE, game.getPuzzle());
+        JSONObject dialogueObj = new JSONObject();
+        dialogueObj.put(DIALOGUE_ID, game.getDialogueId());
+        dialogueObj.put(DIALOGUE_FILE, game.getDialogueFile());
+        dialogueObj.put(DIALOGUES, game.getDialogues());
+        roomDetails.put(DIALOGUE, dialogueObj);
+        roomDetails.put(AVAILABLE_ITEMS, game.getAvailableItemIds());
+    
+        return roomDetails;
+    }
+
+    public static void saveGameConfig() {
+        GameConfig config = GameApp.getGameConfig();
+        try(FileWriter file = new FileWriter(ROOM_TEMP_FILE_NAME)) {
+            file.write(config.toString());
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveTiles(TileManager tileManager) {
+        JSONArray tilesArray = new JSONArray();
+    
+        for (int i = 0; i< tileManager.tile.length;i++) {
+            Tile tile = tileManager.tile[i];
+            if (tile!= null) {
+                tilesArray.add(getTilesJSON(tileManager.tile[i]));
+            }
+        }
+
+        try (FileWriter file = new FileWriter(ROOM_TEMP_FILE_NAME)) {
+            file.write(tilesArray.toJSONString());
+            file.flush();
+        }  catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static JSONObject getTilesJSON(Tile tile) {
+        JSONObject tileDetails = new JSONObject();
+        tileDetails.put("tileId", tile.tileId);
+        tileDetails.put("name", tile.name);
+        tileDetails.put("imagePath", tile.imagePath);
+        tileDetails.put("collision", tile.collision);
+        tileDetails.put("isSpecial", tile.isSpecial);
+        return tileDetails;
+    }
 
     public static void main(String[] args) {
+        GameApp gameApp = new GameApp();
         DataWriter.saveUsers();
+        DataWriter.saveGameConfig();
+        DataWriter.saveTiles(gameApp.tileM);
         DataWriter.saveGame();
     }
 }
