@@ -41,7 +41,7 @@ public class DataWriter extends DataConstants {
         userDetails.put(USER_INVENTORY, player.getInventory());
         return userDetails;
     }
-    public static void saveGame() {
+    public static JSONArray saveRooms() {
         RoomList games = RoomList.getInstance();
         ArrayList<Room> roomList = games.getRooms();
 
@@ -50,14 +50,7 @@ public class DataWriter extends DataConstants {
         for(int i=0; i<roomList.size(); i++) {
             jsonRooms.add(getRoomsJSON(roomList.get(i)));
         }
-
-        try (FileWriter file = new FileWriter(ROOM_TEMP_FILE_NAME)) {
-            file.write(jsonRooms.toJSONString());
-            file.flush();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        return jsonRooms;
     }
     
     public static JSONObject getRoomsJSON(Room game) {
@@ -78,17 +71,12 @@ public class DataWriter extends DataConstants {
         return roomDetails;
     }
 
-    public static void saveGameConfig() {
+    public static String saveGameConfig() {
         GameConfig config = GameApp.getGameConfig();
-        try(FileWriter file = new FileWriter(ROOM_TEMP_FILE_NAME)) {
-            file.write(config.toString());
-            file.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return config.toString();
     }
 
-    public static void saveTiles(TileManager tileManager) {
+    public static JSONArray saveTiles(TileManager tileManager) {
         JSONArray tilesArray = new JSONArray();
     
         for (int i = 0; i< tileManager.tile.length;i++) {
@@ -97,13 +85,7 @@ public class DataWriter extends DataConstants {
                 tilesArray.add(getTilesJSON(tileManager.tile[i]));
             }
         }
-
-        try (FileWriter file = new FileWriter(ROOM_TEMP_FILE_NAME)) {
-            file.write(tilesArray.toJSONString());
-            file.flush();
-        }  catch (IOException e){
-            e.printStackTrace();
-        }
+        return tilesArray;
     }
 
     public static JSONObject getTilesJSON(Tile tile) {
@@ -116,11 +98,21 @@ public class DataWriter extends DataConstants {
         return tileDetails;
     }
 
+    public static void saveGame() {
+        try (FileWriter file = new FileWriter(ROOM_TEMP_FILE_NAME)) {
+            GameApp gameApp = new GameApp();
+            JSONObject game = new JSONObject();
+            game.put("game_config",saveGameConfig());
+            game.put("tiles",saveTiles(gameApp.tileM));
+            game.put("rooms", saveRooms());
+            file.write(game.toString());
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) {
-        GameApp gameApp = new GameApp();
         DataWriter.saveUsers();
-        DataWriter.saveGameConfig();
-        DataWriter.saveTiles(gameApp.tileM);
         DataWriter.saveGame();
     }
 }
