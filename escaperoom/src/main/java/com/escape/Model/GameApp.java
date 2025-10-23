@@ -19,6 +19,10 @@ public class GameApp extends Pane {
         return cfg;
     }
     
+    public static GameConfig getGameConfig() {
+        return config;
+    }
+
     final int originalTileSize = 16;
     final int scale = 3;
 
