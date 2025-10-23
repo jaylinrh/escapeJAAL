@@ -1,8 +1,8 @@
 package com.escape.Model;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.geometry.Rectangle2D;
 
 public class Player extends Entity {
     GameApp ga;
@@ -18,14 +18,14 @@ public class Player extends Entity {
 
     private Room currentRoom;
     
-    public Player(GameApp gp, KeyHandler keyH) {
+    public Player(GameApp ga, KeyHandler keyH) {
         this.ga = ga;
         this.keyH = keyH;
         
         screenX = ga.screenWidth/2 - (ga.tileSize/2);
         screenY = ga.screenHeight/2 - (ga.tileSize/2);
         
-        solidArea = new Rectangle2D(0, 0, gp.tileSize - 16, gp.tileSize - 16);
+        solidArea = new Rectangle2D(0, 0, ga.tileSize - 16, ga.tileSize - 16);
         
         setDefaultValues();
         loadSprites();

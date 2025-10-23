@@ -58,8 +58,8 @@ public class GameApp extends Pane {
     private long lastUpdate = 0;
     private final long FRAME_TIME = 1_000_000_000 / config.getFps();
 
-    public ArrayList<InteractableObject> gameObjects;
-    private InteractableObject nearestObject;
+    //public ArrayList<InteractableObject> gameObjects;
+    //private InteractableObject nearestObject;
     private final int INTERACTION_RANGE = 80;
 
     private long lastAutoSave = 0;

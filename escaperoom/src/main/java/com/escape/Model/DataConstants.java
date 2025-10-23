@@ -77,6 +77,7 @@ public class DataConstants {
     protected static final String PLAY_STATE = "playState";
     protected static final String PAUSE_STATE = "pauseState";
     protected static final String DIALOGUE_STATE = "dialogueState";
+    protected static final String INVENTORY_STATE = "inventoryState";
 
     protected static final String TILE_ID = "titleId";
     protected static final String TILE_NAME = "name";

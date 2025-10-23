@@ -9,6 +9,9 @@ public class TestGame {
 
 		String dl[] = {"hi", "b"};
 		
+		/*
+		 * These are all test methods, will not be in the final test game
+		 */
 		Room Room1 = new Room("roomID", "room", "description", "mapFIle", "musicFile", dl, true);
 		Puzzle Puzzle = Room1.getPuzzle();
 		System.out.println(Puzzle.getLevel());

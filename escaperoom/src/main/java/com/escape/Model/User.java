@@ -1,5 +1,6 @@
 package com.escape.Model;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class User {
@@ -7,26 +8,42 @@ public class User {
 	private String password;
 	private UUID UserID;
 	private String currentRoomId;
-	Player playerState;
+	Player Player;
+	PlayerState playerState;
 	Inventory inventory;
+	GameApp ga;
+	KeyHandler kh;
 
 	
 	int currentLevel;
 	
-	public User (String username, String password) {
-		this.username = username;
-		this.password = password;
-		this.UserID = UUID.randomUUID();
-	}
-	public User(UUID id, String username, String password, int level, String currentRoomId, Player playerState, Inventory inventory) {
+	//public User (String username, String password) {
+	//	this.username = username;
+	//	this.password = password;
+	//	this.UserID = UUID.randomUUID();
+	//}
+	public User(UUID id, String username, String password, int level, String currentRoomId, PlayerState playerState, Inventory inventory) {
 		this.UserID = id;
 		this.username = username;
 		this.password = password;
 		this.currentLevel = level;
 		this.currentRoomId = currentRoomId;
 		this.inventory = inventory;
+		this.playerState = playerState;
+		Player = new Player(ga, kh);
 	}
 	
+	public void getData() {
+		ArrayList<User> users = DataLoader.getUsers();
+		if (users.isEmpty()) {
+			System.out.println("No data found");
+
+		}
+
+		var userData = users.get(0);
+		
+
+	}
 	public int getLevel () {
 		return currentLevel;
 	}
@@ -47,7 +64,11 @@ public class User {
 		return currentRoomId;
 	}
 
-	public Player getPlayerState() {
+	public Player getPlayer() {
+		return Player;
+	}
+
+	public PlayerState getPlayerState() {
 		return playerState;
 	}
 

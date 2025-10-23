@@ -1,8 +1,6 @@
 package com.escape.Model;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class Facade {
     private static Facade instance;
@@ -201,7 +199,11 @@ public class Facade {
         return currentUser != null ? currentUser.getInventory() : null;
     }
     
-    public Player getCurrentUserPlayerState() {
+    public Player getCurrentPlayer() {
+        return currentUser != null ? currentUser.getPlayer() : null;
+    }
+
+    public PlayerState getCurrentUserPlayerState() {
         return currentUser != null ? currentUser.getPlayerState() : null;
     }
     

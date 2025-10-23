@@ -56,7 +56,7 @@ public class DataLoader extends DataConstants {
 
                     SpriteImages spriteImages = new SpriteImages(u1, u2, d1, d2, l1, l2, r1, r2);
 
-                   // PlayerState playerState = new PlayerState(worldX, worldY, speed, direction, solidArea, collisionOn, spriteImages);
+                   PlayerState playerState = new PlayerState(worldX, worldY, speed, direction, solidArea, collisionOn, spriteImages);
 
                     JSONObject inventoryJSON = (JSONObject) userJSON.get(USER_INVENTORY);
                     String inventoryId = (String) inventoryJSON.get(INVENTORY_ID);
@@ -80,6 +80,7 @@ public class DataLoader extends DataConstants {
                     }
 
 
+                    //User player = new User(id, username, password, level, currentRoomId, playerState, inventory);
                     User player = new User(id, username, password, level, currentRoomId, playerState, inventory);
                     users.add(player);
                 } 
@@ -201,12 +202,19 @@ public class DataLoader extends DataConstants {
             int playState = ((Long) gameStatesJSON.get(PLAY_STATE)).intValue();
             int pauseState = ((Long) gameStatesJSON.get(PAUSE_STATE)).intValue();
             int dialogueState = ((Long) gameStatesJSON.get(DIALOGUE_STATE)).intValue();
+            int inventoryState = ((Long gameStatesJSON.get(INVENTORY_STATE)).intValue();
 
             GameConfig config = new GameConfig(
                 originalTileSize, scale, tileSize, maxScreenCol, maxScreenRow,
                 screenWidth, screenHeight, maxWorldCol, maxWorldRow, worldWidth,
                 worldHeight, fps, playState, pauseState, dialogueState, inventoryState
             );
+
+            //GameConfig config = new GameConfig(
+                //originalTileSize, scale, tileSize, maxScreenCol, maxScreenRow,
+                //screenWidth, screenHeight, maxWorldCol, maxWorldRow, worldWidth,
+                //worldHeight, fps, playState, pauseState, dialogueState, inventoryState
+            //);
             
             return config;
         } catch (Exception e) {
