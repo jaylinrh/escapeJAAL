@@ -63,7 +63,7 @@ public class DataConstants {
     protected static final String MAX_SCREEN_COL = "maxScreenCol";
     protected static final String MAX_SCREEN_ROW = "maxScreenRow";
     protected static final String SCREEN_WIDTH = "screenWidth";
-    protected static final String SCREEN_HEIGHT = " screenHeight";
+    protected static final String SCREEN_HEIGHT = "screenHeight";
 
     protected static final String WORLD = "world";
     protected static final String MAX_WORLD_COL = "maxWorldCol";
@@ -79,7 +79,7 @@ public class DataConstants {
     protected static final String DIALOGUE_STATE = "dialogueState";
     protected static final String INVENTORY_STATE = "inventoryState";
 
-    protected static final String TILE_ID = "titleId";
+    protected static final String TILE_ID = "tileId";
     protected static final String TILE_NAME = "name";
     protected static final String IMAGE_PATH = "imagePath";
     protected static final String COLLISION = "collision";
@@ -91,7 +91,7 @@ public class DataConstants {
     protected static final String MAP_FILE = "mapFile";
     protected static final String MUSIC = "music";
     protected static final String PUZZLE = "puzzle";
-    protected static final String DIALOGUE = "dialouge";
+    protected static final String DIALOGUE = "dialogue";
     protected static final String AVAILABLE_ITEMS = "availableItems";
 
     protected static final String PUZZLE_ID = "puzzleId";
