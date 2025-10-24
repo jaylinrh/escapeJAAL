@@ -202,7 +202,7 @@ public class DataLoader extends DataConstants {
             int playState = ((Long) gameStatesJSON.get(PLAY_STATE)).intValue();
             int pauseState = ((Long) gameStatesJSON.get(PAUSE_STATE)).intValue();
             int dialogueState = ((Long) gameStatesJSON.get(DIALOGUE_STATE)).intValue();
-            int inventoryState = ((Long gameStatesJSON.get(INVENTORY_STATE)).intValue();
+            int inventoryState = ((Long) gameStatesJSON.get(INVENTORY_STATE)).intValue();
 
             GameConfig config = new GameConfig(
                 originalTileSize, scale, tileSize, maxScreenCol, maxScreenRow,
