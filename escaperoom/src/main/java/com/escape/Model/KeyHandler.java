@@ -51,7 +51,7 @@ public class KeyHandler {
                     ga.ui.dialogues[ga.ui.currentDialogueIndex] != null) {
                     ga.ui.currentText = ga.ui.dialogues[ga.ui.currentDialogueIndex];
                 } else {
-                    ga.gameState = gp.playState;
+                    ga.gameState = ga.playState;
                     ga.requestFocus();
                 }
             }

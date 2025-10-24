@@ -26,6 +26,19 @@ public class Inventory {
     public void removeItem(Item item) {
         Items.remove(item);
     }
+
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    public String getInventoryId() {
+        return inventoryId;
+    }
+
+    public ArrayList<Item> getItems(){
+        return Items;
+    }
+
     @Override
     public String toString() {
         return String.format("{\"inventoryId\":\"%s\",\"maxCapacity\":%d,\"items\":%s}", 
