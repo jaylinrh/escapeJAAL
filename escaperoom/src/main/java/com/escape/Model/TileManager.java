@@ -7,12 +7,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class TileManager {
+    GameApp ga;
     public Tile[] tile;
     public int mapTileNum[][];
 
     public TileManager(GameApp ga) {
+        this.ga = ga;
         tile = new Tile[12];
-        mapTileNum = new int[ga.WorldColLimit][ga.WorldRowLimit];   
+        mapTileNum = new int[ga.maxWorldCol][ga.maxWorldRow];   
         getTileImage();
         loadMap("/maps/exterior.txt");
     }
@@ -71,6 +73,56 @@ public class TileManager {
             tile[11].collision = false;
         } catch(Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void loadMap(String mapPath) {
+        try {
+            InputStream is = getClass().getResourceAsStream(mapPath);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+            int col = 0;
+            int row = 0;
+
+            while(col < ga.maxWorldCol && row < ga.maxWorldRow) {
+                String line = br.readLine();
+
+                while(col < ga.maxWorldCol) {
+                    String numbers[] = line.split(" ");
+                    int num = Integer.parseInt(numbers[col]);
+                    mapTileNum[col][row] = num;
+                    col++;
+                }
+
+                if(col == ga.maxWorldCol) {
+                    col = 0;
+                    row++;
+                }
+            }
+            br.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void draw(GraphicsContext gc) {
+        for(int worldCol = 0; worldCol < ga.maxWorldCol; worldCol++) {
+            for(int worldRow = 0; worldRow < ga.maxWorldRow; worldRow++) {
+                int tileNum = mapTileNum[worldCol][worldRow];
+
+                int worldX = worldCol * ga.tileSize;
+                int worldY = worldRow * ga.tileSize;
+                int screenX = worldX - ga.player.worldX + ga.player.screenX;
+                int screenY = worldY - ga.player.worldY + ga.player.screenY;
+
+                if (worldX + ga.tileSize > ga.player.worldX - ga.player.screenX &&
+                    worldX - ga.tileSize < ga.player.worldX + ga.player.screenX &&
+                    worldY + ga.tileSize > ga.player.worldY - ga.player.screenY &&
+                    worldY - ga.tileSize < ga.player.worldY + ga.player.screenY) {
+                        
+                        gc.drawImage(tile[tileNum].image, screenX, screenY, ga.tileSize, ga.tileSize);
+                    }
+            }
         }
     }
 
