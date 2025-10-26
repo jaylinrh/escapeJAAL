@@ -49,6 +49,8 @@ public class GameApp extends Pane {
     public TileManager tileM;
     public Player player;
     public UI ui;
+    public ArrayList<InteractableObject> gameObjects;
+    private InteractableObject nearestObject;
     
     // Game states
     public int gameState;

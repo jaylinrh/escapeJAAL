@@ -44,7 +44,7 @@ public class InteractableObject {
     private void loadImage() {
         try {
             if (imagePath != null && !imagePath.isEmpty()) {
-                this.image = new Image(getClass().getResourcesAsStream(imagePath));
+                this.image = new Image(getClass().getResourceAsStream(imagePath));
             }
         } catch (Exception e) {
             System.err.println("Failed to load image: " + imagePath);
