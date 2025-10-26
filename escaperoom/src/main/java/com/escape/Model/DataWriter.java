@@ -71,9 +71,37 @@ public class DataWriter extends DataConstants {
         return roomDetails;
     }
 
-    public static String saveGameConfig() {
+    public static JSONObject saveGameConfig() {
         GameConfig config = GameApp.getGameConfig();
-        return config.toString();
+    
+        JSONObject display = new JSONObject();
+        display.put("originalTileSize", config.getOriginalTileSize());
+        display.put("scale", config.getScale());
+        display.put("tileSize", config.getTileSize());
+        display.put("maxScreenCol", config.getMaxScreenCol());
+        display.put("maxScreenRow", config.getMaxScreenRow());
+        display.put("screenWidth", config.getScreenWidth());
+        display.put("screenHeight", config.getScreenHeight());
+        JSONObject world = new JSONObject();
+         world.put("maxWorldCol", config.getMaxWorldCol());
+        world.put("maxWorldRow", config.getMaxWorldRow());
+        world.put("worldWidth", config.getWorldWidth());
+        world.put("worldHeight", config.getWorldHeight());
+        JSONObject gameStates = new JSONObject();
+        gameStates.put("playState", config.getPlayState());
+        gameStates.put("pauseState", config.getPauseState());
+        gameStates.put("dialogueState", config.getDialogueState());
+        gameStates.put("inventoryState", config.getInventoryState());
+        JSONObject gameplay = new JSONObject();
+        gameplay.put("fps", config.getFps());
+        gameplay.put("gameStates", gameStates);
+
+        JSONObject gameConfig = new JSONObject();
+        gameConfig.put("display", display);
+        gameConfig.put("world", world);
+        gameConfig.put("gameplay", gameplay);
+    
+        return gameConfig;
     }
 
     public static JSONArray saveTiles(TileManager tileManager) {
@@ -98,9 +126,8 @@ public class DataWriter extends DataConstants {
         return tileDetails;
     }
 
-    public static void saveGame() {
+    public static void saveGame(GameApp gameApp) {
         try (FileWriter file = new FileWriter(ROOM_TEMP_FILE_NAME)) {
-            GameApp gameApp = new GameApp();
             JSONObject game = new JSONObject();
             game.put("game_config",saveGameConfig());
             game.put("tiles",saveTiles(gameApp.tileM));
@@ -113,6 +140,5 @@ public class DataWriter extends DataConstants {
     }
     public static void main(String[] args) {
         DataWriter.saveUsers();
-        DataWriter.saveGame();
     }
 }

@@ -23,6 +23,10 @@ public class GameApp extends Pane {
         return config;
     }
 
+    public void saveGame() {
+        DataWriter.saveGame(this);
+    }
+
     final int originalTileSize = 16;
     final int scale = 3;
 
@@ -83,7 +87,7 @@ public class GameApp extends Pane {
         tileM = new TileManager(this);
         player = new Player(this, keyH);
         ui = new UI(this);
-        gameObjects = new ArrayList<>();
+        ArrayList gameObjects = new ArrayList<>();
         
         // Set up key listeners
         setupKeyHandlers();
