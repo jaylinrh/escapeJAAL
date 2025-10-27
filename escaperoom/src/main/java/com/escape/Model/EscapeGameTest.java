@@ -21,7 +21,7 @@ public class EscapeGameTest {
         boolean loggedIn = facade.loginUser(testUsername, testPassword);
 
         if (!loggedIn) {
-            System.out.println("No existing user '" + testUsername + "' or wrong password. Creating account 'TestPlayer.");
+            System.out.println("No existing user '" + testUsername + "' or wrong password. Creating account '" + testUsername + "'");
             boolean registered = facade.registerUser(testUsername, testPassword);
             System.out.println("Registered: " + registered);
             if (registered) {
@@ -65,8 +65,8 @@ public class EscapeGameTest {
         facade.solvePuzzle("puzzle1");
 
 
-        System.out.println("Would you like to pick up the item? (Y/M)");
-        Speak.speak("Would you like to pick up the item? (Y/M)");
+        System.out.println("Would you like to pick up the item? (Y/N)");
+        Speak.speak("Would you like to pick up the item? (Y/N)");
 
         String choice = scanner.nextLine();
         if ("Y".equalsIgnoreCase(choice.trim())) {
