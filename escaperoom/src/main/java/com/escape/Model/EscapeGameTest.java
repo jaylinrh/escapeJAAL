@@ -54,11 +54,11 @@ public class EscapeGameTest {
             System.out.println("PlayerState: (none)");
         }
 
-        //ArrayList<String> dialogueLines = facade.getDialogueForRoom("room_exterior");
-        //for (String line : dialogueLines) {
-        //System.out.println(line);
-        //    Speak.speak(line);
-        //}
+        ArrayList<String> dialogueLines = facade.getDialogueForRoom("room_exterior");
+        for (String line : dialogueLines) {
+        System.out.println(line);
+            Speak.speak(line);
+        }
         
         System.out.println("\n--- Progressing player: solving puzzle 'puzzle1' ---");
         // Mark puzzle solved in progression
