@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Facade {
     private static Facade instance;
     
-    private UserList userList;
+    UserList userList;
     private RoomList roomList;
     private Items items;
     
@@ -149,6 +149,14 @@ public class Facade {
         }
         return new ArrayList<>();
     }
+    public ArrayList<String> getDialogueForRoom(String roomId) {
+    Room room = roomList.getRoomById(roomId);
+    if (room != null) {
+        return room.getDialogues();
+    }
+    return new ArrayList<>();
+    }
+
     
     public boolean pickupItem(String itemId) {
         if (currentUser == null) return false;
@@ -228,6 +236,16 @@ public class Facade {
         loadGameData();
     }
     
+    public void getLeaderboard() {
+        ArrayList<User> users = userList.getUsers();
+
+        users.sort((u1, u2) -> Integer.compare(u2.getLevel(), u1.getLevel()));
+        
+        int rank = 1;
+        for (User u : users) {
+            System.out.printf("%d. %s - Level %d%n", rank++, u.getUserName(), u.getLevel());
+        }
+    }
     public String getGameStats() {
         return String.format(
             "Total Users: %d, Total Rooms: %d, Total Items: %d, User Logged In: %s",
