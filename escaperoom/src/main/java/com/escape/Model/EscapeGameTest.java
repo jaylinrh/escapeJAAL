@@ -1,7 +1,5 @@
 package com.escape.Model;
 
-public package com.escape.Model;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -173,6 +171,4 @@ public class EscapeGameTest {
         System.out.println("=== TestGame complete ===");
     }
 }
- {
-    
-}
+ 
