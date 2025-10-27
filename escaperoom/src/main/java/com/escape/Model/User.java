@@ -30,7 +30,7 @@ public class User {
 		this.currentRoomId = currentRoomId;
 		this.inventory = inventory;
 		this.playerState = playerState;
-		Player = new Player(ga, kh);
+		//Player = new Player(ga, kh);
 	}
 	
 	public void getData() {

@@ -1,5 +1,6 @@
 package com.escape.Model;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class UserList {
     private static UserList users;
@@ -30,11 +31,35 @@ public class UserList {
         return userList;
     }
 
-    public boolean addUser(String userName, String password) {
-        if(haveUser(userName)) {
+    public boolean addUser(String username, String password) {
+        if(haveUser(username)) {
             return false;
         }
-        userList.add(new User(userName, password));
+        SolidArea solidArea = new SolidArea(8, 16, 32, 32);
+        SpriteImages sprites = new SpriteImages(
+            "/images/player.png", "/images/player.png",
+            "/images/player.png", "/images/player.png",
+            "/images/player.png", "/images/player.png",
+            "/images/player.png", "/images/player.png"
+        );
+        
+        PlayerState playerState = new PlayerState(
+            1200, 2160, 4, "down", solidArea, false, sprites
+        );
+
+        Inventory inventory = new Inventory(UUID.randomUUID().toString(), 10);
+
+        UUID id = UUID.randomUUID();
+                User newUser = new User(
+            UUID.randomUUID(),
+            username,
+            password,
+            1,
+            "room_exterior",
+            playerState,
+            inventory
+        );
+        userList.add(newUser);
         return true;
     }
 
