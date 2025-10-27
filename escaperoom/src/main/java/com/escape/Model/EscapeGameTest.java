@@ -56,10 +56,10 @@ public class EscapeGameTest {
 
         ArrayList<String> dialogueLines = facade.getDialogueForRoom("room_exterior");
         for (String line : dialogueLines) {
-        System.out.println(line);
+            System.out.println(line);
             Speak.speak(line);
         }
-        
+
         System.out.println("\n--- Progressing player: solving puzzle 'puzzle1' ---");
         // Mark puzzle solved in progression
         facade.solvePuzzle("puzzle1");
@@ -70,7 +70,8 @@ public class EscapeGameTest {
 
         String choice = scanner.nextLine();
         if ("Y".equalsIgnoreCase(choice.trim())) {
-        String candidateItemId = "test_item_2"; // an ID to attempt
+            
+        String candidateItemId = "test_item"; // an ID to attempt
         boolean pickedUp = false;
 
         Item existingItem = facade.getItemById(candidateItemId);
@@ -101,22 +102,31 @@ public class EscapeGameTest {
                 }
             }   
         }
+        facade.completeRoom("room1");
+        facade.levelUpCurrentUser();
+        facade.saveUserProgress();
 
-        ArrayList<String> dialogueLines2 = facade.getDialogueForRoom("room_parlor");
+        ArrayList<String> dialogueLines2 = facade.getDialogueForRoom("room_foyer");
         for (String line : dialogueLines2) {
             System.out.println(line);
             Speak.speak(line);
         }
-        existingItem = facade.getItemById(candidateItemId);
+        System.out.println("Would you like to pick up the item: (Y/N)");
+        String choice2 = scanner.nextLine();
 
-        if (existingItem != null) {
+        if ("Y".equalsIgnoreCase(choice2.trim())) {
+        String candidateItemId2 = "test_item2"; // an ID to attempt
+        boolean pickedUp2 = false;
+        Item existingItem2 = facade.getItemById(candidateItemId);
+
+        if (existingItem2 != null) {
         // if item exists in repository
-            pickedUp = facade.pickupItem(candidateItemId);
-            System.out.println("Picked up existing item via Facade: " + pickedUp);
+            pickedUp2 = facade.pickupItem(candidateItemId2);
+            System.out.println("Picked up existing item via Facade: " + pickedUp2);
         } 
         else {
             // otherwise create a new one and manually register it in progression
-            Item newItem = new Item(candidateItemId, "Test Item", "Hint for test item", "Description of test item");
+            Item newItem = new Item(candidateItemId2, "Test Item", "Hint for test item", "Description of test item");
             Inventory inv = current.getInventory();
 
             if (inv != null) {
@@ -130,27 +140,66 @@ public class EscapeGameTest {
                 // tell progression about it
                 Progression prog = facade.getProgression();
                 if (prog != null) {
-                prog.collectItem(candidateItemId);
-                System.out.println("Recorded item collection in Progression.");
-                }
-            }   
+                    prog.collectItem(candidateItemId2);
+                    System.out.println("Recorded item collection in Progression.");
+                    }
+                }   
+            }
         }
-    }
+        facade.completeRoom("room2");
+        facade.levelUpCurrentUser();
+        facade.saveUserProgress();
+        ArrayList<String> dialogueLines3 = facade.getDialogueForRoom("room_parlor");
+        for (String line : dialogueLines3) {
+            System.out.println(line);
+            Speak.speak(line);
+        }
+        System.out.println("Would you like to pick up the item: (Y/N)");
+        String choice3 = scanner.nextLine();
+
+        if ("Y".equalsIgnoreCase(choice2.trim())) {
+        String candidateItemId3 = "test_item3"; // an ID to attempt
+        boolean pickedUp3 = false;
+        Item existingItem3 = facade.getItemById(candidateItemId);
+
+        if (existingItem3 != null) {
+        // if item exists in repository
+            pickedUp3 = facade.pickupItem(candidateItemId3);
+            System.out.println("Picked up existing item via Facade: " + pickedUp3);
+        } 
+        else {
+            // otherwise create a new one and manually register it in progression
+            Item newItem = new Item(candidateItemId3, "Test Item", "Hint for test item", "Description of test item");
+            Inventory inv = current.getInventory();
+
+            if (inv != null) {
+                inv.addItem(newItem);
+                pickedUp = true;
+                System.out.println("New Item: " + newItem.getName());
+                System.out.println("Item description: " + newItem.getDescription());
+                System.out.println("You have received a hint from the item! Your hint is: ");
+                System.out.print(newItem.getHint() + "\n");
+
+                // tell progression about it
+                Progression prog = facade.getProgression();
+                if (prog != null) {
+                    prog.collectItem(candidateItemId3);
+                    System.out.println("Recorded item collection in Progression.");
+                    }
+                }   
+            }
+        }
+        facade.completeRoom("room3");
+        facade.levelUpCurrentUser();
+        facade.saveUserProgress();
+    }   
 
 
        
         
         
 
-        
-        // Optionally mark a room complete (if you want)
-        facade.completeRoom("room1");
 
-        // Level up the user once to reflect progress
-        facade.levelUpCurrentUser();
-
-        // Save progress to make it persistent (calls DataWriter via UserList.saveUsers())
-        facade.saveUserProgress();
 
         System.out.println("\n--- Post-progression status ---");
         System.out.println("Username: " + current.getUserName());
