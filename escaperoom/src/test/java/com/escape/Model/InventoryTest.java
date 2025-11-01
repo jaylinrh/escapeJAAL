@@ -50,5 +50,41 @@ public class InventoryTest {
         assertFalse("Inventory should not contain removed item", inventory.hasItem(testItem1));
         assertEquals("Inventory should be empty after removing the only item", 0, inventory.getItems().size());
     }
+    @Test
+    public void testRemoveItem_ItemNotInInventory() {
+        inventory.removeItem(testItem1);
+
+        assertEquals("Inventory size should remain 0", 0, inventory.getItems().size());
+    }
+    
+    @Test
+    public void testAddItem_ExceedsCapacity() {
+        Inventory smallInventory = new Inventory("small-inv", 2);
+
+        smallInventory.addItem(testItem1);
+        smallInventory.addItem(testItem2);
+        Item testItem3 = new Item("item3", "Item3", "Hint", "Desc");
+        smallInventory.addItem(testItem3);
+
+        assertEquals("Inventory should not exceed capacity", 2, smallInventory.getItems().size());
+        assertFalse("Item should not be added when inventory is full", smallInventory.hasItem(testItem3));
+    }
+
+    @Test
+    public void testHasItem_ItemNotPresent() {
+        assertFalse("Empty inventory should not contain any items", inventory.hasItem(testItem1));
+    }
+    @Test
+    public void testGetMaxCapacity_ReturnsCorrectValue() {
+        assertEquals("Max capacity should match constructor value", 5, inventory.getMaxCapacity());
+    }
+    @Test
+    public void testGetInventoryId_ReturnsCorrectId() {
+        assertEquals("Inventory ID should match constructor value", "test-inv-001", inventory.getInventoryId());
+    }
+    @Test
+    public void testGetItems_EmptyInventory() {
+        assertEquals("New inventory should be empty", 0, inventory.getItems().size());
+    }
     
 }
