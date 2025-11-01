@@ -1,4 +1,4 @@
-package com.model;
+package com.escape.Model;
 
 import org.junit.Test;
 import org.junit.Before;
@@ -39,13 +39,13 @@ public class InventoryTest {
 
         assertEquals("Inventory should contain 2 items", 2, inventory.getItems().size());
         assertTrue("Should have item 1", inventory.hasItem(testItem1));
-        assertTrue("Should have item 2", inventory.hasItem(testItem2))
+        assertTrue("Should have item 2", inventory.hasItem(testItem2));
     }
 
     @Test
     public void testRemoveItem_Success() {
         inventory.addItem(testItem1);
-        invenotry.removeItem(testItem1);
+        inventory.removeItem(testItem1);
 
         assertFalse("Inventory should not contain removed item", inventory.hasItem(testItem1));
         assertEquals("Inventory should be empty after removing the only item", 0, inventory.getItems().size());

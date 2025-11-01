@@ -1,4 +1,4 @@
-package com.model;
+package com.escape.Model;
 
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
