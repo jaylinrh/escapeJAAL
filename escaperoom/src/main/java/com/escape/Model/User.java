@@ -64,6 +64,10 @@ public class User {
 		return currentRoomId;
 	}
 
+	public void setCurrentRoomID(String roomId) {
+		this.currentRoomId = roomId;
+	}
+
 	public Player getPlayer() {
 		return Player;
 	}

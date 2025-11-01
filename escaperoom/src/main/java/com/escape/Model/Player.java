@@ -121,4 +121,15 @@ public class Player extends Entity {
     public void setCurrentRoom(Room room) {
         this.currentRoom = room;
     }
+    
+    public void loadPlayerState(PlayerState state) {
+        if (state != null) {
+            this.worldX = state.getWorldX();
+            this.worldY = state.getWorldY();
+            this.speed = state.getSpeed();
+            this.direction = state.getDirection();
+        } else {
+            setDefaultValues();
+        }
+    }
 }
