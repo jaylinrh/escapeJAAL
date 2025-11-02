@@ -268,4 +268,70 @@ public class UserTest {
         
         assertEquals("High level should be allowed", 999, highLevelUser.getLevel());
     }
+    
+    @Test
+    public void testUser_LevelProgression() {
+        assertEquals("Start at level 1", 1, user.getLevel());
+        
+        user.addLevel();
+        assertEquals("Level 2", 2, user.getLevel());
+        
+        user.addLevel();
+        assertEquals("Level 3", 3, user.getLevel());
+        
+        user.setLevel(10);
+        assertEquals("Jump to level 10", 10, user.getLevel());
+        
+        user.addLevel();
+        assertEquals("Level 11", 11, user.getLevel());
+    }
+
+    @Test
+    public void testUser_StateConsistency() {
+        PlayerState state1 = user.getPlayerState();
+        PlayerState state2 = user.getPlayerState();
+        
+        assertSame("Should return same player state instance", state1, state2);
+        
+        Inventory inv1 = user.getInventory();
+        Inventory inv2 = user.getInventory();
+        
+        assertSame("Should return same inventory instance", inv1, inv2);
+    }
+    
+    @Test
+    public void testUser_InventoryOperations() {
+        Inventory inv = user.getInventory();
+        
+        Item testItem = new Item("item1", "Test Item", "Hint", "Description");
+        inv.addItem(testItem);
+        
+        assertTrue("Inventory should contain added item", inv.hasItem(testItem));
+        assertEquals("Inventory should have 1 item", 1, inv.getItems().size());
+    }
+
+    @Test
+    public void testUser_PlayerStateProperties() {
+        PlayerState state = user.getPlayerState();
+        
+        assertEquals("World X should be 100", 100, state.getWorldX());
+        assertEquals("World Y should be 200", 200, state.getWorldY());
+        assertEquals("Speed should be 4", 4, state.getSpeed());
+        assertEquals("Direction should be down", "down", state.getDirection());
+    }
+    
+    @Test
+    public void testUser_UniqueIds() {
+        User user2 = new User(
+            UUID.randomUUID(),
+            "user2",
+            "password",
+            1,
+            "room1",
+            testPlayerState,
+            testInventory
+        );
+        
+        assertNotEquals("User IDs should be unique", user.getId(), user2.getId());
+    }
 }
