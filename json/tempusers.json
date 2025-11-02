@@ -117,7 +117,7 @@
             }
         },
         "inventory": {
-            "inventoryId": "4a7e387c-8844-4fd7-aeed-6ed048b4cfc3",
+            "inventoryId": "6a8861a2-07bf-4649-a60f-abb4beb98c0b",
             "maxCapacity": 10,
             "items": [
                 {
@@ -140,7 +140,7 @@
                 }
             ]
         },
-        "userId": "f0197038-4beb-4674-9d76-7f090cbe19d2",
+        "userId": "a342612f-5c05-4850-9be1-e49d1fab45d5",
         "username": "andrew"
     }
 ]

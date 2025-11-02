@@ -304,4 +304,123 @@ public class FacadeTest {
         assertFalse("Should return false when not logged in", 
             facade.currentUserHasItem("any_item"));
     }
+
+    //User level
+    @Test
+    public void testGetCurrentUserLevel_WhenLoggedOut() {
+        int level = facade.getCurrentUserLevel();
+        assertEquals("Level should be 0 when not logged in", 0, level);
+    }
+    
+    @Test
+    public void testGetCurrentUserLevel_WhenLoggedIn() {
+        facade.registerUser(TEST_USERNAME, TEST_PASSWORD);
+        int level = facade.getCurrentUserLevel();
+        assertEquals("Initial level should be 1", 1, level);
+    }
+    
+    @Test
+    public void testLevelUpCurrentUser() {
+        facade.registerUser(TEST_USERNAME, TEST_PASSWORD);
+        int initialLevel = facade.getCurrentUserLevel();
+        
+        facade.levelUpCurrentUser();
+        
+        int newLevel = facade.getCurrentUserLevel();
+        assertEquals("Level should increase by 1", initialLevel + 1, newLevel);
+    }
+    
+    @Test
+    public void testLevelUpCurrentUser_MultipleTimes() {
+        facade.registerUser(TEST_USERNAME, TEST_PASSWORD);
+        
+        facade.levelUpCurrentUser();
+        facade.levelUpCurrentUser();
+        facade.levelUpCurrentUser();
+        
+        assertEquals("Level should be 4 after 3 level ups", 4, facade.getCurrentUserLevel());
+    }
+
+    //Inventory Test
+    @Test
+    public void testGetCurrentUserInventory_WhenLoggedOut() {
+        Inventory inventory = facade.getCurrentUserInventory();
+        assertNull("Inventory should be null when not logged in", inventory);
+    }
+    
+    @Test
+    public void testGetCurrentUserInventory_WhenLoggedIn() {
+        facade.registerUser(TEST_USERNAME, TEST_PASSWORD);
+        Inventory inventory = facade.getCurrentUserInventory();
+        
+        assertNotNull("Inventory should not be null when logged in", inventory);
+    }
+
+    //Utility Test
+    @Test
+    public void testUsernameExists_True() {
+        facade.registerUser(TEST_USERNAME, TEST_PASSWORD);
+        facade.logoutUser();
+        
+        assertTrue("Should return true for existing username", 
+            facade.usernameExists(TEST_USERNAME));
+    }
+    
+    @Test
+    public void testUsernameExists_False() {
+        assertFalse("Should return false for nonexistent username", 
+            facade.usernameExists("nonexistent_user_999"));
+    }
+    
+    @Test
+    public void testGetTotalUsers() {
+        int initialCount = facade.getTotalUsers();
+        facade.registerUser(TEST_USERNAME, TEST_PASSWORD);
+        
+        int newCount = facade.getTotalUsers();
+        assertEquals("User count should increase by 1", initialCount + 1, newCount);
+    }
+    
+    @Test
+    public void testGetTotalRooms() {
+        int roomCount = facade.getTotalRooms();
+        assertTrue("Should have at least 1 room", roomCount > 0);
+    }
+    
+    @Test
+    public void testGetTotalItems() {
+        int itemCount = facade.getTotalItems();
+        assertTrue("Item count should be non-negative", itemCount >= 0);
+    }
+    
+    @Test
+    public void testGetGameStats() {
+        String stats = facade.getGameStats();
+        assertNotNull("Stats should not be null", stats);
+        assertTrue("Stats should contain user info", stats.contains("Total Users"));
+        assertTrue("Stats should contain room info", stats.contains("Total Rooms"));
+    }
+    
+    @Test
+    public void testReset() {
+        facade.registerUser(TEST_USERNAME, TEST_PASSWORD);
+        assertTrue("User should be logged in", facade.isUserLoggedIn());
+        
+        facade.reset();
+        
+        assertFalse("User should be logged out after reset", facade.isUserLoggedIn());
+    }
+    
+    @Test
+    public void testGetDialogueForRoom_ValidRoom() {
+        ArrayList<String> dialogues = facade.getDialogueForRoom("room_foyer");
+        assertNotNull("Dialogues should not be null", dialogues);
+    }
+    
+    @Test
+    public void testGetDialogueForRoom_InvalidRoom() {
+        ArrayList<String> dialogues = facade.getDialogueForRoom("invalid_room");
+        assertNotNull("Dialogues should not be null", dialogues);
+        assertTrue("Dialogues should be empty for invalid room", dialogues.isEmpty());
+    }
 }

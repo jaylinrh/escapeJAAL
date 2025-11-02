@@ -1,6 +1,9 @@
 package com.escape.Model;
 
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -10,11 +13,26 @@ import org.json.simple.parser.JSONParser;
 
 public class DataLoader extends DataConstants {
     
+    /**
+     * Gets a reader for a resource file, trying classpath first (for tests),
+     * then falling back to filesystem
+     */
+    private static Reader getReader(String fileName) throws Exception {
+        // First try to load from classpath (for tests)
+        InputStream is = DataLoader.class.getClassLoader().getResourceAsStream(fileName);
+        if (is != null) {
+            return new InputStreamReader(is);
+        }
+        
+        // Fall back to file system (for production)
+        return new FileReader(fileName);
+    }
+    
     public static ArrayList<User> getUsers() {
         ArrayList<User> users = new ArrayList<User>();
 
             try {
-                FileReader reader = new FileReader(USER_FILE_NAME);
+                Reader reader = getReader(USER_FILE_NAME);
                 JSONObject jsonObject = (JSONObject) new JSONParser().parse(reader);
                 JSONArray usersJSON = (JSONArray) jsonObject.get(USERS_ARRAY);
 
@@ -80,10 +98,10 @@ public class DataLoader extends DataConstants {
                     }
 
 
-                    //User player = new User(id, username, password, level, currentRoomId, playerState, inventory);
                     User player = new User(id, username, password, level, currentRoomId, playerState, inventory);
                     users.add(player);
-                } 
+                }
+                reader.close();
                 return users;
 
             } catch (Exception e) {
@@ -98,7 +116,7 @@ public class DataLoader extends DataConstants {
         ArrayList<Tile> tiles = new ArrayList<Tile>();
 
         try {
-            FileReader reader = new FileReader(ROOM_FILE_NAME);
+            Reader reader = getReader(ROOM_FILE_NAME);
             JSONObject jsonObject = (JSONObject) new JSONParser().parse(reader);
             JSONArray tilesJSON = (JSONArray) jsonObject.get(TILE_ARRAY);
 
@@ -114,6 +132,7 @@ public class DataLoader extends DataConstants {
                 Tile tile = new Tile(tileId, tileName, imagePath, collision, isSpecial);
                 tiles.add(tile);
             }
+            reader.close();
             return tiles;
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,7 +145,7 @@ public class DataLoader extends DataConstants {
         ArrayList<Room> rooms = new ArrayList<Room>();
 
         try {
-            FileReader reader = new FileReader(ROOM_FILE_NAME);
+            Reader reader = getReader(ROOM_FILE_NAME);
             JSONObject jsonObject = (JSONObject) new JSONParser().parse(reader);
             JSONArray roomsJSON = (JSONArray) jsonObject.get(ROOMS_ARRAY);
 
@@ -166,6 +185,7 @@ public class DataLoader extends DataConstants {
                                     dialogueId, dialogueFile, dialogues, availableItems);
                 rooms.add(room);
         }
+        reader.close();
         return rooms;
     } catch(Exception e) {
         e.printStackTrace();
@@ -177,7 +197,7 @@ public class DataLoader extends DataConstants {
     public static GameConfig getGameConfig() {
 
         try {
-            FileReader reader = new FileReader(ROOM_FILE_NAME);
+            Reader reader = getReader(ROOM_FILE_NAME);
             JSONObject jsonObject = (JSONObject) new JSONParser().parse(reader);
             JSONObject configJSON = (JSONObject) jsonObject.get(GAME_CONFIG);
 
@@ -209,13 +229,8 @@ public class DataLoader extends DataConstants {
                 screenWidth, screenHeight, maxWorldCol, maxWorldRow, worldWidth,
                 worldHeight, fps, playState, pauseState, dialogueState, inventoryState
             );
-
-            //GameConfig config = new GameConfig(
-                //originalTileSize, scale, tileSize, maxScreenCol, maxScreenRow,
-                //screenWidth, screenHeight, maxWorldCol, maxWorldRow, worldWidth,
-                //worldHeight, fps, playState, pauseState, dialogueState, inventoryState
-            //);
             
+            reader.close();
             return config;
         } catch (Exception e) {
             e.printStackTrace();
