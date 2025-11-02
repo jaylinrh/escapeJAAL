@@ -178,4 +178,150 @@ public void testAddItem_OnRoomWithEmptyItemList_AddsSuccessfully() {
         roomWithPuzzle.hasItem("item-001"));
     assertEquals("Should have 1 item", 1, roomWithPuzzle.getItemCount());
 }
+
+ @Test
+    public void testRemoveItem_ExistingItem_RemovesSuccessfully() {
+        assertTrue("Item should exist before removal", roomFromFullConstructor.hasItem("key-001"));
+        
+        roomFromFullConstructor.removeItem("key-001");
+        
+        assertFalse("Item should no longer exist", roomFromFullConstructor.hasItem("key-001"));
+        assertEquals("Item count should decrease by 1", 1, roomFromFullConstructor.getItemCount());
+    }
+    
+    @Test
+    public void testRemoveItem_NonExistentItem_DoesNothing() {
+        int initialCount = roomFromFullConstructor.getItemCount();
+        
+        roomFromFullConstructor.removeItem("non-existent-item");
+        
+        assertEquals("Item count should remain unchanged", initialCount, roomFromFullConstructor.getItemCount());
+    }
+    
+    @Test
+    public void testRemoveItem_AllItems_LeavesEmptyList() {
+        roomFromFullConstructor.removeItem("key-001");
+        roomFromFullConstructor.removeItem("book-001");
+        
+        assertEquals("Room should have no items", 0, roomFromFullConstructor.getItemCount());
+        assertFalse("Should not have key-001", roomFromFullConstructor.hasItem("key-001"));
+        assertFalse("Should not have book-001", roomFromFullConstructor.hasItem("book-001"));
+    }
+    
+    @Test
+public void testRemoveItem_OnRoomWithEmptyItemList_DoesNothing() {
+    roomWithPuzzle.removeItem("non-existent-item");
+    assertEquals("Should still have 0 items", 0, roomWithPuzzle.getItemCount());
+    }
+    
+    // getItemCount() Tests
+    
+    @Test
+    public void testGetItemCount_WithMultipleItems_ReturnsCorrectCount() {
+        assertEquals("Should return correct item count", 2, roomFromFullConstructor.getItemCount());
+    }
+    
+    @Test
+    public void testGetItemCount_AfterAddingItems_ReturnsUpdatedCount() {
+        roomFromFullConstructor.addItem("new-item");
+        assertEquals("Count should reflect added item", 3, roomFromFullConstructor.getItemCount());
+    }
+    
+    @Test
+    public void testGetItemCount_AfterRemovingItems_ReturnsUpdatedCount() {
+        roomFromFullConstructor.removeItem("key-001");
+        assertEquals("Count should reflect removed item", 1, roomFromFullConstructor.getItemCount());
+    }
+    
+    @Test
+public void testGetItemCount_OnRoomWithEmptyItemList_ReturnsZero() {
+    assertEquals("Empty room should have 0 items", 0, roomWithPuzzle.getItemCount());
+}
+    
+    // hasPuzzle() Tests
+    
+    @Test
+    public void testHasPuzzle_WithPuzzle_ReturnsTrue() {
+        assertTrue("Room with puzzle should return true", roomWithPuzzle.hasPuzzle());
+    }
+    
+    @Test
+    public void testHasPuzzle_WithoutPuzzle_ReturnsFalse() {
+        assertFalse("Room without puzzle should return false", roomWithoutPuzzle.hasPuzzle());
+    }
+    
+    @Test
+    public void testHasPuzzle_AfterSettingPuzzleToNull_ReturnsFalse() {
+        roomWithPuzzle.setPuzzle(null);
+        assertFalse("Room should return false after puzzle set to null", roomWithPuzzle.hasPuzzle());
+    }
+    
+    @Test
+    public void testHasPuzzle_AfterSettingPuzzle_ReturnsTrue() {
+        Puzzle newPuzzle = new Puzzle("p1", "New Puzzle", "Desc", 1, false);
+        roomWithoutPuzzle.setPuzzle(newPuzzle);
+        assertTrue("Room should return true after setting puzzle", roomWithoutPuzzle.hasPuzzle());
+    }
+    
+    // isPuzzleSolved() Tests
+    
+    @Test
+    public void testIsPuzzleSolved_WithUnsolvedPuzzle_ReturnsFalse() {
+        assertFalse("Unsolved puzzle should return false", roomFromFullConstructor.isPuzzleSolved());
+    }
+    
+    @Test
+    public void testIsPuzzleSolved_WithSolvedPuzzle_ReturnsTrue() {
+        roomFromFullConstructor.getPuzzle().setSolved(true);
+        assertTrue("Solved puzzle should return true", roomFromFullConstructor.isPuzzleSolved());
+    }
+    
+    @Test
+    public void testIsPuzzleSolved_WithNoPuzzle_ReturnsFalse() {
+        assertFalse("Room without puzzle should return false", roomWithoutPuzzle.isPuzzleSolved());
+    }
+    
+    @Test
+    public void testIsPuzzleSolved_AfterPuzzleSetToNull_ReturnsFalse() {
+        roomWithPuzzle.setPuzzle(null);
+        assertFalse("Room with null puzzle should return false", roomWithPuzzle.isPuzzleSolved());
+    }
+    
+    // toString() Tests
+    
+    @Test
+    public void testToString_ContainsRoomName() {
+        String result = roomFromFullConstructor.toString();
+        assertTrue("toString should contain room name", result.contains("Study"));
+    }
+    
+    @Test
+    public void testToString_ContainsRoomId() {
+        String result = roomFromFullConstructor.toString();
+        assertTrue("toString should contain room ID", result.contains("room-003"));
+    }
+    
+    @Test
+    public void testToString_WithPuzzle_ContainsPuzzleTitle() {
+        String result = roomFromFullConstructor.toString();
+        assertTrue("toString should contain puzzle title", result.contains("Code Breaker"));
+    }
+    
+    @Test
+    public void testToString_WithoutPuzzle_ContainsNone() {
+        String result = roomWithoutPuzzle.toString();
+        assertTrue("toString should contain 'None' for puzzle", result.contains("None"));
+    }
+    
+    @Test
+    public void testToString_ContainsItemCount() {
+        String result = roomFromFullConstructor.toString();
+        assertTrue("toString should contain item count", result.contains("Items: 2"));
+    }
+    
+    @Test
+public void testToString_OnRoomWithEmptyItemList_ContainsZeroItems() {
+    String result = roomWithPuzzle.toString();
+    assertTrue("toString should indicate 0 items", result.contains("Items: 0"));
+}
 }
