@@ -15,13 +15,13 @@ public class UserListTest {
     public void setUp() {
         userList = UserList.getInstance();
         ArrayList<User> users = userList.getUsers();
-        users.removeIf(u -> u.getUserName().equals(TEST_USERNAME));
+        users.removeIf(u -> u.getUserName() != null && u.getUserName().equals(TEST_USERNAME));
     }
 
     @After
     public void tearDown() {
         ArrayList<User> users = userList.getUsers();
-        users.removeIf(u -> u.getUserName().equals(TEST_USERNAME));
+        users.removeIf(u -> u.getUserName() != null && u.getUserName().equals(TEST_USERNAME));
     }
 
     //Singleton Test
@@ -251,5 +251,106 @@ public class UserListTest {
         }
         
         assertTrue("User list should contain added user", found);
+    }
+
+    // Edge Case Test
+
+    @Test
+    public void testAddUser_EmptyUsername_ShouldFail() {
+        boolean result = userList.addUser("", TEST_PASSWORD);
+        
+        assertFalse("Should reject empty username", result);
+        assertFalse("Empty username should not be in list", userList.haveUser(""));
+    }
+
+    @Test
+    public void testAddUser_NullUsername_ShouldFail() {
+        boolean result = userList.addUser(null, TEST_PASSWORD);
+        
+        assertFalse("Should reject null username", result);
+    }
+
+    @Test
+    public void testAddUser_EmptyPassword_ShouldFail() {
+        String username = TEST_USERNAME + "_empty_pass";
+        boolean result = userList.addUser(username, "");
+        
+        assertFalse("Should reject empty password", result);
+        assertFalse("User with empty password should not exist", 
+            userList.haveUser(username));
+    }
+
+    @Test
+    public void testAddUser_NullPassword_ShouldFail() {
+        boolean result = userList.addUser(TEST_USERNAME, null);
+        
+        assertFalse("Should reject null password", result);
+    }
+
+    @Test
+    public void testAddUser_SpecialCharactersUsername() {
+        String specialUsername = "test@example.com";
+        boolean result = userList.addUser(specialUsername, TEST_PASSWORD);
+        
+        assertTrue("Should allow valid special characters in username", result);
+        assertTrue("Should find user with special characters", 
+            userList.haveUser(specialUsername));
+        
+        ArrayList<User> users = userList.getUsers();
+        users.removeIf(u -> u.getUserName().equals(specialUsername));
+    }
+
+    @Test
+    public void testAddUser_WhitespaceUsername_ShouldFail() {
+        boolean result = userList.addUser("   ", TEST_PASSWORD);
+        
+        assertFalse("Should reject whitespace-only username", result);
+    }
+
+    @Test
+    public void testAddUser_VeryLongUsername() {
+        StringBuilder longUsername = new StringBuilder();
+        for (int i = 0; i < 256; i++) {
+            longUsername.append("a");
+        }
+        
+        // Might want to set max length limit
+        boolean result = userList.addUser(longUsername.toString(), TEST_PASSWORD);
+        
+        assertTrue("Should handle long usernames up to reasonable limit", result);
+        
+        if (result) {
+            ArrayList<User> users = userList.getUsers();
+            users.removeIf(u -> u.getUserName().equals(longUsername.toString()));
+        }
+    }
+    @Test
+    public void testAddUser_MultipleUsers_AllPersist() {
+        String[] usernames = {
+            TEST_USERNAME + "_1",
+            TEST_USERNAME + "_2",
+            TEST_USERNAME + "_3",
+            TEST_USERNAME + "_4",
+            TEST_USERNAME + "_5"
+        };
+        
+        for (String username : usernames) {
+            boolean result = userList.addUser(username, TEST_PASSWORD);
+            assertTrue("Adding user " + username + " should succeed", result);
+        }
+        
+        for (String username : usernames) {
+            assertTrue("User " + username + " should exist after batch add", 
+                userList.haveUser(username));
+        }
+        
+        int expectedMinSize = usernames.length;
+        assertTrue("User list should contain at least " + expectedMinSize + " users",
+            userList.getUsers().size() >= expectedMinSize);
+        
+        ArrayList<User> users = userList.getUsers();
+        for (String username : usernames) {
+            users.removeIf(u -> u.getUserName().equals(username));
+        }
     }
 }
