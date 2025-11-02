@@ -124,11 +124,13 @@ public class RoomTest {
         roomFromFullConstructor.hasItem(null);
     }
     
-    @Test(expected = NullPointerException.class)
-    public void testHasItem_OnRoomWithNullItemList_ThrowsException() {
-        
-        roomWithPuzzle.hasItem("any-item");
-    }
+    //previosly tested for nullPointerException on empty list behavior.
+    // now tests to see the list is properly initialized.
+    @Test
+public void testHasItem_OnRoomWithEmptyItemList_ReturnsFalse() {
+    assertFalse("Should return false when item list is empty", 
+        roomWithPuzzle.hasItem("any-item"));
+}
 
     @Test
     public void testAddItem_NewItem_AddsSuccessfully() {
@@ -167,8 +169,13 @@ public class RoomTest {
         assertTrue("Should have potion", roomFromFullConstructor.hasItem("potion-001"));
     }
     
-    @Test(expected = NullPointerException.class)
-    public void testAddItem_OnRoomWithNullItemList_ThrowsException() {
-        roomWithPuzzle.addItem("item-001");
-    }
+    //previously tested for nullPointerException on empty list behavior.
+    //now tests if items can be added to initialized empty list
+    @Test
+public void testAddItem_OnRoomWithEmptyItemList_AddsSuccessfully() {
+    roomWithPuzzle.addItem("item-001");
+    assertTrue("Should add item to initially empty list", 
+        roomWithPuzzle.hasItem("item-001"));
+    assertEquals("Should have 1 item", 1, roomWithPuzzle.getItemCount());
+}
 }

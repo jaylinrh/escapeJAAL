@@ -31,6 +31,10 @@ public class Room {
         this.music = music;
         this.hasPuzzle = hasPuzzle;
         
+        //Bug fix: initialized availableItemIds to prevent a NullPointerExceptionn,
+        //when calling hasItem, addItem...ect.
+        this.availableItemIds = new ArrayList<>();
+        
 
          if (this.hasPuzzle) {
             this.puzzle = new Puzzle("a", "puzzle", "a puzzle", 3, false);
