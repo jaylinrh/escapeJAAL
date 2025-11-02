@@ -108,4 +108,67 @@ public class RoomTest {
         assertTrue("Room should have key-001", roomFromFullConstructor.hasItem("key-001"));
         assertTrue("Room should have book-001", roomFromFullConstructor.hasItem("book-001"));
     }
+
+    @Test
+    public void testHasItem_WithExistingItem_ReturnsTrue() {
+        assertTrue("Should return true for existing item", roomFromFullConstructor.hasItem("key-001"));
+    }
+    
+    @Test
+    public void testHasItem_WithNonExistentItem_ReturnsFalse() {
+        assertFalse("Should return false for non-existent item", roomFromFullConstructor.hasItem("sword-999"));
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void testHasItem_WithNullItemId_ThrowsException() {
+        roomFromFullConstructor.hasItem(null);
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void testHasItem_OnRoomWithNullItemList_ThrowsException() {
+        
+        roomWithPuzzle.hasItem("any-item");
+    }
+
+    @Test
+    public void testAddItem_NewItem_AddsSuccessfully() {
+        int initialCount = roomFromFullConstructor.getItemCount();
+        roomFromFullConstructor.addItem("potion-001");
+        
+        assertEquals("Item count should increase by 1", initialCount + 1, roomFromFullConstructor.getItemCount());
+        assertTrue("Room should now contain the new item", roomFromFullConstructor.hasItem("potion-001"));
+    }
+    
+    @Test
+    public void testAddItem_DuplicateItem_DoesNotAddAgain() {
+        roomFromFullConstructor.addItem("key-001"); 
+        
+        assertEquals("Item count should remain 2", 2, roomFromFullConstructor.getItemCount());
+        
+        
+        int keyCount = 0;
+        for (String itemId : roomFromFullConstructor.getAvailableItemIds()) {
+            if (itemId.equals("key-001")) {
+                keyCount++;
+            }
+        }
+        assertEquals("Should only have one instance of key-001", 1, keyCount);
+    }
+    
+    @Test
+    public void testAddItem_MultipleUniqueItems_AddsAll() {
+        roomFromFullConstructor.addItem("sword-001");
+        roomFromFullConstructor.addItem("shield-001");
+        roomFromFullConstructor.addItem("potion-001");
+        
+        assertEquals("Room should have 5 items total", 5, roomFromFullConstructor.getItemCount());
+        assertTrue("Should have sword", roomFromFullConstructor.hasItem("sword-001"));
+        assertTrue("Should have shield", roomFromFullConstructor.hasItem("shield-001"));
+        assertTrue("Should have potion", roomFromFullConstructor.hasItem("potion-001"));
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void testAddItem_OnRoomWithNullItemList_ThrowsException() {
+        roomWithPuzzle.addItem("item-001");
+    }
 }
