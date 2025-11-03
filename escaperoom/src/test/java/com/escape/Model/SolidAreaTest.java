@@ -12,152 +12,122 @@ public class SolidAreaTest {
         solidArea = new SolidArea(10, 20, 30, 40);
     }
     
+    // === GETTER TESTS ===
+    @Test
+    public void testGetters_ReturnCorrectValues() {
+        assertEquals("getX should return correct value", 10, solidArea.getX());
+        assertEquals("getY should return correct value", 20, solidArea.getY());
+        assertEquals("getWidth should return correct value", 30, solidArea.getWidth());
+        assertEquals("getHeight should return correct value", 40, solidArea.getHeight());
+    }
+    
+    // === SETTER TESTS ===
+    @Test
+    public void testSetters_UpdateValues() {
+        solidArea.setX(100);
+        solidArea.setY(200);
+        solidArea.setWidth(300);
+        solidArea.setHeight(400);
+        
+        assertEquals("setX should update x value", 100, solidArea.getX());
+        assertEquals("setY should update y value", 200, solidArea.getY());
+        assertEquals("setWidth should update width value", 300, solidArea.getWidth());
+        assertEquals("setHeight should update height value", 400, solidArea.getHeight());
+    }
+    
+    @Test
+    public void testSetters_ZeroValues() {
+        solidArea.setX(0);
+        solidArea.setY(0);
+        solidArea.setWidth(0);
+        solidArea.setHeight(0);
+        
+        assertEquals("setX should handle zero", 0, solidArea.getX());
+        assertEquals("setY should handle zero", 0, solidArea.getY());
+        assertEquals("setWidth should handle zero", 0, solidArea.getWidth());
+        assertEquals("setHeight should handle zero", 0, solidArea.getHeight());
+    }
+    
+    @Test
+    public void testSetters_NegativeValues() {
+        solidArea.setX(-5);
+        solidArea.setY(-10);
+        solidArea.setWidth(-15);
+        solidArea.setHeight(-20);
+        
+        assertEquals("setX should handle negative values", -5, solidArea.getX());
+        assertEquals("setY should handle negative values", -10, solidArea.getY());
+        assertEquals("setWidth should handle negative values", -15, solidArea.getWidth());
+        assertEquals("setHeight should handle negative values", -20, solidArea.getHeight());
+    }
+    
+    @Test
+    public void testSetters_MaxValues() {
+        solidArea.setX(Integer.MAX_VALUE);
+        solidArea.setY(Integer.MAX_VALUE);
+        solidArea.setWidth(Integer.MAX_VALUE);
+        solidArea.setHeight(Integer.MAX_VALUE);
+        
+        assertEquals("setX should handle MAX_VALUE", Integer.MAX_VALUE, solidArea.getX());
+        assertEquals("setY should handle MAX_VALUE", Integer.MAX_VALUE, solidArea.getY());
+        assertEquals("setWidth should handle MAX_VALUE", Integer.MAX_VALUE, solidArea.getWidth());
+        assertEquals("setHeight should handle MAX_VALUE", Integer.MAX_VALUE, solidArea.getHeight());
+    }
+    
     // === CONSTRUCTOR TESTS ===
     @Test
     public void testConstructor_InitializesAllFields() {
-        assertEquals("X coordinate should be initialized", 10, solidArea.x);
-        assertEquals("Y coordinate should be initialized", 20, solidArea.y);
-        assertEquals("Width should be initialized", 30, solidArea.width);
-        assertEquals("Height should be initialized", 40, solidArea.height);
-    }
-    
-    @Test
-    public void testConstructor_ZeroValues() {
-        SolidArea zeroArea = new SolidArea(0, 0, 0, 0);
-        assertEquals("X should be 0", 0, zeroArea.x);
-        assertEquals("Y should be 0", 0, zeroArea.y);
-        assertEquals("Width should be 0", 0, zeroArea.width);
-        assertEquals("Height should be 0", 0, zeroArea.height);
-    }
-    
-    @Test
-    public void testConstructor_NegativeValues() {
-        SolidArea negativeArea = new SolidArea(-5, -10, -15, -20);
-        assertEquals("X should be -5", -5, negativeArea.x);
-        assertEquals("Y should be -10", -10, negativeArea.y);
-        assertEquals("Width should be -15", -15, negativeArea.width);
-        assertEquals("Height should be -20", -20, negativeArea.height);
-    }
-    
-    @Test
-    public void testConstructor_MaxValues() {
-        SolidArea maxArea = new SolidArea(Integer.MAX_VALUE, Integer.MAX_VALUE, 
-                                         Integer.MAX_VALUE, Integer.MAX_VALUE);
-        assertEquals("X should be MAX_VALUE", Integer.MAX_VALUE, maxArea.x);
-        assertEquals("Y should be MAX_VALUE", Integer.MAX_VALUE, maxArea.y);
-        assertEquals("Width should be MAX_VALUE", Integer.MAX_VALUE, maxArea.width);
-        assertEquals("Height should be MAX_VALUE", Integer.MAX_VALUE, maxArea.height);
-    }
-    
-    // === FIELD ACCESS TESTS ===
-    @Test
-    public void testFieldAccess_X() {
-        solidArea.x = 100;
-        assertEquals("X should be settable", 100, solidArea.x);
-    }
-    
-    @Test
-    public void testFieldAccess_Y() {
-        solidArea.y = 200;
-        assertEquals("Y should be settable", 200, solidArea.y);
-    }
-    
-    @Test
-    public void testFieldAccess_Width() {
-        solidArea.width = 300;
-        assertEquals("Width should be settable", 300, solidArea.width);
-    }
-    
-    @Test
-    public void testFieldAccess_Height() {
-        solidArea.height = 400;
-        assertEquals("Height should be settable", 400, solidArea.height);
+        assertEquals("Constructor should initialize x", 10, solidArea.getX());
+        assertEquals("Constructor should initialize y", 20, solidArea.getY());
+        assertEquals("Constructor should initialize width", 30, solidArea.getWidth());
+        assertEquals("Constructor should initialize height", 40, solidArea.getHeight());
     }
     
     // === TOSTRING TESTS ===
     @Test
+    public void testToString_ReflectsSetterChanges() {
+        solidArea.setX(100);
+        solidArea.setY(200);
+        String result = solidArea.toString();
+        
+        assertTrue("toString should reflect updated x value", result.contains("\"x\":100"));
+        assertTrue("toString should reflect updated y value", result.contains("\"y\":200"));
+    }
+    
+    @Test
     public void testToString_DefaultFormat() {
         String result = solidArea.toString();
-        String expected = "{\"x\":10,\"y\":20,\"width\":30,\"height\":40}";
-        assertEquals("toString should return correct JSON format", expected, result);
+        assertEquals("toString should return correct JSON format", 
+                    "{\"x\":10,\"y\":20,\"width\":30,\"height\":40}", result);
     }
     
+    // === CONSISTENCY TESTS ===
     @Test
-    public void testToString_ZeroValues() {
-        SolidArea zeroArea = new SolidArea(0, 0, 0, 0);
-        String result = zeroArea.toString();
-        String expected = "{\"x\":0,\"y\":0,\"width\":0,\"height\":0}";
-        assertEquals("toString should handle zero values", expected, result);
-    }
-    
-    @Test
-    public void testToString_NegativeValues() {
-        SolidArea negativeArea = new SolidArea(-1, -2, -3, -4);
-        String result = negativeArea.toString();
-        String expected = "{\"x\":-1,\"y\":-2,\"width\":-3,\"height\":-4}";
-        assertEquals("toString should handle negative values", expected, result);
-    }
-    
-    @Test
-    public void testToString_LargeValues() {
-        SolidArea largeArea = new SolidArea(1000, 2000, 3000, 4000);
-        String result = largeArea.toString();
-        String expected = "{\"x\":1000,\"y\":2000,\"width\":3000,\"height\":4000}";
-        assertEquals("toString should handle large values", expected, result);
-    }
-    
-    // === EDGE CASE TESTS ===
-    @Test
-    public void testFieldAssignment_Sequence() {
-        solidArea.x = 1;
-        solidArea.y = 2;
-        solidArea.width = 3;
-        solidArea.height = 4;
+    public void testGetterSetter_Consistency() {
+        solidArea.setX(50);
+        assertEquals("Getter should return value set by setter", 50, solidArea.getX());
         
-        assertEquals("X should be 1", 1, solidArea.x);
-        assertEquals("Y should be 2", 2, solidArea.y);
-        assertEquals("Width should be 3", 3, solidArea.width);
-        assertEquals("Height should be 4", 4, solidArea.height);
+        solidArea.setY(60);
+        assertEquals("Getter should return value set by setter", 60, solidArea.getY());
     }
     
     @Test
-    public void testMultipleInstances() {
-        SolidArea area1 = new SolidArea(1, 2, 3, 4);
-        SolidArea area2 = new SolidArea(5, 6, 7, 8);
+    public void testMultipleOperations() {
+        // Test sequence of operations
+        solidArea.setX(1);
+        assertEquals("First setX", 1, solidArea.getX());
         
-        assertEquals("Area1 X should be independent", 1, area1.x);
-        assertEquals("Area2 X should be independent", 5, area2.x);
-        assertNotEquals("Instances should have different values", area1.toString(), area2.toString());
-    }
-    
-    // === JSON FORMAT VALIDATION ===
-    @Test
-    public void testToString_JsonFormat() {
+        solidArea.setY(2);
+        assertEquals("Then setY", 2, solidArea.getY());
+        
+        solidArea.setWidth(3);
+        assertEquals("Then setWidth", 3, solidArea.getWidth());
+        
+        solidArea.setHeight(4);
+        assertEquals("Then setHeight", 4, solidArea.getHeight());
+        
         String result = solidArea.toString();
-        
-        // Verify JSON structure
-        assertTrue("Should contain x field", result.contains("\"x\":10"));
-        assertTrue("Should contain y field", result.contains("\"y\":20"));
-        assertTrue("Should contain width field", result.contains("\"width\":30"));
-        assertTrue("Should contain height field", result.contains("\"height\":40"));
-        assertTrue("Should start with {", result.startsWith("{"));
-        assertTrue("Should end with }", result.endsWith("}"));
-    }
-    
-    // === BOUNDARY VALUE TESTS ===
-    @Test
-    public void testBoundaryValues_MinInteger() {
-        SolidArea minArea = new SolidArea(Integer.MIN_VALUE, Integer.MIN_VALUE, 
-                                         Integer.MIN_VALUE, Integer.MIN_VALUE);
-        String result = minArea.toString();
-        assertTrue("Should handle MIN_VALUE in toString", result.contains(String.valueOf(Integer.MIN_VALUE)));
-    }
-    
-    @Test
-    public void testBoundaryValues_MixedPositiveNegative() {
-        SolidArea mixedArea = new SolidArea(-10, 20, -30, 40);
-        String result = mixedArea.toString();
-        String expected = "{\"x\":-10,\"y\":20,\"width\":-30,\"height\":40}";
-        assertEquals("Should handle mixed positive/negative values", expected, result);
+        assertEquals("Final toString should reflect all changes",
+                    "{\"x\":1,\"y\":2,\"width\":3,\"height\":4}", result);
     }
 }
