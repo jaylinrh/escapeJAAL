@@ -32,6 +32,14 @@ public class UserList {
     }
 
     public boolean addUser(String username, String password) {
+        if(username == null || username.trim().isEmpty()) {
+            return false;
+        }
+        
+        if(password == null || password.trim().isEmpty()) {
+            return false;
+        }
+
         if(haveUser(username)) {
             return false;
         }
