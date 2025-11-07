@@ -18,7 +18,7 @@ public class Inventory {
     }
 
     public void addItem(Item item) {
-        if (Items.size()<maxCapacity) {
+        if (Items.size() < maxCapacity && !hasItem(item) && item != null) {
             Items.add(item);
         }
     }
