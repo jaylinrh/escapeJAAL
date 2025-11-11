@@ -194,7 +194,8 @@ public class Room {
             "Room: %s (ID: %s)\nDescription: %s\nMap: %s\nMusic: %s\nItems: %d\nPuzzle: %s\nDialogue: %s",
             name, roomId, description, mapFile, music, 
             availableItemIds.size(),
-            (puzzle != null ? puzzle.getTitle() : "None")
+            (puzzle != null ? puzzle.getTitle() : "None"),
+            (dialogueFile != null ? dialogueFile : "None")
         );
     }
 }

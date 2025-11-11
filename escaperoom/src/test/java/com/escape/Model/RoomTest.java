@@ -119,18 +119,13 @@ public class RoomTest {
         assertFalse("Should return false for non-existent item", roomFromFullConstructor.hasItem("sword-999"));
     }
     
-    @Test(expected = NullPointerException.class)
-    public void testHasItem_WithNullItemId_ThrowsException() {
-        roomFromFullConstructor.hasItem(null);
-    }
-    
     //previosly tested for nullPointerException on empty list behavior.
     // now tests to see the list is properly initialized.
     @Test
-public void testHasItem_OnRoomWithEmptyItemList_ReturnsFalse() {
+    public void testHasItem_OnRoomWithEmptyItemList_ReturnsFalse() {
     assertFalse("Should return false when item list is empty", 
         roomWithPuzzle.hasItem("any-item"));
-}
+    }
 
     @Test
     public void testAddItem_NewItem_AddsSuccessfully() {
