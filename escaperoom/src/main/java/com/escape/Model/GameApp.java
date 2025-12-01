@@ -32,14 +32,14 @@ public class GameApp extends Pane {
 
 
     public final int tileSize = config.getTileSize();
-    public final int maxScreenCol = config.getMaxScreenCol();
-    public final int maxScreenRow = config.getMaxScreenRow();
+    public final int screenCols = config.getScreenCols();
+    public final int screenRows = config.getScreenRows();
     final int screenWidth = config.getScreenWidth();
     final int screenHeight = config.getScreenHeight();
     
     // World settings from config
-    public final int maxWorldCol = config.getMaxWorldCol();
-    public final int maxWorldRow = config.getMaxWorldRow();
+    public final int worldCols = config.getWorldCols();
+    public final int worldRows = config.getWorldRows();
     public final int worldWidth = config.getWorldWidth();
     public final int worldHeight = config.getWorldHeight();
     
@@ -89,7 +89,7 @@ public class GameApp extends Pane {
         tileM = new TileManager(this);
         player = new Player(this, keyH);
         ui = new UI(this);
-        ArrayList gameObjects = new ArrayList<>();
+        this.gameObjects = new ArrayList<>();
         
         // Set up key listeners
         setupKeyHandlers();
@@ -134,7 +134,7 @@ public class GameApp extends Pane {
         String mapPath = "/maps/" + room.getMapFile();
         tileM.loadMap(mapPath);
         player.setCurrentRoom(room);
-        loadRoomObjects(room);
+        //loadRoomObjects(room);
 
         Facade facade = Facade.getInstance();
         Progression progression = facade.getProgression();
@@ -248,8 +248,8 @@ public class GameApp extends Pane {
     int playerCol = player.worldX / tileSize;
     int playerRow = player.worldY / tileSize;
     
-    if (playerCol >= 0 && playerCol < maxWorldCol && 
-        playerRow >= 0 && playerRow < maxWorldRow) {
+    if (playerCol >= 0 && playerCol < worldCols && 
+        playerRow >= 0 && playerRow < worldRows) {
         
         int tileNum = tileM.mapTileNum[playerCol][playerRow];
         

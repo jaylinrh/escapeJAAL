@@ -42,7 +42,7 @@ public class Player extends Entity {
     public void loadSprites() {
         try {
             // Load images using JavaFX Image class
-            String imagePath = "/images/player.png";
+            String imagePath = "/com/escape/images/player.png";
             u1 = new Image(getClass().getResourceAsStream(imagePath));
             u2 = new Image(getClass().getResourceAsStream(imagePath));
             d1 = new Image(getClass().getResourceAsStream(imagePath));

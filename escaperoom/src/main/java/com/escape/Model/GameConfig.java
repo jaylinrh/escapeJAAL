@@ -5,14 +5,14 @@ public class GameConfig {
     private int originalTileSize;
     private int scale;
     private int tileSize;
-    private int maxScreenCol;
-    private int maxScreenRow;
+    private int screenCols;
+    private int screenRows;
     private int screenWidth;
     private int screenHeight;
     
     // World settings
-    private int maxWorldCol;
-    private int maxWorldRow;
+    private int worldCols;
+    private int worldRows;
     private int worldWidth;
     private int worldHeight;
     
@@ -24,19 +24,19 @@ public class GameConfig {
     private int inventoryState;
     
     public GameConfig(int originalTileSize, int scale, int tileSize, 
-                     int maxScreenCol, int maxScreenRow, int screenWidth, 
-                     int screenHeight, int maxWorldCol, int maxWorldRow, 
+                     int screenCols, int screenRows, int screenWidth, 
+                     int screenHeight, int worldCols, int worldRows, 
                      int worldWidth, int worldHeight, int fps, 
                      int playState, int pauseState, int dialogueState, int inventoryState) {
         this.originalTileSize = originalTileSize;
         this.scale = scale;
         this.tileSize = tileSize;
-        this.maxScreenCol = maxScreenCol;
-        this.maxScreenRow = maxScreenRow;
+        this.screenCols = screenCols;
+        this.screenRows = screenRows;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
-        this.maxWorldCol = maxWorldCol;
-        this.maxWorldRow = maxWorldRow;
+        this.worldCols = worldCols;
+        this.worldRows = worldRows;
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
         this.fps = fps;
@@ -50,14 +50,14 @@ public class GameConfig {
     public int getOriginalTileSize() { return originalTileSize; }
     public int getScale() { return scale; }
     public int getTileSize() { return tileSize; }
-    public int getMaxScreenCol() { return maxScreenCol; }
-    public int getMaxScreenRow() { return maxScreenRow; }
+    public int getScreenCols() { return screenCols; }
+    public int getScreenRows() { return screenRows; }
     public int getScreenWidth() { return screenWidth; }
     public int getScreenHeight() { return screenHeight; }
     
     // World getters
-    public int getMaxWorldCol() { return maxWorldCol; }
-    public int getMaxWorldRow() { return maxWorldRow; }
+    public int getWorldCols() { return worldCols; }
+    public int getWorldRows() { return worldRows; }
     public int getWorldWidth() { return worldWidth; }
     public int getWorldHeight() { return worldHeight; }
     

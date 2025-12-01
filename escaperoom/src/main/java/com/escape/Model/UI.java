@@ -19,7 +19,7 @@ public class UI {
     public boolean showInteractionPrompt = false;
     public String interactionPrompt = "";
     public UI(GameApp ga) {
-
+        this.ga = ga;
     }
 
     public void draw(GraphicsContext gc) {

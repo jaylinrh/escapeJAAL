@@ -14,11 +14,11 @@ public class TileManager {
     public TileManager(GameApp ga) {
         this.ga = ga;
         tile = new Tile[12];
-        mapTileNum = new int[ga.maxWorldCol][ga.maxWorldRow];   
+        mapTileNum = new int[ga.worldCols][ga.worldCols];   
         getTileImage();
         loadMap("/maps/exterior.txt");
     }
-
+        
     public void getTileImage() {
         try {
             tile[0] = new Tile();
@@ -84,17 +84,17 @@ public class TileManager {
             int col = 0;
             int row = 0;
 
-            while(col < ga.maxWorldCol && row < ga.maxWorldRow) {
+            while(col < ga.worldCols && row < ga.worldRows) {
                 String line = br.readLine();
 
-                while(col < ga.maxWorldCol) {
+                while(col < ga.worldCols) {
                     String numbers[] = line.split(" ");
                     int num = Integer.parseInt(numbers[col]);
                     mapTileNum[col][row] = num;
                     col++;
                 }
 
-                if(col == ga.maxWorldCol) {
+                if(col == ga.worldCols) {
                     col = 0;
                     row++;
                 }
@@ -105,9 +105,9 @@ public class TileManager {
         }
     }
 
-    public void draw(GraphicsContext gc) {
-        for(int worldCol = 0; worldCol < ga.maxWorldCol; worldCol++) {
-            for(int worldRow = 0; worldRow < ga.maxWorldRow; worldRow++) {
+        public void draw(GraphicsContext gc) {
+        for(int worldCol = 0; worldCol < ga.worldCols; worldCol++) { // renamed
+            for(int worldRow = 0; worldRow < ga.worldRows; worldRow++) { // renamed
                 int tileNum = mapTileNum[worldCol][worldRow];
 
                 int worldX = worldCol * ga.tileSize;
@@ -125,6 +125,7 @@ public class TileManager {
             }
         }
     }
+
 
 }
 

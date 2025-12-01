@@ -16,6 +16,7 @@ public class KeyHandler {
     
     
     public void handleKeyPressed(KeyEvent e) {
+        System.out.println("test");
         KeyCode code = e.getCode();
         
         if (ga.gameState == ga.playState) {

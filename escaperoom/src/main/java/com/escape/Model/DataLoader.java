@@ -211,8 +211,8 @@ public class DataLoader extends DataConstants {
             int screenHeight = ((Long) displayJSON.get(SCREEN_HEIGHT)).intValue();
 
             JSONObject worldJSON = (JSONObject) configJSON.get(WORLD);
-            int maxWorldCol =((Long) worldJSON.get(MAX_WORLD_COL)).intValue();
-            int maxWorldRow = ((Long) worldJSON.get(MAX_WORLD_ROW)).intValue();
+            int worldCols =((Long) worldJSON.get(MAX_WORLD_COL)).intValue();
+            int worldRows = ((Long) worldJSON.get(MAX_WORLD_ROW)).intValue();
             int worldWidth = ((Long) worldJSON.get(WORLD_WIDTH)).intValue();
             int worldHeight = ((Long) worldJSON.get(WORLD_HEIGHT)).intValue();
 
@@ -226,7 +226,7 @@ public class DataLoader extends DataConstants {
 
             GameConfig config = new GameConfig(
                 originalTileSize, scale, tileSize, maxScreenCol, maxScreenRow,
-                screenWidth, screenHeight, maxWorldCol, maxWorldRow, worldWidth,
+                screenWidth, screenHeight, worldCols, worldRows, worldWidth,
                 worldHeight, fps, playState, pauseState, dialogueState, inventoryState
             );
             
