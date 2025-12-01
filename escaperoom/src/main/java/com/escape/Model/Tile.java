@@ -20,6 +20,7 @@ public class Tile {
     public Tile(int tileId, String name, String imagePath, boolean collision, boolean isSpecial) {
         this.tileId = tileId;
         this.name = name;
+        this.imagePath = imagePath;
         this.collision = collision;
         this.isSpecial = isSpecial;
         loadImage();
