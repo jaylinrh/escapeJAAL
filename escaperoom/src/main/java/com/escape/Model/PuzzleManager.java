@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class PuzzleManager {
     private GameApp gameApp;
-    private Map<String, PuzzleBase> puzzles;
+    public Map<String, PuzzleBase> puzzles;
     private PuzzleBase currentPuzzle;
     
     // Game state for puzzles
@@ -33,12 +33,12 @@ public class PuzzleManager {
      * Create all puzzle instances
      */
     private void initializePuzzles() {
-        puzzles.put("room_foyer", new FoyerPuzzle(gameApp));
-        puzzles.put("room_parlor", new ParlorPuzzle(gameApp));
-        puzzles.put("room_library", new LibraryPuzzle(gameApp));
-        puzzles.put("room_kitchen", new KitchenPuzzle(gameApp));
-        puzzles.put("room_greenhouse", new GreenhousePuzzle(gameApp));
-        puzzles.put("room_cellar", new CellarPuzzle(gameApp));
+        //puzzles.put("room_foyer", new FoyerPuzzle(gameApp));
+        // puzzles.put("room_parlor", new ParlorPuzzle(gameApp));
+        // puzzles.put("room_library", new LibraryPuzzle(gameApp));
+        // puzzles.put("room_kitchen", new KitchenPuzzle(gameApp));
+        // puzzles.put("room_greenhouse", new GreenhousePuzzle(gameApp));
+        // puzzles.put("room_cellar", new CellarPuzzle(gameApp));
     }
     
     /**
@@ -96,9 +96,19 @@ public class PuzzleManager {
      * Update current puzzle
      */
     public void update() {
+
+         
         if (currentPuzzle != null && gameApp.gameState == PUZZLE_STATE) {
             currentPuzzle.update();
         }
+
+        if (gameApp.gameState == gameApp.playState) {
+        PuzzleBase foyerPuzzle = puzzles.get("room_foyer");
+        if (foyerPuzzle != null) {
+            foyerPuzzle.update();
+        }
+    }
+
     }
     
     /**
@@ -108,6 +118,13 @@ public class PuzzleManager {
         if (currentPuzzle != null && gameApp.gameState == PUZZLE_STATE) {
             currentPuzzle.draw(gc);
         }
+
+        if (gameApp.gameState == gameApp.playState) {
+        PuzzleBase foyerPuzzle = puzzles.get("room_foyer");
+        if (foyerPuzzle != null) {
+            foyerPuzzle.draw(gc);
+        }
+      }   
     }
     
     /**
@@ -160,20 +177,20 @@ public class PuzzleManager {
      * Notify puzzle when item is collected
      * Used for puzzles that require item collection
      */
-    public void notifyItemCollected(String itemId, String roomId) {
-        if (!puzzles.containsKey(roomId)) return;
+    // public void notifyItemCollected(String itemId, String roomId) {
+    //     if (!puzzles.containsKey(roomId)) return;
         
-        PuzzleBase puzzle = puzzles.get(roomId);
+    //     PuzzleBase puzzle = puzzles.get(roomId);
         
-        if (puzzle instanceof LibraryPuzzle) {
-            LibraryPuzzle libraryPuzzle = (LibraryPuzzle) puzzle;
-            // Handle cipher items
-            if (itemId.startsWith("cipher_")) {
-                String type = itemId.substring(7); 
-                libraryPuzzle.collectItem(type);
-            }
-        } 
-    }
+    //     if (puzzle instanceof LibraryPuzzle) {
+    //         LibraryPuzzle libraryPuzzle = (LibraryPuzzle) puzzle;
+    //         // Handle cipher items
+    //         if (itemId.startsWith("cipher_")) {
+    //             String type = itemId.substring(7); 
+    //             libraryPuzzle.collectItem(type);
+    //         }
+    //     } 
+    // }
     
     /**
      * Get puzzle progress statistics

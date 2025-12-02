@@ -3,6 +3,7 @@ package com.escape.Model;
 import java.util.ArrayList;
 
 public class Room {
+    private TileSteppingPuzzle tilePuzzle;
     private String roomId;
     private String name;
     private String description;
@@ -20,6 +21,14 @@ public class Room {
     private ArrayList<String> dialogues;
     private boolean hasPuzzle;
     private ArrayList<String> availableItemIds;
+
+    public TileSteppingPuzzle getTilePuzzle() {
+        return tilePuzzle;
+    }
+
+    public void setTilePuzzle(TileSteppingPuzzle puzzle) {
+        this.tilePuzzle = puzzle;
+    }
 
 
     public Room(String roomId, String name, String description, String mapFile, 

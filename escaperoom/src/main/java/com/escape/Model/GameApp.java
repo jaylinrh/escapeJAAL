@@ -9,6 +9,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class GameApp extends Pane {
+    
+public PuzzleManager puzzleManager;
+
     private static GameConfig config = DataLoader.getGameConfig();
 
     private static GameConfig loadConfig() {
@@ -84,6 +87,7 @@ public class GameApp extends Pane {
         this.getChildren().add(canvas);
         
         // Initialize game components
+        puzzleManager = new PuzzleManager(this);
         keyH = new KeyHandler(this);
         cHandler = new CollisionHandler(this);
         tileM = new TileManager(this);
@@ -123,44 +127,71 @@ public class GameApp extends Pane {
 }
 
      public void loadRoom(String roomId) {
-        RoomList roomList = RoomList.getInstance();
-        Room room = roomList.getRoomById(roomId);
-        
-        if (room == null) {
-            System.err.println("ERROR: Room not found: " + roomId);
-            return;
+        puzzleManager.exitPuzzle();
+// 1. Get Room Data
+    RoomList roomList = RoomList.getInstance();
+    Room room = roomList.getRoomById(roomId);
+    
+    if (room == null) {
+        System.err.println("ERROR: Room not found in RoomList: " + roomId);
+        return;
+    }
+    
+    // 2. load the Map File
+    // ensure you have "parlor.txt" inside your /resources/maps/ folder!
+    String mapPath = "/maps/" + room.getMapFile();
+    tileM.loadMap(mapPath);
+    player.setCurrentRoom(room);
+
+    // 3. initialize the Specific Puzzle for this Room
+    // This replaces the hardcoded "if (room_foyer)" checks
+    switch (roomId) {
+        case "room_foyer":
+            // Create and register the foyer puzzle
+            FoyerPuzzle foyerPuzzle = new FoyerPuzzle(this);
+            puzzleManager.puzzles.put("room_foyer", foyerPuzzle);
+            // Activate it immediately
+            puzzleManager.activatePuzzle("room_foyer"); 
+            break;
+
+        case "room_parlor":
+            System.out.println("=== LOADING PARLOR (No Puzzle Yet) ===");
+            
+            break;
+            
+        default:
+            break;
+    }
+
+    // 4. handle Room Visit Logic (Dialogues, etc.)
+    Facade facade = Facade.getInstance();
+    Progression progression = facade.getProgression();
+    
+    boolean hasVisitedBefore = (progression != null && progression.hasVisitedRoom(roomId));
+    
+    if (hasVisitedBefore) {
+        gameState = playState;
+    } else {
+        // Show dialogue for first visit if available
+        if (room.getDialogues() != null && !room.getDialogues().isEmpty()) {
+            ui.dialogues = room.getDialogues().toArray(new String[0]);
+            ui.currentDialogueIndex = 0;
+            ui.currentText = ui.dialogues[0];
+            gameState = dialogueState;
+        } else {
+            gameState = playState;
         }
         
-        String mapPath = "/maps/" + room.getMapFile();
-        tileM.loadMap(mapPath);
-        player.setCurrentRoom(room);
-        //loadRoomObjects(room);
-
-        Facade facade = Facade.getInstance();
-        Progression progression = facade.getProgression();
-        
-        boolean hasVisitedBefore = (progression != null && progression.hasVisitedRoom(roomId));
-        
-        if (hasVisitedBefore) {
-            gameState = playState;
-        } else {
-            // Show dialogue for first visit
-            if (room.getDialogues() != null && !room.getDialogues().isEmpty()) {
-                ui.dialogues = room.getDialogues().toArray(new String[0]);
-                ui.currentDialogueIndex = 0;
-                ui.currentText = ui.dialogues[0];
-                gameState = dialogueState;
-            } else {
-                gameState = playState;
-            }
-            
-            // Mark room as visited
-            if (progression != null) {
-                progression.visitRoom(roomId);
-                facade.saveUserProgress(); // Save immediately
-            }
+        // Mark room as visited
+        if (progression != null) {
+            progression.visitRoom(roomId);
+            facade.saveUserProgress();
         }
     }
+    
+    // 5. load Objects
+    // loadRoomObjects(room); // Uncomment when you are ready to use this
+}
 
     private void loadRoomObjects(Room room) {
         gameObjects.clear();
@@ -234,6 +265,7 @@ public class GameApp extends Pane {
     private void update() {
         if (gameState == playState) {
             player.update();
+            puzzleManager.update();
             checkNearbyObjects();
             checkRoomTransition();
             long currentTime = System.currentTimeMillis();
@@ -245,29 +277,47 @@ public class GameApp extends Pane {
     }
 
     private void checkRoomTransition() {
-    int playerCol = player.worldX / tileSize;
-    int playerRow = player.worldY / tileSize;
-    
-    if (playerCol >= 0 && playerCol < worldCols && 
-        playerRow >= 0 && playerRow < worldRows) {
+        // calculate center of player to avoid accidental triggers
+        int playerCenterX = player.worldX + (tileSize / 2);
+        int playerCenterY = player.worldY + (tileSize / 2);
         
-        int tileNum = tileM.mapTileNum[playerCol][playerRow];
+        int playerCol = playerCenterX / tileSize;
+        int playerRow = playerCenterY / tileSize;
         
-        // Check if it's a special transition tile
-        if (tileM.tile[tileNum] != null && tileM.tile[tileNum].isSpecial) {
-            Room currentRoom = getCurrentRoom();
+        // ensure we are within map bounds to avoid crash
+        if (playerCol >= 0 && playerCol < worldCols && 
+            playerRow >= 0 && playerRow < worldRows) {
             
-            if (currentRoom != null && currentRoom.getRoomId().equals("room_exterior")) {
-                // Transition from exterior to foyer
-                loadRoom("room_foyer");
-                User currentUser = Facade.getInstance().getCurrentUser();
-                if (currentUser != null) {
-                    currentUser.setCurrentRoomID("room_foyer");
+            int tileNum = tileM.mapTileNum[playerCol][playerRow];
+            
+            // Check if it's a special transition tile
+            if (tileM.tile[tileNum] != null && tileM.tile[tileNum].isSpecial) {
+                Room currentRoom = getCurrentRoom();
+                
+                // 1. Logic for Foyer to Parlor 
+                if (currentRoom != null && currentRoom.getRoomId().equals("room_foyer")) {
+                    // If we stepped on the newly opened door (Tile 10)
+                    if (tileNum == 10) {
+                        System.out.println("Entering Parlor...");
+                        loadRoom("room_parlor"); 
+                        
+                        
+                        // change these numbers to where you want them to spawn in the Parlor.
+                        player.worldX = tileSize * 2; 
+                        player.worldY = tileSize * 10;
+                    }
+                }
+                
+                // 2. Logic for Exterior -> Foyer (Existing logic)
+                else if (currentRoom != null && currentRoom.getRoomId().equals("room_exterior")) {
+                    loadRoom("room_foyer");
+                    // Move player to Foyer entrance
+                    player.worldX = tileSize * 24; 
+                    player.worldY = tileSize * 45;
                 }
             }
         }
     }
-}
 
     private void savePlayerPosition() {
     Facade facade = Facade.getInstance();
@@ -345,6 +395,7 @@ public class GameApp extends Pane {
         tileM.draw(gc);
         drawGameObjects(gc);
         player.draw(gc);
+        puzzleManager.draw(gc);
         ui.draw(gc);
     }
     private void drawGameObjects(GraphicsContext gc) {

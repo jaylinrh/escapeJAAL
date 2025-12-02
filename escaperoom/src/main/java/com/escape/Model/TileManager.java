@@ -5,6 +5,8 @@ import javafx.scene.image.Image;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import javafx.scene.image.Image;
+
 
 public class TileManager {
     GameApp ga;
@@ -74,6 +76,12 @@ public class TileManager {
             e.printStackTrace();
         }
     }
+
+    public void setMapTile(int col, int row, int tileId) {
+         if (col >= 0 && col < ga.worldCols && row >= 0 && row < ga.worldRows) {
+        mapTileNum[col][row] = tileId;
+    }
+}
 
     public void loadMap(String mapPath) {
         try {

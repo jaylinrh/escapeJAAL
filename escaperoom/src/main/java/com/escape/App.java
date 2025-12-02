@@ -30,7 +30,7 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
 
-        
+       
         game.setupGame();
         game.startGameThread();
     }

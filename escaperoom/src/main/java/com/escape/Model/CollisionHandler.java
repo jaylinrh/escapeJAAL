@@ -21,7 +21,7 @@ public class CollisionHandler {
         int entityBottomRow = entityBottomWorldY / ga.tileSize;
         
         int tileNum1, tileNum2;
-
+    try {
         switch(entity.direction) {
             case "up":
                 entityTopRow = (entityTopWorldY - entity.speed) / ga.tileSize;
@@ -56,5 +56,8 @@ public class CollisionHandler {
                 }
                 break;
         }
+    } catch (ArrayIndexOutOfBoundsException e) {
+        entity.collisionOn = true;
     }
+}
 }
