@@ -78,13 +78,13 @@ public class DataWriter extends DataConstants {
         display.put("originalTileSize", config.getOriginalTileSize());
         display.put("scale", config.getScale());
         display.put("tileSize", config.getTileSize());
-        display.put("maxScreenCol", config.getMaxScreenCol());
-        display.put("maxScreenRow", config.getMaxScreenRow());
+        display.put("maxScreenCol", config.getScreenCols());
+        display.put("maxScreenRow", config.getScreenRows());
         display.put("screenWidth", config.getScreenWidth());
         display.put("screenHeight", config.getScreenHeight());
         JSONObject world = new JSONObject();
-         world.put("maxWorldCol", config.getMaxWorldCol());
-        world.put("maxWorldRow", config.getMaxWorldRow());
+         world.put("maxWorldCol", config.getWorldCols());
+        world.put("maxWorldRow", config.getWorldRows());
         world.put("worldWidth", config.getWorldWidth());
         world.put("worldHeight", config.getWorldHeight());
         JSONObject gameStates = new JSONObject();
