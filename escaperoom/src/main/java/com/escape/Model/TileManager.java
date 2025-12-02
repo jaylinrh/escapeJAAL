@@ -14,9 +14,8 @@ public class TileManager {
     public TileManager(GameApp ga) {
         this.ga = ga;
         tile = new Tile[12];
-        mapTileNum = new int[ga.worldCols][ga.worldCols];   
+        mapTileNum = new int[ga.worldCols][ga.worldRows];   
         getTileImage();
-        loadMap("/maps/exterior.txt");
     }
         
     public void getTileImage() {
