@@ -10,7 +10,7 @@ public class FoyerPuzzle extends AbstractPuzzle {
     private TileSteppingPuzzle tileSteppingPuzzle;
     private boolean doorOpened = false;
 
-    // DOOR LOCATION 
+    // DOOR LOCATION!!!
     private final int DOOR_COL = 24; 
     private final int DOOR_ROW = 0; 
     
