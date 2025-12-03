@@ -9,9 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-/**
- * Abstract base class for puzzles with common functionality
- */
+
 public abstract class AbstractPuzzle implements PuzzleBase {
     protected GameApp gameApp;
     protected String puzzleId;
@@ -20,12 +18,10 @@ public abstract class AbstractPuzzle implements PuzzleBase {
     protected String description;
     protected String successMessage;
     
-    // UI dimensions
     protected int screenWidth;
     protected int screenHeight;
     protected int tileSize;
     
-    // Common fonts
     protected Font titleFont;
     protected Font textFont;
     protected Font smallFont;
@@ -38,12 +34,10 @@ public abstract class AbstractPuzzle implements PuzzleBase {
         this.solved = false;
         this.successMessage = "Puzzle Solved!";
         
-        // Get screen dimensions
         this.screenWidth = gameApp.screenWidth;
         this.screenHeight = gameApp.screenHeight;
         this.tileSize = gameApp.tileSize;
         
-        // Initialize fonts
         this.titleFont = Font.font("Arial", FontWeight.BOLD, 40);
         this.textFont = Font.font("Arial", FontWeight.NORMAL, 24);
         this.smallFont = Font.font("Arial", FontWeight.NORMAL, 18);
@@ -69,37 +63,25 @@ public abstract class AbstractPuzzle implements PuzzleBase {
         facade.saveUserProgress();
     }
     
-    /**
-     * Draw a window background for puzzle UI
-     */
     protected void drawPuzzleWindow(GraphicsContext gc, int x, int y, int width, int height) {
-        // Background
         gc.setFill(Color.rgb(20, 20, 30, 0.95));
         gc.fillRoundRect(x, y, width, height, 20, 20);
         
-        // Border
         gc.setStroke(Color.web("#FFD700"));
         gc.setLineWidth(3);
         gc.strokeRoundRect(x, y, width, height, 20, 20);
     }
     
-    /**
-     * Draw puzzle title
-     */
     protected void drawTitle(GraphicsContext gc, int x, int y) {
         gc.setFont(titleFont);
         gc.setFill(Color.web("#FFD700"));
         gc.fillText(title, x, y);
     }
     
-    /**
-     * Draw puzzle description
-     */
     protected void drawDescription(GraphicsContext gc, int x, int y, int maxWidth) {
         gc.setFont(textFont);
         gc.setFill(Color.WHITE);
         
-        // Word wrap the description
         String[] words = description.split(" ");
         StringBuilder line = new StringBuilder();
         int lineY = y;
@@ -121,9 +103,6 @@ public abstract class AbstractPuzzle implements PuzzleBase {
         }
     }
     
-    /**
-     * Draw success message when puzzle is solved
-     */
     protected void drawSuccessMessage(GraphicsContext gc) {
         gc.setFont(titleFont);
         gc.setFill(Color.web("#00FF00"));
@@ -138,11 +117,7 @@ public abstract class AbstractPuzzle implements PuzzleBase {
         gc.fillText("Press ENTER to continue", x + 10, y + 50);
     }
     
-    /**
-     * Draw button
-     */
     protected void drawButton(GraphicsContext gc, String text, int x, int y, int width, int height, boolean hover) {
-        // Button background
         if (hover) {
             gc.setFill(Color.web("#FFD700"));
         } else {
@@ -150,16 +125,13 @@ public abstract class AbstractPuzzle implements PuzzleBase {
         }
         gc.fillRoundRect(x, y, width, height, 10, 10);
         
-        // Button border
         gc.setStroke(Color.WHITE);
         gc.setLineWidth(2);
         gc.strokeRoundRect(x, y, width, height, 10, 10);
         
-        // Button text
         gc.setFont(textFont);
         gc.setFill(hover ? Color.BLACK : Color.WHITE);
         
-        // Center text
         double textWidth = text.length() * 12; // Approximate
         double textX = x + (width - textWidth) / 2;
         double textY = y + (height / 2) + 8;

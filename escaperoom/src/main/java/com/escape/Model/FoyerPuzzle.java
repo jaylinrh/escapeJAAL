@@ -53,7 +53,8 @@ public class FoyerPuzzle extends AbstractPuzzle {
         
         
         // Makes DOOR_COL and DOOR_ROW match where door is in foyer.txt
-        gameApp.tileM.setMapTile(DOOR_COL, DOOR_ROW, 10); 
+        gameApp.tileM.setMapTile(DOOR_COL, DOOR_ROW, 10);
+        onComplete(Facade.getInstance());
     }
 
     @Override

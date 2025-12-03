@@ -35,12 +35,12 @@ public class GameConfigTest {
         assertEquals("Original tile size should be initialized", 16, config.getOriginalTileSize());
         assertEquals("Scale should be initialized", 3, config.getScale());
         assertEquals("Tile size should be initialized", 48, config.getTileSize());
-        assertEquals("Max screen columns should be initialized", 16, config.getMaxScreenCol());
-        assertEquals("Max screen rows should be initialized", 12, config.getMaxScreenRow());
+        assertEquals("Max screen columns should be initialized", 16, config.getScreenCols());
+        assertEquals("Max screen rows should be initialized", 12, config.getScreenRows());
         assertEquals("Screen width should be initialized", 768, config.getScreenWidth());
         assertEquals("Screen height should be initialized", 576, config.getScreenHeight());
-        assertEquals("Max world columns should be initialized", 50, config.getMaxWorldCol());
-        assertEquals("Max world rows should be initialized", 50, config.getMaxWorldRow());
+        assertEquals("Max world columns should be initialized", 50, config.getWorldCols());
+        assertEquals("Max world rows should be initialized", 50, config.getWorldRows());
         assertEquals("World width should be initialized", 2400, config.getWorldWidth());
         assertEquals("World height should be initialized", 2400, config.getWorldHeight());
         assertEquals("FPS should be initialized", 60, config.getFps());
@@ -68,12 +68,12 @@ public class GameConfigTest {
     
     @Test
     public void testDisplayGetters_MaxScreenCol() {
-        assertEquals("getMaxScreenCol should return correct value", 16, config.getMaxScreenCol());
+        assertEquals("getMaxScreenCol should return correct value", 16, config.getScreenCols());
     }
     
     @Test
     public void testDisplayGetters_MaxScreenRow() {
-        assertEquals("getMaxScreenRow should return correct value", 12, config.getMaxScreenRow());
+        assertEquals("getMaxScreenRow should return correct value", 12, config.getScreenRows());
     }
     
     @Test
@@ -89,12 +89,12 @@ public class GameConfigTest {
     // === WORLD GETTER TESTS ===
     @Test
     public void testWorldGetters_MaxWorldCol() {
-        assertEquals("getMaxWorldCol should return correct value", 50, config.getMaxWorldCol());
+        assertEquals("getMaxWorldCol should return correct value", 50, config.getWorldCols());
     }
     
     @Test
     public void testWorldGetters_MaxWorldRow() {
-        assertEquals("getMaxWorldRow should return correct value", 50, config.getMaxWorldRow());
+        assertEquals("getMaxWorldRow should return correct value", 50, config.getWorldRows());
     }
     
     @Test
@@ -237,12 +237,12 @@ public class GameConfigTest {
     @Test
     public void testScreenDimensionsCalculation() {
         // Verify that screenWidth = maxScreenCol * tileSize
-        int calculatedScreenWidth = config.getMaxScreenCol() * config.getTileSize();
+        int calculatedScreenWidth = config.getScreenCols() * config.getTileSize();
         assertEquals("Screen width should equal maxScreenCol * tileSize", 
                     calculatedScreenWidth, config.getScreenWidth());
         
         // Verify that screenHeight = maxScreenRow * tileSize
-        int calculatedScreenHeight = config.getMaxScreenRow() * config.getTileSize();
+        int calculatedScreenHeight = config.getScreenRows() * config.getTileSize();
         assertEquals("Screen height should equal maxScreenRow * tileSize", 
                     calculatedScreenHeight, config.getScreenHeight());
     }
@@ -250,12 +250,12 @@ public class GameConfigTest {
     @Test
     public void testWorldDimensionsCalculation() {
         // Verify that worldWidth = maxWorldCol * tileSize
-        int calculatedWorldWidth = config.getMaxWorldCol() * config.getTileSize();
+        int calculatedWorldWidth = config.getWorldCols() * config.getTileSize();
         assertEquals("World width should equal maxWorldCol * tileSize", 
                     calculatedWorldWidth, config.getWorldWidth());
         
         // Verify that worldHeight = maxWorldRow * tileSize
-        int calculatedWorldHeight = config.getMaxWorldRow() * config.getTileSize();
+        int calculatedWorldHeight = config.getWorldRows() * config.getTileSize();
         assertEquals("World height should equal maxWorldRow * tileSize", 
                     calculatedWorldHeight, config.getWorldHeight());
     }

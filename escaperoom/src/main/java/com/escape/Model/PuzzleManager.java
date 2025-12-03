@@ -9,16 +9,11 @@ import javafx.scene.input.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Manages all puzzles in the game
- * Handles puzzle creation, activation, and lifecycle
- */
 public class PuzzleManager {
     private GameApp gameApp;
-    public Map<String, PuzzleBase> puzzles;
+    private Map<String, PuzzleBase> puzzles;
     private PuzzleBase currentPuzzle;
     
-    // Game state for puzzles
     public static final int PUZZLE_STATE = 5;
     
     public PuzzleManager(GameApp gameApp) {
@@ -29,21 +24,11 @@ public class PuzzleManager {
         initializePuzzles();
     }
     
-    /**
-     * Create all puzzle instances
-     */
+
     private void initializePuzzles() {
-        //puzzles.put("room_foyer", new FoyerPuzzle(gameApp));
-        // puzzles.put("room_parlor", new ParlorPuzzle(gameApp));
-        // puzzles.put("room_library", new LibraryPuzzle(gameApp));
-        // puzzles.put("room_kitchen", new KitchenPuzzle(gameApp));
-        // puzzles.put("room_greenhouse", new GreenhousePuzzle(gameApp));
-        // puzzles.put("room_cellar", new CellarPuzzle(gameApp));
+        puzzles.put("room_foyer", new FoyerPuzzle(gameApp));
     }
     
-    /**
-     * Activate puzzle for current room
-     */
     public void activatePuzzle(String roomId) {
         if (puzzles.containsKey(roomId)) {
             currentPuzzle = puzzles.get(roomId);
@@ -55,9 +40,6 @@ public class PuzzleManager {
         }
     }
     
-    /**
-     * Activate puzzle by puzzle ID (for testing)
-     */
     public void activatePuzzleById(String puzzleId) {
         for (PuzzleBase puzzle : puzzles.values()) {
             if (puzzle.getPuzzleId().equals(puzzleId)) {
@@ -68,16 +50,10 @@ public class PuzzleManager {
         }
     }
     
-    /**
-     * Check if room has a puzzle
-     */
     public boolean roomHasPuzzle(String roomId) {
         return puzzles.containsKey(roomId);
     }
     
-    /**
-     * Check if puzzle is solved
-     */
     public boolean isPuzzleSolved(String roomId) {
         if (puzzles.containsKey(roomId)) {
             return puzzles.get(roomId).isSolved();
@@ -85,16 +61,10 @@ public class PuzzleManager {
         return false;
     }
     
-    /**
-     * Get current active puzzle
-     */
     public PuzzleBase getCurrentPuzzle() {
         return currentPuzzle;
     }
     
-    /**
-     * Update current puzzle
-     */
     public void update() {
 
          
@@ -111,9 +81,6 @@ public class PuzzleManager {
 
     }
     
-    /**
-     * Draw current puzzle
-     */
     public void draw(GraphicsContext gc) {
         if (currentPuzzle != null && gameApp.gameState == PUZZLE_STATE) {
             currentPuzzle.draw(gc);
@@ -127,27 +94,18 @@ public class PuzzleManager {
       }   
     }
     
-    /**
-     * Handle key press for current puzzle
-     */
     public void handleKeyPress(KeyEvent e) {
         if (currentPuzzle != null && gameApp.gameState == PUZZLE_STATE) {
             currentPuzzle.handleKeyPress(e);
         }
     }
     
-    /**
-     * Handle mouse click for current puzzle
-     */
     public void handleMouseClick(MouseEvent e) {
         if (currentPuzzle != null && gameApp.gameState == PUZZLE_STATE) {
             currentPuzzle.handleMouseClick(e);
         }
     }
     
-    /**
-     * Exit current puzzle and return to play state
-     */
     public void exitPuzzle() {
         if (currentPuzzle != null) {
             gameApp.gameState = gameApp.playState;
@@ -155,18 +113,12 @@ public class PuzzleManager {
         }
     }
     
-    /**
-     * Reset a specific puzzle
-     */
     public void resetPuzzle(String roomId) {
         if (puzzles.containsKey(roomId)) {
             puzzles.get(roomId).reset();
         }
     }
     
-    /**
-     * Reset all puzzles
-     */
     public void resetAllPuzzles() {
         for (PuzzleBase puzzle : puzzles.values()) {
             puzzle.reset();
@@ -192,9 +144,6 @@ public class PuzzleManager {
     //     } 
     // }
     
-    /**
-     * Get puzzle progress statistics
-     */
     public String getPuzzleStats() {
         int total = puzzles.size();
         int solved = 0;
@@ -208,9 +157,6 @@ public class PuzzleManager {
         return String.format("Puzzles Solved: %d/%d", solved, total);
     }
     
-    /**
-     * Check if all puzzles are solved
-     */
     public boolean allPuzzlesSolved() {
         for (PuzzleBase puzzle : puzzles.values()) {
             if (!puzzle.isSolved()) {

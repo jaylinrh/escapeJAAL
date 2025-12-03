@@ -147,9 +147,6 @@ public PuzzleManager puzzleManager;
     // This replaces the hardcoded "if (room_foyer)" checks
     switch (roomId) {
         case "room_foyer":
-            // Create and register the foyer puzzle
-            FoyerPuzzle foyerPuzzle = new FoyerPuzzle(this);
-            puzzleManager.puzzles.put("room_foyer", foyerPuzzle);
             // Activate it immediately
             puzzleManager.activatePuzzle("room_foyer"); 
             break;
