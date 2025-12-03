@@ -21,6 +21,13 @@ public class Items {
     }
     
     private void createItems() {
+        addItem("letter_l", "Book 'L'", "A heavy book with 'L' on the spine.", "Part of the library code.");
+        addItem("letter_i", "Book 'I'", "A heavy book with 'I' on the spine.", "Part of the library code.");
+        addItem("letter_b", "Book 'B'", "A heavy book with 'B' on the spine.", "Part of the library code.");
+        addItem("letter_r_1", "Book 'R'", "A heavy book with'R' on the spine.", "Part of the library code.");
+        addItem("letter_a", "Book 'A'", "A heavy book with 'A' on the spine.", "Part of the library code.");
+        addItem("letter_r_2", "Book 'R'", "A heavy book with'R' on the spine.", "Part of the library code."); // 2nd R
+        addItem("letter_y", "Book 'Y'", "A heavy book with 'Y' on the spine.", "Part of the library code.");
     }
     
     private void addItem(String itemId, String name, String hint, String description) {

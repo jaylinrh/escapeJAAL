@@ -120,6 +120,17 @@ public PuzzleManager puzzleManager;
             }
             loadRoom(startRoomId);
         } else {
+            //test user login for puzzle tests.
+            System.out.println("Auto-logging in Test User");
+            
+            Facade facade = Facade.getInstance();
+            
+            //  Try to register a "Tester" account.
+            //    If registerUser returns 'false', user already exists.
+            if (!facade.registerUser("Tester", "password")) {
+                //  If user exists, just log them in.
+                facade.loginUser("Tester", "password");
+            }
             loadRoom("room_foyer");
         }
     this.requestFocus();
@@ -128,7 +139,8 @@ public PuzzleManager puzzleManager;
 
      public void loadRoom(String roomId) {
         puzzleManager.exitPuzzle();
-// 1. Get Room Data
+        gameObjects.clear();
+//  Get Room Data
     RoomList roomList = RoomList.getInstance();
     Room room = roomList.getRoomById(roomId);
     
@@ -137,13 +149,12 @@ public PuzzleManager puzzleManager;
         return;
     }
     
-    // 2. load the Map File
-    // ensure you have "parlor.txt" inside your /resources/maps/ folder!
+    //  load the Map File
     String mapPath = "/maps/" + room.getMapFile();
     tileM.loadMap(mapPath);
     player.setCurrentRoom(room);
 
-    // 3. initialize the Specific Puzzle for this Room
+    //  initialize the Specific Puzzle for this Room
     // This replaces the hardcoded "if (room_foyer)" checks
     switch (roomId) {
         case "room_foyer":
@@ -152,15 +163,23 @@ public PuzzleManager puzzleManager;
             break;
 
         case "room_parlor":
-            System.out.println("=== LOADING PARLOR (No Puzzle Yet) ===");
+           System.out.println(" Loading Parlor Book Puzzle");
+            // same class, just activated in the Parlor now
+            LibraryPuzzle bookPuzzle = new LibraryPuzzle(this);
+            puzzleManager.puzzles.put("room_parlor", bookPuzzle);
+            puzzleManager.activatePuzzle("room_parlor");
             
             break;
+
+        case "room_library": // Make sure this matches the ID in rooms.json
+        System.out.println("LOADING LIBRARY PUZZLE");
+        break;
             
         default:
             break;
     }
 
-    // 4. handle Room Visit Logic (Dialogues, etc.)
+    //  handle Room Visit Logic (Dialogues, etc.)
     Facade facade = Facade.getInstance();
     Progression progression = facade.getProgression();
     
@@ -186,8 +205,8 @@ public PuzzleManager puzzleManager;
         }
     }
     
-    // 5. load Objects
-    // loadRoomObjects(room); // Uncomment when you are ready to use this
+    //  load Objects
+    // loadRoomObjects(room); // Uncomment when ready to use.
 }
 
     private void loadRoomObjects(Room room) {
@@ -200,7 +219,6 @@ public PuzzleManager puzzleManager;
         User currentUser = facade.getCurrentUser();
         Progression progression = facade.getProgression();
 
-        // For now, place items at specific locations
         // TODO: Later, load positions from JSON or room data
         int startX = tileSize * 10;
         int startY = tileSize * 10;
@@ -287,11 +305,12 @@ public PuzzleManager puzzleManager;
             
             int tileNum = tileM.mapTileNum[playerCol][playerRow];
             
-            // Check if it's a special transition tile
+            // check if it's a special transition tile
             if (tileM.tile[tileNum] != null && tileM.tile[tileNum].isSpecial) {
+
                 Room currentRoom = getCurrentRoom();
                 
-                // 1. Logic for Foyer to Parlor 
+                //  logic for Foyer to Parlor 
                 if (currentRoom != null && currentRoom.getRoomId().equals("room_foyer")) {
                     // If we stepped on the newly opened door (Tile 10)
                     if (tileNum == 10) {
@@ -299,16 +318,28 @@ public PuzzleManager puzzleManager;
                         loadRoom("room_parlor"); 
                         
                         
-                        // change these numbers to where you want them to spawn in the Parlor.
+                        // change these numbers to where you want to spawn in the Parlor.
                         player.worldX = tileSize * 2; 
                         player.worldY = tileSize * 10;
                     }
                 }
+
+                // PARLOR -> LIBRARY
+            else if (currentRoom.getRoomId().equals("room_parlor")) {
+                if (tileNum == 10) { // If standing on the Open Door
+                    System.out.println("Entering the Library...");
+                    loadRoom("room_library"); 
+                    
+                    // Spawn player inside the Library (adjust coords as needed)
+                    player.worldX = tileSize * 24; 
+                    player.worldY = tileSize * 45; // spawning at bottom
+                }
+            }
                 
-                // 2. Logic for Exterior -> Foyer (Existing logic)
+                //  Logic for Exterior -> Foyer (Existing logic)
                 else if (currentRoom != null && currentRoom.getRoomId().equals("room_exterior")) {
                     loadRoom("room_foyer");
-                    // Move player to Foyer entrance
+                    // move player to Foyer entrance
                     player.worldX = tileSize * 24; 
                     player.worldY = tileSize * 45;
                 }
@@ -348,9 +379,16 @@ public PuzzleManager puzzleManager;
             }
         }
         
-        // Update UI with interaction prompt
         if (nearestObject != null) {
+            if (nearestObject.getType() == InteractableObject.ObjectType.SLOT) {
+                if (nearestObject.isFilled()) {
+                    ui.interactionPrompt = "Press E to Remove Book";
+                } else {
+                    ui.interactionPrompt = "Press E to Place Book";
+                }
+            } else {
             ui.interactionPrompt = "Press E to pick up " + nearestObject.getName();
+            }
             ui.showInteractionPrompt = true;
         } else {
             ui.showInteractionPrompt = false;

@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class PuzzleManager {
     private GameApp gameApp;
-    private Map<String, PuzzleBase> puzzles;
+    public Map<String, PuzzleBase> puzzles;
     private PuzzleBase currentPuzzle;
     
     public static final int PUZZLE_STATE = 5;
@@ -33,7 +33,7 @@ public class PuzzleManager {
         if (puzzles.containsKey(roomId)) {
             currentPuzzle = puzzles.get(roomId);
             
-            // Only show puzzle if not already solved
+            // only show puzzle if not already solved
             if (!currentPuzzle.isSolved()) {
                 gameApp.gameState = PUZZLE_STATE;
             }
@@ -72,13 +72,9 @@ public class PuzzleManager {
             currentPuzzle.update();
         }
 
-        if (gameApp.gameState == gameApp.playState) {
-        PuzzleBase foyerPuzzle = puzzles.get("room_foyer");
-        if (foyerPuzzle != null) {
-            foyerPuzzle.update();
+        if (gameApp.gameState == gameApp.playState && currentPuzzle != null) {
+       currentPuzzle.update();
         }
-    }
-
     }
     
     public void draw(GraphicsContext gc) {
@@ -86,13 +82,10 @@ public class PuzzleManager {
             currentPuzzle.draw(gc);
         }
 
-        if (gameApp.gameState == gameApp.playState) {
-        PuzzleBase foyerPuzzle = puzzles.get("room_foyer");
-        if (foyerPuzzle != null) {
-            foyerPuzzle.draw(gc);
+        if (gameApp.gameState == gameApp.playState && currentPuzzle != null) {
+            currentPuzzle.draw(gc);
         }
       }   
-    }
     
     public void handleKeyPress(KeyEvent e) {
         if (currentPuzzle != null && gameApp.gameState == PUZZLE_STATE) {
@@ -125,6 +118,7 @@ public class PuzzleManager {
         }
     }
     
+    //NOT SURE IF WE NEED THIS YET. JUST leave commented. May be deleted later.
     /**
      * Notify puzzle when item is collected
      * Used for puzzles that require item collection
