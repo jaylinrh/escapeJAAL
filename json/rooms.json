@@ -6,8 +6,8 @@
       "tileSize": 48,
       "maxScreenCol": 16,
       "maxScreenRow": 12,
-      "screenWidth": 768,
-      "screenHeight": 576
+      "screenWidth": 1280,
+      "screenHeight": 720
     },
     "world": {
       "maxWorldCol": 50,

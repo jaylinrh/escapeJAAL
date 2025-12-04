@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml/1" 
+           fx:controller="com.escape.Controller.MainMenuController"
+           prefWidth="1280" prefHeight="720"
+           stylesheets="@../css/hollowmore.css">
+
+    <!-- pixel art -->
+    <ImageView fitWidth="1280" fitHeight="720" preserveRatio="false">
+        <image>
+            <Image url="@../com/escape/images/menu_background.png"/>
+        </image>
+    </ImageView>
+
+    <!-- main -->
+    <AnchorPane>
+        
+        <!-- menu box-->
+        <VBox AnchorPane.topAnchor="0" 
+              AnchorPane.bottomAnchor="0" 
+              AnchorPane.leftAnchor="0" 
+              AnchorPane.rightAnchor="0"
+              alignment="CENTER">
+            
+            <VBox styleClass="dialog-box" 
+                  spacing="25" 
+                  alignment="CENTER"
+                  prefWidth="300"
+                  maxWidth="300">
+                
+                <padding>
+                    <Insets top="50" bottom="50" left="45" right="45"/>
+                </padding>
+                
+                <!-- new game -->
+                <Button text="NEW GAME" 
+                        styleClass="menu-button"
+                        onAction="#onNewGameClicked"/>
+                
+                <!-- continue -->
+                <Button text="CONTINUE" 
+                        styleClass="menu-button"
+                        onAction="#onContinueClicked"/>
+                
+                <!-- logout -->
+                <Button text="LOGOUT" 
+                        styleClass="menu-button"
+                        onAction="#onLogoutClicked"/>
+                
+            </VBox>
+        </VBox>
+
+    </AnchorPane>
+</StackPane>

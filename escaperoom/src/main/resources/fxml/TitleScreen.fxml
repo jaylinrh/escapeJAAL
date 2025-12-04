@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml/1" 
+           fx:controller="com.escape.Controller.TitleScreenController"
+           prefWidth="1280" prefHeight="720"
+           stylesheets="@../css/hollowmore.css">
+
+    <!-- pixel art -->
+    <ImageView fx:id="backgroundImage" fitWidth="1280" fitHeight="720" preserveRatio="false">
+    </ImageView>
+
+    <!-- main -->
+    <AnchorPane>
+        
+        <!-- title -->
+        <VBox AnchorPane.topAnchor="0" 
+              AnchorPane.leftAnchor="0" 
+              AnchorPane.rightAnchor="0"
+              alignment="CENTER"
+              pickOnBounds="false">
+            
+            <VBox styleClass="title-banner" 
+                  alignment="CENTER"
+                  prefWidth="650">
+                
+                <padding>
+                    <Insets top="0" bottom="20" left="40" right="40"/>
+                </padding>
+                
+                <HBox alignment="CENTER">
+                    <Text text="Hollow" styleClass="title-hollow"/>
+                    <Text text="More" styleClass="title-more"/>
+                </HBox>
+            </VBox>
+        </VBox>
+
+        <!-- start button -->
+        <VBox AnchorPane.bottomAnchor="130" 
+              AnchorPane.leftAnchor="0" 
+              AnchorPane.rightAnchor="0"
+              alignment="CENTER">
+            <Button fx:id="startButton" 
+                    text="START" 
+                    styleClass="start-button"
+                    onAction="#onStartClicked"/>
+        </VBox>
+
+        <!-- leaderboard panel -->
+        <VBox fx:id="leaderboardPanel" 
+              AnchorPane.topAnchor="180" 
+              AnchorPane.rightAnchor="40"
+              AnchorPane.bottomAnchor="180"
+              styleClass="leaderboard-panel"
+              prefWidth="280" 
+              spacing="15" 
+              alignment="TOP_CENTER">
+            
+            <padding>
+                <Insets top="20" bottom="20" left="25" right="25"/>
+            </padding>
+            
+            <Label text="LeaderBoard" styleClass="leaderboard-title"/>
+            
+            <!-- leaderboard entries -->
+            <VBox fx:id="leaderboardEntries" spacing="10" alignment="CENTER_LEFT"/>
+        </VBox>
+
+        <!-- settings button -->
+        <Button fx:id="settingsButton" 
+                text="⚙" 
+                styleClass="settings-button"
+                AnchorPane.bottomAnchor="20" 
+                AnchorPane.leftAnchor="20"
+                onAction="#onSettingsClicked"/>
+
+    </AnchorPane>
+</StackPane>

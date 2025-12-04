@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.UUID;
 
 import org.json.simple.JSONArray;
@@ -74,7 +75,7 @@ public class DataLoader extends DataConstants {
 
                     SpriteImages spriteImages = new SpriteImages(u1, u2, d1, d2, l1, l2, r1, r2);
 
-                   PlayerState playerState = new PlayerState(worldX, worldY, speed, direction, solidArea, collisionOn, spriteImages);
+                    PlayerState playerState = new PlayerState(worldX, worldY, speed, direction, solidArea, collisionOn, spriteImages);
 
                     JSONObject inventoryJSON = (JSONObject) userJSON.get(USER_INVENTORY);
                     String inventoryId = (String) inventoryJSON.get(INVENTORY_ID);
@@ -97,8 +98,41 @@ public class DataLoader extends DataConstants {
                        inventory.addItem(item);
                     }
 
+                    HashSet<String> visitedRooms = new HashSet<>();
+                    JSONArray visitedRoomsJSON = (JSONArray) userJSON.get(VISITED_ROOMS);
+                    if (visitedRoomsJSON != null) {
+                        for (int j = 0; j < visitedRoomsJSON.size(); j++) {
+                            visitedRooms.add((String) visitedRoomsJSON.get(j));
+                        }
+                    }
 
-                    User player = new User(id, username, password, level, currentRoomId, playerState, inventory);
+                    HashSet<String> completedRooms = new HashSet<>();
+                    JSONArray completedRoomsJSON = (JSONArray) userJSON.get(COMPLETED_ROOMS);
+                    if (completedRoomsJSON != null) {
+                        for (int j = 0; j < completedRoomsJSON.size(); j++) {
+                            completedRooms.add((String) completedRoomsJSON.get(j));
+                        }
+                    }
+
+                    HashSet<String> solvedPuzzles = new HashSet<>();
+                    JSONArray solvedPuzzlesJSON = (JSONArray) userJSON.get(SOLVED_PUZZLES);
+                    if (solvedPuzzlesJSON != null) {
+                        for (int j = 0; j < solvedPuzzlesJSON.size(); j++) {
+                            solvedPuzzles.add((String) solvedPuzzlesJSON.get(j));
+                        }
+                    }
+
+                    double volume = 50.0;
+                    double sfx = 50.0;
+
+                    if (userJSON.get(VOLUME) != null) {
+                        volume = ((Number) userJSON.get(VOLUME)).doubleValue();
+                    }
+                    if (userJSON.get(SFX) != null) {
+                        sfx = ((Number) userJSON.get(SFX)).doubleValue();
+                    }
+
+                    User player = new User(id, username, password, level, currentRoomId, playerState, inventory, visitedRooms, completedRooms, solvedPuzzles, volume, sfx);
                     users.add(player);
                 }
                 reader.close();

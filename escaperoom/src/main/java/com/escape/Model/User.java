@@ -1,6 +1,7 @@
 package com.escape.Model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.UUID;
 
 public class User {
@@ -13,6 +14,11 @@ public class User {
 	Inventory inventory;
 	GameApp ga;
 	KeyHandler kh;
+	private HashSet<String> visitedRooms;
+	private HashSet<String> completedRooms;
+	private HashSet<String> solvedPuzzles;
+	private double volume;
+	private double sfx;
 
 	
 	int currentLevel;
@@ -22,7 +28,7 @@ public class User {
 	//	this.password = password;
 	//	this.UserID = UUID.randomUUID();
 	//}
-	public User(UUID id, String username, String password, int level, String currentRoomId, PlayerState playerState, Inventory inventory) {
+	public User(UUID id, String username, String password, int level, String currentRoomId, PlayerState playerState, Inventory inventory, HashSet<String> visitedRooms, HashSet<String> completedRooms, HashSet<String> solvedPuzzles, double volume, double sfx) {
 		this.UserID = id;
 		this.username = username;
 		this.password = password;
@@ -30,6 +36,9 @@ public class User {
 		this.currentRoomId = currentRoomId;
 		this.inventory = inventory;
 		this.playerState = playerState;
+		this.visitedRooms = visitedRooms != null ? visitedRooms : new HashSet<>();
+		this.completedRooms = completedRooms != null ? completedRooms : new HashSet<>();
+		this.solvedPuzzles = solvedPuzzles != null ? solvedPuzzles : new HashSet<>();
 		//Player = new Player(ga, kh);
 	}
 	
@@ -90,6 +99,66 @@ public class User {
 
 	public void update() {
 		
+	}
+
+	public HashSet<String> getVisitedRooms() {
+    return visitedRooms;
+	}
+
+	public void setVisitedRooms(HashSet<String> visitedRooms) {
+		this.visitedRooms = visitedRooms;
+	}
+
+	public HashSet<String> getCompletedRooms() {
+		return completedRooms;
+	}
+
+	public void setCompletedRooms(HashSet<String> completedRooms) {
+		this.completedRooms = completedRooms;
+	}
+
+	public HashSet<String> getSolvedPuzzles() {
+		return solvedPuzzles;
+	}
+
+	public void setSolvedPuzzles(HashSet<String> solvedPuzzles) {
+		this.solvedPuzzles = solvedPuzzles;
+	}
+
+	public void addVisitedRoom(String roomId) {
+		visitedRooms.add(roomId);
+	}
+
+	public void addCompletedRoom(String roomId) {
+		completedRooms.add(roomId);
+	}
+
+	public void addSolvedPuzzle(String puzzleId) {
+		solvedPuzzles.add(puzzleId);
+	}
+
+	public boolean hasVisitedRoom(String roomId) {
+		return visitedRooms.contains(roomId);
+	}
+
+	public boolean hasSolvedPuzzle(String puzzleId) {
+		return solvedPuzzles.contains(puzzleId);
+	}
+
+	public double getVolume() {
+    return volume;
+	}
+
+	public void setVolume(double volume) {
+		this.volume = volume;
+	}
+
+	public double getSfx() {
+		return sfx;
+	}
+
+	public void setSfx(double sfx) {
+		this.sfx = sfx;
 	}
 	
 	@Override

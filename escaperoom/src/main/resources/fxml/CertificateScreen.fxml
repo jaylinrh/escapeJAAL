@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml/1" 
+           fx:controller="com.escape.Controller.CertificateScreenController"
+           prefWidth="1280" prefHeight="720"
+           stylesheets="@../css/hollowmore.css">
+
+    <!-- Background Image -->
+    <ImageView fitWidth="1280" fitHeight="720" preserveRatio="false">
+        <image>
+            <Image url="@../com/escape/images/menu_background.png"/>
+        </image>
+    </ImageView>
+
+    <!-- Main Layer -->
+    <AnchorPane>
+        
+        <!-- Certificate Box - Center -->
+        <VBox AnchorPane.topAnchor="60" 
+              AnchorPane.bottomAnchor="60" 
+              AnchorPane.leftAnchor="120" 
+              AnchorPane.rightAnchor="120"
+              alignment="CENTER">
+            
+            <VBox styleClass="certificate-box" 
+                  spacing="20" 
+                  alignment="CENTER"
+                  prefWidth="1000"
+                  prefHeight="550">
+                
+                <padding>
+                    <Insets top="30" bottom="30" left="50" right="50"/>
+                </padding>
+                
+                <!-- Title -->
+                <HBox alignment="CENTER" spacing="15">
+                    <Text text="★" styleClass="certificate-star"/>
+                    <Text text="Certificate" styleClass="certificate-title"/>
+                    <Text text="★" styleClass="certificate-star"/>
+                </HBox>
+                
+                <!-- Presented to who -->
+                <Text fx:id="presentedToText" 
+                      text="Presented to &quot;player name&quot;" 
+                      styleClass="certificate-presented"/>
+                
+                <!-- Stats-->
+                <GridPane hgap="200" vgap="12" alignment="CENTER">
+                    <padding>
+                        <Insets top="20"/>
+                    </padding>
+                    
+                    <!-- Row 0 -->
+                    <Text text="Hints used:" styleClass="certificate-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <Text fx:id="hintsValue" text="01" styleClass="certificate-value" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    
+                    <!-- Row 1 -->
+                    <Text text="Items Collected:" styleClass="certificate-label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <Text fx:id="itemsValue" text="02" styleClass="certificate-value" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    
+                    <!-- Row 2 -->
+                    <Text text="Time taken:" styleClass="certificate-label" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <Text fx:id="timeValue" text="13:54" styleClass="certificate-value" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                    
+                    <!-- Row 3 -->
+                    <Text text="Difficulty:" styleClass="certificate-label" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                    <Text fx:id="difficultyValue" text="Easy" styleClass="certificate-value" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                    
+                    <!-- Row 4 -->
+                    <Text text="Puzzles Solved:" styleClass="certificate-label" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                    <Text fx:id="puzzlesValue" text="05" styleClass="certificate-value" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                    
+                    <!-- Row 5 -->
+                    <Text text="Rooms Completed:" styleClass="certificate-label" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                    <Text fx:id="roomsValue" text="06" styleClass="certificate-value" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                </GridPane>
+                
+                <Region prefHeight="20"/>
+                
+                <!-- Main Menu Button -->
+                <Button text="Main Menu" 
+                        styleClass="form-button"
+                        onAction="#onMainMenuClicked"/>
+                
+            </VBox>
+        </VBox>
+
+    </AnchorPane>
+</StackPane>

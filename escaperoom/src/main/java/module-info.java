@@ -8,6 +8,8 @@ module com.escape {
 
     opens com.escape to javafx.fxml;
     opens com.escape.Model to junit;
+    opens com.escape.Controller to javafx.fxml;
     exports com.escape;
     exports com.escape.Model;
+    exports com.escape.Controller;
 }

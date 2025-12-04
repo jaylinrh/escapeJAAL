@@ -14,15 +14,21 @@ public class DataWriter extends DataConstants {
         UserList players = UserList.getInstance();
         ArrayList<User> userList = players.getUsers();
 
+        if (userList.isEmpty()) {
+            return;
+        }
+
         JSONArray jsonUsers = new JSONArray();
 
         for(int i=0; i<userList.size(); i++) {
             jsonUsers.add(getUserJSON(userList.get(i)));
         }
     
+        JSONObject wrapper = new JSONObject();
+        wrapper.put("users", jsonUsers);
 
-        try (FileWriter file = new FileWriter(USER_TEMP_FILE_NAME)) {
-            file.write(jsonUsers.toJSONString());
+        try (FileWriter file = new FileWriter(USER_FILE_NAME)) {
+            file.write(wrapper.toJSONString());
             file.flush();
         }
         catch (IOException e) {
@@ -35,10 +41,77 @@ public class DataWriter extends DataConstants {
         userDetails.put(USER_ID, player.getId().toString());
         userDetails.put(USER_USERNAME, player.getUserName());
         userDetails.put(USER_PASSWORD, player.getPassword());
-        userDetails.put(USER_LEVEL, Integer.toString(player.getLevel()));
+        userDetails.put(USER_LEVEL, player.getLevel());
         userDetails.put(USER_CURRENT_ROOM_ID, player.getCurrentRoomID());
-        userDetails.put(USER_PLAYER_STATE, player.getPlayerState());
-        userDetails.put(USER_INVENTORY, player.getInventory());
+        
+        PlayerState ps = player.getPlayerState();
+        JSONObject playerStateJSON = new JSONObject();
+        playerStateJSON.put(WORLD_X, ps.getWorldX());
+        playerStateJSON.put(WORLD_Y, ps.getWorldY());
+        playerStateJSON.put(SPEED, ps.getSpeed());
+        playerStateJSON.put(DIRECTION, ps.getDirection());
+        playerStateJSON.put(COLLISION_ON, ps.getCollision());
+        
+        SolidArea sa = ps.getSolidArea();
+        JSONObject solidAreaJSON = new JSONObject();
+        solidAreaJSON.put(X, sa.getX());
+        solidAreaJSON.put(Y, sa.getY());
+        solidAreaJSON.put(WIDTH, sa.getWidth());
+        solidAreaJSON.put(HEIGHT, sa.getHeight());
+        playerStateJSON.put(SOLID_AREA, solidAreaJSON);
+        
+        SpriteImages si = ps.getSpriteImages();
+        JSONObject spritesJSON = new JSONObject();
+        spritesJSON.put(U1, "/images/player.png");
+        spritesJSON.put(U2, "/images/player.png");
+        spritesJSON.put(D1, "/images/player.png");
+        spritesJSON.put(D2, "/images/player.png");
+        spritesJSON.put(L1, "/images/player.png");
+        spritesJSON.put(L2, "/images/player.png");
+        spritesJSON.put(R1, "/images/player.png");
+        spritesJSON.put(R2, "/images/player.png");
+        playerStateJSON.put(SPRITE_IMAGES, spritesJSON);
+        
+        userDetails.put(USER_PLAYER_STATE, playerStateJSON);
+        
+        Inventory inv = player.getInventory();
+        JSONObject inventoryJSON = new JSONObject();
+        inventoryJSON.put(INVENTORY_ID, inv.getInventoryId());
+        inventoryJSON.put(MAX_CAPACITY, inv.getMaxCapacity());
+        
+        JSONArray itemsArray = new JSONArray();
+        for (Item item : inv.getItems()) {
+            JSONObject itemJSON = new JSONObject();
+            itemJSON.put(ITEM_ID, item.getItemId());
+            itemJSON.put(NAME, item.getName());
+            itemJSON.put(HINT, item.getHint());
+            itemJSON.put(DESCRIPTION, item.getDescription());
+            itemsArray.add(itemJSON);
+        }
+        inventoryJSON.put(ITEMS, itemsArray);
+        
+        userDetails.put(USER_INVENTORY, inventoryJSON);
+
+        JSONArray visitedRoomsArray = new JSONArray();
+        for (String roomId : player.getVisitedRooms()) {
+            visitedRoomsArray.add(roomId);
+        }
+        userDetails.put(VISITED_ROOMS, visitedRoomsArray);
+
+        JSONArray completedRoomsArray = new JSONArray();
+        for (String roomId : player.getCompletedRooms()) {
+            completedRoomsArray.add(roomId);
+        }
+        userDetails.put(COMPLETED_ROOMS, completedRoomsArray);
+
+        JSONArray solvedPuzzlesArray = new JSONArray();
+        for (String puzzleId : player.getSolvedPuzzles()) {
+            solvedPuzzlesArray.add(puzzleId);
+        }
+        userDetails.put(SOLVED_PUZZLES, solvedPuzzlesArray);
+        userDetails.put(VOLUME, player.getVolume());
+        userDetails.put(SFX, player.getSfx());
+        
         return userDetails;
     }
     public static JSONArray saveRooms() {

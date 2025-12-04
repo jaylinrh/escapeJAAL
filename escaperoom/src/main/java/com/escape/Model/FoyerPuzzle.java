@@ -29,8 +29,21 @@ public class FoyerPuzzle extends AbstractPuzzle {
         tileSteppingPuzzle.addTargetTile(11, 34);
         tileSteppingPuzzle.addTargetTile(38, 15);
         tileSteppingPuzzle.addTargetTile(30, 38);
+
+        Progression prog = Facade.getInstance().getProgression();
+        if (prog != null && prog.hasSolvedPuzzle(puzzleId)) {
+            System.out.println("Foyer puzzle already solved - opening door");
+            this.solved = true;
+        }
         
         System.out.println("Foyer Puzzle Initialized.");
+    }
+
+    public void onRoomLoaded() {
+        if (solved && gameApp.tileM != null) {
+            System.out.println("Opening foyer door (puzzle was already solved)");
+            gameApp.tileM.setMapTile(DOOR_COL, DOOR_ROW, 10);
+        }
     }
     
     @Override

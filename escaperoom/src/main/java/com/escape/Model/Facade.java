@@ -97,6 +97,9 @@ public class Facade {
     
     public void saveUserProgress() {
         if (currentUser != null) {
+            if (progression != null) {
+                progression.syncToUser();
+            }
             userList.saveUsers();
         }
     }
@@ -234,6 +237,32 @@ public class Facade {
     public void reset() {
         logoutUser();
         loadGameData();
+    }
+
+    public double getVolume() {
+        if (currentUser != null) {
+            return currentUser.getVolume();
+        }
+        return 50.0;
+    }
+
+    public void setVolume(double volume) {
+        if (currentUser != null) {
+            currentUser.setVolume(volume);
+        }
+    }
+
+    public double getSfx() {
+        if (currentUser != null) {
+            return currentUser.getSfx();
+        }
+        return 50.0;
+    }
+
+    public void setSfx(double sfx) {
+        if (currentUser != null) {
+            currentUser.setSfx(sfx);
+        }
     }
     
     public void getLeaderboard() {

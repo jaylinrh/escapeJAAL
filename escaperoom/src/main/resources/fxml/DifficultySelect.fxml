@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml/1" 
+           fx:controller="com.escape.Controller.DifficultySelectController"
+           prefWidth="1280" prefHeight="720"
+           stylesheets="@../css/hollowmore.css">
+
+    <!-- pixel art -->
+    <ImageView fitWidth="1280" fitHeight="720" preserveRatio="false">
+        <image>
+            <Image url="@../com/escape/images/menu_background.png"/>
+        </image>
+    </ImageView>
+
+    <!-- main layer -->
+    <AnchorPane>
+
+        <!-- title -->
+        <HBox AnchorPane.topAnchor="30" 
+              AnchorPane.leftAnchor="0" 
+              AnchorPane.rightAnchor="0"
+              alignment="CENTER">
+            <Text text="Difficulty" styleClass="screen-title"/>
+        </HBox>
+
+        <!-- difficulty Options-->
+        <VBox AnchorPane.topAnchor="0" 
+              AnchorPane.bottomAnchor="0" 
+              AnchorPane.leftAnchor="0" 
+              AnchorPane.rightAnchor="0"
+              alignment="CENTER" 
+              spacing="25">
+            
+            <VBox styleClass="dialog-box" 
+                  spacing="25" 
+                  alignment="CENTER"
+                  prefWidth="500"
+                  maxWidth="500">
+                
+                <padding>
+                    <Insets top="40" bottom="40" left="50" right="50"/>
+                </padding>
+
+            <!-- easy option -->
+            <HBox alignment="CENTER" spacing="40">
+                <Button text="Easy" 
+                        styleClass="difficulty-button"
+                        onAction="#onEasyClicked"/>
+                <Text text="45:00" styleClass="time-label"/>
+            </HBox>
+            
+            <!-- medium option -->
+            <HBox alignment="CENTER" spacing="40">
+                <Button text="Medium" 
+                        styleClass="difficulty-button"
+                        onAction="#onMediumClicked"/>
+                <Text text="30:00" styleClass="time-label"/>
+            </HBox>
+            
+            <!-- hard option -->
+            <HBox alignment="CENTER" spacing="40">
+                <Button text="Hard" 
+                        styleClass="difficulty-button-hard"
+                        onAction="#onHardClicked"/>
+                <Text text="20:00" styleClass="time-label-red"/>
+            </HBox>
+            
+        </VBox>
+    </VBox>
+
+        <Button text="Back" 
+                styleClass="back-button"
+                AnchorPane.topAnchor="30" 
+                AnchorPane.leftAnchor="40"
+                onAction="#onBackClicked"/>
+
+    </AnchorPane>
+</StackPane>
