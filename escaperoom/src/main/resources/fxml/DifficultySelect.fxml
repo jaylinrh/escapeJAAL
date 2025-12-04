@@ -40,8 +40,8 @@
             <VBox styleClass="dialog-box" 
                   spacing="25" 
                   alignment="CENTER"
-                  prefWidth="500"
-                  maxWidth="500">
+                  prefWidth="600"
+                  maxWidth="600">
                 
                 <padding>
                     <Insets top="40" bottom="40" left="50" right="50"/>
