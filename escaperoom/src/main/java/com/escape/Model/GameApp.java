@@ -185,8 +185,10 @@ public PuzzleManager puzzleManager;
 
         case "room_library": // Make sure this matches the ID in rooms.json
             System.out.println("LOADING LIBRARY PUZZLE");
+            LibraryItemsPuzzle cipherPuzzle = new LibraryItemsPuzzle(this);
+            puzzleManager.puzzles.put("room_library",cipherPuzzle);
             puzzleManager.activatePuzzle("room_library");
-            
+            cipherPuzzle.onRoomLoaded();
             break;
             
         default:
@@ -350,6 +352,14 @@ public PuzzleManager puzzleManager;
                     player.worldY = tileSize * 45; // spawning at bottom
                 }
             }
+            else if (currentRoom.getRoomId().equals("room_library")) {
+                if (tileNum == 10) {
+                    System.out.println("Entering the Greenhouse...");
+                    loadRoom("room_greenhouse");
+                    player.worldX = tileSize*24;
+                    player.worldY = tileSize*45;
+                }
+            }
                 
                 //  Logic for Exterior -> Foyer (Existing logic)
                 else if (currentRoom != null && currentRoom.getRoomId().equals("room_exterior")) {
@@ -359,6 +369,7 @@ public PuzzleManager puzzleManager;
                     player.worldY = tileSize * 45;
                 }
             }
+
         }
     }
 

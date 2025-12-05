@@ -7,8 +7,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 public class LibraryItemsPuzzle extends AbstractPuzzle {
-    private final int DOOR_COL = 24; 
-    private final int DOOR_ROW = 0; 
+    private final int DOOR_COL = 25; 
+    private final int DOOR_ROW = 1; 
     private boolean doorOpened = false;
     private ArrayList<InteractableObject> torches;
     private int litTorches = 0;
@@ -21,7 +21,7 @@ public class LibraryItemsPuzzle extends AbstractPuzzle {
     public LibraryItemsPuzzle(GameApp gameApp) {
         super(gameApp, "puzzle_LibraryItems", "Library Puzzle", "Find the hidden cipher.");
         initialize();
-    }    
+    }
     private void openDoor() {
         System.out.println("An unseen door creaks open...");
         doorOpened = true;
