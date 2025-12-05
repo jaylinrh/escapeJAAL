@@ -149,8 +149,12 @@ public class InteractableObject {
                         break;
                     }
                 }
-                if (hasLighter == true && this.containedImage.equals(new Image(getClass().getResourceAsStream("/items/unlit.png")))) {
-                    this.containedImage = new Image(getClass().getResourceAsStream("/items/lit.png"));
+                if (hasLighter == true && this.getLit() == false) {
+                    try {
+                        this.containedImage = new Image(getClass().getResourceAsStream("/items/lit.png"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     this.lit = true;
                 }
         }
