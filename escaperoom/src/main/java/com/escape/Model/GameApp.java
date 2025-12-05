@@ -12,6 +12,7 @@ public class GameApp extends Pane {
     
 public PuzzleManager puzzleManager;
 
+    private static GameApp instance;
     private static GameConfig config = DataLoader.getGameConfig();
 
     private static GameConfig loadConfig() {
@@ -65,6 +66,7 @@ public PuzzleManager puzzleManager;
     public int pauseState = 2;
     public int dialogueState = 3;
     public int inventoryState = 4;
+    public int cutsceneState = 5;
     
     // Animation timer for game loop
     private AnimationTimer gameTimer;
@@ -79,6 +81,9 @@ public PuzzleManager puzzleManager;
     private final long AUTO_SAVE_INTERVAL = 30_000;
     
     public GameApp() {
+
+        instance = this;
+
         // Create canvas
         canvas = new Canvas(screenWidth, screenHeight);
         gc = canvas.getGraphicsContext2D();
@@ -485,5 +490,8 @@ public PuzzleManager puzzleManager;
                 }
             }
         }
+    }
+    public static GameApp getInstance() {
+    return instance;
     }
 }
