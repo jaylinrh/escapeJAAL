@@ -52,20 +52,20 @@ public class LibraryItemsPuzzle extends AbstractPuzzle {
         
         //  creates torches around table
         // interactableObjects of type TORCHES
-        int x = 22;
-        int y = 20;
-        for (int i = 0; i <=6; i++) {
+        int x = 21;
+        int y = 19;
+        for (int i = 0; i <=5; i++) {
             createTorch(x+i,y);
         }
         for (int i = 1; i <= 4; i++) {
             createTorch(x,y+i);
         }
-        x = 28;
+        x = 27;
         for (int i = 1; i<=4; i++) {
             createTorch(x,y+i);
         }
-        x = 22;
-        y = 24;
+        x = 21;
+        y = 23;
         for (int i = 1; i<=5; i++) {
             createTorch(x+1,y);
         }
