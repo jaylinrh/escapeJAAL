@@ -29,6 +29,7 @@ public class FoyerPuzzle extends AbstractPuzzle {
         tileSteppingPuzzle.addTargetTile(11, 34);
         tileSteppingPuzzle.addTargetTile(38, 15);
         tileSteppingPuzzle.addTargetTile(30, 38);
+        tileSteppingPuzzle.addTargetTile(24, 24);
 
         Progression prog = Facade.getInstance().getProgression();
         if (prog != null && prog.hasSolvedPuzzle(puzzleId)) {

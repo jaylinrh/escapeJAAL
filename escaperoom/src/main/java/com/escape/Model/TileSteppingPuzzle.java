@@ -41,9 +41,22 @@ public class TileSteppingPuzzle {
             activatedTiles.add(currentPos);
             System.out.println("Activated Tile at: " + gridX + ", " + gridY);
             
+            if(gridX == 24 && gridY == 24) {
+                    GameApp ga = GameApp.getInstance(); // ONLY IF you use a singleton for GameApp
+                    if (ga != null) {
+                        UI ui = ga.ui; 
+                        ui.setCutsceneImageFromPath("/com/escape/images/bkg.png");
+                        ga.gameState = ga.cutsceneState;
+                        System.out.println("Cutscene");
+                        
+                    }
+    
+            }
+
             if (activatedTiles.size() == requiredTiles.size()) {
                 puzzleComplete = true;
             }
+            
             return true; 
         }
         return false;
