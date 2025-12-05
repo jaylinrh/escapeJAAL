@@ -208,7 +208,7 @@ public class UI {
         int textX = x + ga.tileSize / 2;
         int textY = y + ga.tileSize;
         // handle multi-line text
-        String[] lines = currentText.split("\n");
+        String[] lines = dialogues[currentDialogueIndex].split("\n");
         int lineHeight = 36;
         for (int i = 0; i < lines.length; i++) {
             gc.fillText(lines[i], textX, textY + (i * lineHeight));

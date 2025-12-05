@@ -1,6 +1,8 @@
 package com.escape.Model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class TileSteppingPuzzle {
@@ -45,9 +47,18 @@ public class TileSteppingPuzzle {
                     GameApp ga = GameApp.getInstance(); // ONLY IF you use a singleton for GameApp
                     if (ga != null) {
                         UI ui = ga.ui; 
+                        List<String> list = new ArrayList<>(); 
+                        list.add("hi");
+                        list.add("stuff");
+                        
                         ui.setCutsceneImageFromPath("/com/escape/images/bkg.png");
+                        ui.dialogues = list.toArray(new String[0]);
                         ga.gameState = ga.cutsceneState;
                         System.out.println("Cutscene");
+                        ui.currentDialogueIndex = 0;
+                        ui.currentText = ui.dialogues[0];
+
+            
                         
                     }
     

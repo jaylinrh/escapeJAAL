@@ -57,6 +57,19 @@ public class KeyHandler {
                 }
             }
         }
+         else if (ga.gameState == ga.cutsceneState) {
+            if (code == KeyCode.ENTER) {
+                ga.ui.currentDialogueIndex++;
+                
+                if (ga.ui.currentDialogueIndex < ga.ui.dialogues.length && 
+                    ga.ui.dialogues[ga.ui.currentDialogueIndex] != null) {
+                    ga.ui.currentText = ga.ui.dialogues[ga.ui.currentDialogueIndex];
+                } else {
+                    ga.gameState = ga.playState;
+                    ga.requestFocus();
+                }
+            }
+        }
         
         else if (ga.gameState == ga.pauseState) {
             if (code == KeyCode.P) {
