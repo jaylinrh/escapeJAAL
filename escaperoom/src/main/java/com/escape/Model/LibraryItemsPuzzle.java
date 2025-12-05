@@ -54,7 +54,7 @@ public class LibraryItemsPuzzle extends AbstractPuzzle {
         // interactableObjects of type TORCHES
         int x = 21;
         int y = 19;
-        for (int i = 0; i <=5; i++) {
+        for (int i = 0; i <=6; i++) {
             createTorch(x+i,y);
         }
         for (int i = 1; i <= 4; i++) {
@@ -67,7 +67,7 @@ public class LibraryItemsPuzzle extends AbstractPuzzle {
         x = 21;
         y = 23;
         for (int i = 1; i<=5; i++) {
-            createTorch(x+1,y);
+            createTorch(x+i,y);
         }
         
         gameApp.gameObjects.addAll(torches);

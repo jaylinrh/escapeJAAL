@@ -152,8 +152,6 @@ public class InteractableObject {
                 if (hasLighter == true && this.containedImage.equals(new Image(getClass().getResourceAsStream("/items/unlit.png")))) {
                     this.containedImage = new Image(getClass().getResourceAsStream("/items/lit.png"));
                     this.lit = true;
-                } else {
-                    System.out.println("the torchlight burns with an ethereal light");
                 }
         }
     }

@@ -412,6 +412,12 @@ public PuzzleManager puzzleManager;
                 } else {
                     ui.interactionPrompt = "Press E to Place Book";
                 }
+            } else if (nearestObject.getType() == InteractableObject.ObjectType.TORCH) {
+                if (!nearestObject.getLit()) {
+                    ui.interactionPrompt = "Press E to light the torch";
+                } else {
+                    ui.interactionPrompt = "The fire burns with an ethereal light";
+                }
             } else {
             ui.interactionPrompt = "Press E to pick up " + nearestObject.getName();
             }
