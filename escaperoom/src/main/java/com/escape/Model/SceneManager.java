@@ -4,10 +4,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+
 
 
 public class SceneManager {
@@ -47,6 +51,26 @@ public class SceneManager {
         primaryStage.setResizable(false);
     }
     
+    private MediaPlayer menuMusicPlayer;
+
+    public void playMenuMusic() {
+    try {
+        if (menuMusicPlayer == null) {
+            Media media = new Media(getClass().getResource("music.mp3").toExternalForm());
+            menuMusicPlayer = new MediaPlayer(media);
+            menuMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE); // loop music
+        }
+        menuMusicPlayer.play();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+public void stopMenuMusic() {
+    if (menuMusicPlayer != null) {
+        menuMusicPlayer.stop();
+    }
+}
     public void switchToScene(String sceneName) {
         try {
             Parent root = loadFXML(sceneName);

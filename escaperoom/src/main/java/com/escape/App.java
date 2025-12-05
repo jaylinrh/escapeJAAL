@@ -15,7 +15,8 @@ public class App extends Application {
         SceneManager sceneManager = SceneManager.getInstance();
         sceneManager.initialize(primaryStage);
         sceneManager.switchToScene("TitleScreen");
-
+        
+        SceneManager.getInstance().playMenuMusic();
          primaryStage.setOnCloseRequest(event -> {
             System.out.println("Window closing - saving progress...");
             sceneManager.onAppClose();

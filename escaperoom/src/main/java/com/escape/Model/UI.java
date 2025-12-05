@@ -13,6 +13,7 @@ import javafx.scene.text.FontWeight;
 public class UI {
     GameApp ga;
     Font arial_40, arial_80B;
+    private int quitBtnX, quitBtnY, quitBtnW, quitBtnH;
     public boolean messageOn = false;
     public String message = "";
     public boolean gameFinished = false;
@@ -91,6 +92,8 @@ public class UI {
     public void drawPauseScreen(GraphicsContext gc) {
         int x = ga.tileSize * 4;
         int y = ga.tileSize / 2;
+        int width = 350;
+        int height = 500;
         
         drawSubWindow(gc, x, y, 350, 500);
         
@@ -100,7 +103,43 @@ public class UI {
         gc.setFont(arial_40);
         gc.setFill(Color.WHITE);
         gc.fillText("Pause Menu", x, y);
-        gc.fillText("Current Level: " + getLevel(), x, y * 4);
+        gc.fillText("Current Level: " + getLevel(), x, y * 80);
+
+        String roomName = "Unknown";
+        if (Facade.getInstance().getCurrentUser() != null) {
+            String rawId = Facade.getInstance().getCurrentUser().getCurrentRoomID();
+            roomName = getTheRoomName(rawId);
+        }
+        gc.fillText("Location: " + roomName, x, y + 110);
+
+        quitBtnW = 200;
+        quitBtnH = 50;
+
+        quitBtnX = (ga.tileSize * 4) + (350 - quitBtnW) / 2;
+        quitBtnY = (ga.tileSize / 2) + 400;
+
+        gc.setFill(Color.web("#d8890aff"));
+        gc.fillRoundRect(quitBtnX, quitBtnY, quitBtnW, quitBtnH, 10, 10);
+
+        gc.setStroke(Color.WHITE);
+        gc.setLineWidth(2);
+        gc.strokeRoundRect(quitBtnX, quitBtnY, quitBtnW, quitBtnH, 10, 10);
+
+        gc.setFill(Color.WHITE);
+        gc.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        gc.fillText("Quit to Menu", quitBtnX + 25, quitBtnY + 33);
+    }
+
+    private String getTheRoomName(String roomId) {
+        if (roomId == null) return "Unknown";
+        switch (roomId) {
+            case "room_exterior": return "Exterior";
+            case "room_foyer": return "Foyer";
+            case "room_parlor": return "Parlor";
+            case "room_library": return "Library";
+
+            default: return roomId;
+        }
     }
 
     public void drawInventoryScreen(GraphicsContext gc) {
@@ -221,6 +260,11 @@ public class UI {
         double hintX = x + width - ga.tileSize - gc.getFont().getSize() * hint.length() * 0.25;
         double hintY = y + height - (ga.tileSize / 2);
         gc.fillText(hint, hintX, hintY);
+    }
+
+    public boolean isQuitButtonClicked(double mouseX, double mouseY) {
+        return mouseX >= quitBtnX && mouseX <= quitBtnX + quitBtnW &&
+               mouseY >= quitBtnY && mouseY <= quitBtnY + quitBtnH;
     }
 
 }

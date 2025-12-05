@@ -115,7 +115,17 @@ public PuzzleManager puzzleManager;
         // Make sure pane can receive key events
         this.setFocusTraversable(true);
 
-        this.setOnMouseClicked(e -> this.requestFocus());
+        this.setOnMouseClicked(e -> {
+            this.requestFocus();
+
+            if (gameState == pauseState) {
+                if (ui.isQuitButtonClicked(e.getX(), e.getY())) {
+                    System.out.println("Quitting to Main Menu");
+
+                    SceneManager.getInstance().returnToMenu();
+                }
+            }
+        });   
     }
 
     public void setupGame() {
