@@ -74,6 +74,7 @@ public class InteractableObject {
             int padding = 4;
             gc.drawImage(containedImage, screenX + padding, screenY + padding, size - (padding*2), size - (padding*2));
         }
+        
     }
 
       public boolean isPlayerNearby(int playerWorldX, int playerWorldY, int interactionRange) {
@@ -151,10 +152,8 @@ public class InteractableObject {
                 }
                 if (hasLighter == true && this.getLit() == false) {
                     try {
-                        this.containedImage = new Image(getClass().getResourceAsStream("/items/lit.png"));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                        this.image = new Image(getClass().getResourceAsStream("/items/lit.png"));
+                    } catch (Exception e) { e.printStackTrace(); }
                     this.lit = true;
                 }
         }

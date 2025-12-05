@@ -109,6 +109,7 @@ public class LibraryItemsPuzzle extends AbstractPuzzle {
                 litTorches++;
             }
         }
+        hasCipher(Facade.getInstance());
         if (litTorches == torches.size() && hasLighter && hasRecord && hasfragA && hasfragB && hasfragC) {
             System.out.println("Library puzzle solved!");
             markSolved();
