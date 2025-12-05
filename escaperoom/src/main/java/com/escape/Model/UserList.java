@@ -1,5 +1,6 @@
 package com.escape.Model;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.UUID;
 
 public class UserList {
@@ -65,7 +66,12 @@ public class UserList {
             1,
             "room_exterior",
             playerState,
-            inventory
+            inventory,
+            new HashSet<>(),
+            new HashSet<>(),
+            new HashSet<>(),
+            50.0,
+            50.0
         );
         userList.add(newUser);
         return true;

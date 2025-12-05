@@ -1,13 +1,7 @@
 package com.escape;
 
-import java.io.IOException;
-
-import com.escape.Model.GameApp;
-
+import com.escape.Model.SceneManager;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -15,34 +9,29 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
-    private static Scene scene;
 
     @Override
-    public void start(Stage stage) throws IOException {
-        System.out.println("/images/player.png -> " + GameApp.class.getResource("/images/player.png"));
-        GameApp game = new GameApp();        
-        Scene scene = new Scene(game, 
-                            GameApp.getGameConfig().getScreenWidth(),
-                            GameApp.getGameConfig().getScreenHeight());
+    public void start(Stage primaryStage) {
+        SceneManager sceneManager = SceneManager.getInstance();
+        sceneManager.initialize(primaryStage);
+        sceneManager.switchToScene("TitleScreen");
 
-
-        ///scene = new Scene(loadFXML("primary"), 1280, 720);
-        stage.setScene(scene);
-        stage.show();
-
-       
-        game.setupGame();
-        game.startGameThread();
+         primaryStage.setOnCloseRequest(event -> {
+            System.out.println("Window closing - saving progress...");
+            sceneManager.onAppClose();
+        });
     }
 
-
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+    public static void returnToMenu() {
+        SceneManager.getInstance().returnToMenu();
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+    public static void showCertificate() {
+        SceneManager.getInstance().showCertificate();
+    }
+
+    public static SceneManager getSceneManager() {
+        return SceneManager.getInstance();
     }
 
     public static void main(String[] args) {

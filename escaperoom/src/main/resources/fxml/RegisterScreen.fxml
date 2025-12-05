@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml/1" 
+           fx:controller="com.escape.Controller.RegisterScreenController"
+           prefWidth="1280" prefHeight="720"
+           stylesheets="@../css/hollowmore.css">
+
+    <!-- pixel art -->
+    <ImageView fitWidth="1280" fitHeight="720" preserveRatio="false">
+        <image>
+            <Image url="@../com/escape/images/menu_background.png"/>
+        </image>
+    </ImageView>
+
+    <!-- main -->
+    <AnchorPane>
+
+        <!-- title -->
+        <HBox AnchorPane.topAnchor="30" 
+              AnchorPane.leftAnchor="0" 
+              AnchorPane.rightAnchor="0"
+              alignment="CENTER">
+            <Text text="Register" styleClass="screen-title"/>
+        </HBox>
+
+        <!-- register -->
+        <VBox AnchorPane.topAnchor="0" 
+              AnchorPane.bottomAnchor="0" 
+              AnchorPane.leftAnchor="0" 
+              AnchorPane.rightAnchor="0"
+              alignment="CENTER">
+            
+            <VBox styleClass="dialog-box" 
+                  spacing="18" 
+                  alignment="CENTER"
+                  prefWidth="350"
+                  maxWidth="350">
+                
+                <padding>
+                    <Insets top="35" bottom="35" left="50" right="50"/>
+                </padding>
+                
+                <!-- username -->
+                <TextField fx:id="usernameField" 
+                           promptText="Enter Username"
+                           styleClass="gold-text-field"/>
+                
+                <!-- password -->
+                <PasswordField fx:id="passwordField" 
+                               promptText="Enter Password"
+                               styleClass="gold-password-field"/>
+                
+                <!-- confirm password -->
+                <PasswordField fx:id="confirmPasswordField" 
+                               promptText="Password confirmation"
+                               styleClass="gold-password-field"/>
+                <Region prefHeight="15"/>
+                
+                <!-- Register -->
+                <Button text="Register" 
+                        styleClass="form-button"
+                        onAction="#onRegisterClicked"/>
+                
+                <!-- error message -->
+                <Label fx:id="errorLabel" text="" styleClass="error-label"/>
+                
+            </VBox>
+        </VBox>
+
+        <Button text="Back" 
+                styleClass="back-button"
+                AnchorPane.topAnchor="30" 
+                AnchorPane.leftAnchor="40"
+                onAction="#onBackClicked"/>
+
+    </AnchorPane>
+</StackPane>

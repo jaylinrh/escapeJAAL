@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml/1" 
+           fx:controller="com.escape.Controller.SettingsScreenController"
+           prefWidth="1280" prefHeight="720"
+           stylesheets="@../css/hollowmore.css">
+
+    <!-- pixel art -->
+    <ImageView fitWidth="1280" fitHeight="720" preserveRatio="false">
+        <image>
+            <Image url="@../com/escape/images/menu_background.png"/>
+        </image>
+    </ImageView>
+
+    <!-- main -->
+    <AnchorPane>
+        
+        <!-- back -->
+        <Button text="Back" 
+                styleClass="back-button"
+                AnchorPane.topAnchor="30" 
+                AnchorPane.leftAnchor="40"
+                onAction="#onBackClicked"/>
+
+        <!-- settings Panel -->
+        <VBox AnchorPane.topAnchor="150" 
+              AnchorPane.bottomAnchor="150" 
+              AnchorPane.leftAnchor="150"
+              alignment="CENTER_LEFT">
+            
+            <VBox styleClass="dialog-box" 
+                  spacing="40" 
+                  alignment="CENTER_LEFT"
+                  prefWidth="500">
+                
+                <padding>
+                    <Insets top="40" bottom="40" left="40" right="40"/>
+                </padding>
+                
+                <!-- volume slider -->
+                <VBox spacing="15">
+                    <Label text="Volume" styleClass="settings-label"/>
+                    <Slider fx:id="volumeSlider" 
+                            min="0" max="100" value="50"
+                            prefWidth="400"/>
+                </VBox>
+                
+                <!-- SFX slider -->
+                <VBox spacing="15">
+                    <Label text="SFX" styleClass="settings-label"/>
+                    <Slider fx:id="sfxSlider" 
+                            min="0" max="100" value="50"
+                            prefWidth="400"/>
+                </VBox>
+                
+            </VBox>
+        </VBox>
+
+    </AnchorPane>
+</StackPane>

@@ -104,4 +104,11 @@ public class DataConstants {
     protected static final String DIALOGUE_FILE = "dialogueFile";
     protected static final String DIALOGUES = "dialogues";
 
+    protected static final String VISITED_ROOMS = "visitedRooms";
+    protected static final String COMPLETED_ROOMS = "completedRooms";
+    protected static final String SOLVED_PUZZLES = "solvedPuzzles";
+    protected static final String VOLUME = "volume";
+    protected static final String SFX = "sfx";
+
+
 }

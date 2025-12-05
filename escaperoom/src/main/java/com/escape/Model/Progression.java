@@ -20,9 +20,9 @@ public class Progression {
     
     public Progression(User player) {
         this.player = player;
-        this.visitedRooms = new HashSet<>();
-        this.completedRooms = new HashSet<>();
-        this.solvedPuzzles = new HashSet<>();
+        this.visitedRooms = new HashSet<>(player.getVisitedRooms());
+        this.completedRooms = new HashSet<>(player.getCompletedRooms());
+        this.solvedPuzzles = new HashSet<>(player.getSolvedPuzzles());
         this.collectedItems = new HashSet<>();
         this.levelsCompleted = player.getLevel();
         
@@ -34,6 +34,11 @@ public class Progression {
         this.totalPlayTime = 0;
     }
     
+    public void syncToUser() {
+        player.setVisitedRooms(new HashSet<>(visitedRooms));
+        player.setCompletedRooms(new HashSet<>(completedRooms));
+        player.setSolvedPuzzles(new HashSet<>(solvedPuzzles));
+    }
     
     public void visitRoom(String roomId) {
         visitedRooms.add(roomId);

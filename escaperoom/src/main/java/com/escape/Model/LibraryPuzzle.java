@@ -30,7 +30,7 @@ public class LibraryPuzzle extends AbstractPuzzle {
         
         //  create the slots (L-I-B-R-A-R-Y)
         // interactableObjects of type SLOT
-       createSlot(0, "letter_l", SHELF_START_X);
+        createSlot(0, "letter_l", SHELF_START_X);
         createSlot(1, "letter_i", SHELF_START_X + 1);
         createSlot(2, "letter_b", SHELF_START_X + 2);
         createSlot(3, "letter_r_1", SHELF_START_X + 3);
@@ -49,6 +49,19 @@ public class LibraryPuzzle extends AbstractPuzzle {
         spawnBook("letter_a",   25, 10);
         spawnBook("letter_r_2", 15, 22); // Near bottom
         spawnBook("letter_y",   28, 14);
+
+        Progression prog = Facade.getInstance().getProgression();
+        if (prog != null && prog.hasSolvedPuzzle(puzzleId)) {
+            System.out.println("Library puzzle already solved");
+            this.solved = true;
+        }
+    }
+
+    public void onRoomLoaded() {
+        if (solved && gameApp.tileM != null) {
+            System.out.println("Opening library door (puzzle was already solved)");
+            gameApp.tileM.setMapTile(24, 0, 10);
+        }
     }
     
     private void createSlot(int index, String requiredId, int gridX) {

@@ -1,0 +1,422 @@
+/*  ROOT  */
+.root {
+    -fx-font-family: "Arial";
+}
+
+/* title screen */
+
+/* title */
+.title-hollow {
+    -fx-font-family: "Georgia";
+    -fx-font-size: 85px;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-fill: #9B59B6;
+}
+
+/* title for more */
+.title-more {
+    -fx-font-family: "Georgia";
+    -fx-font-size: 85px;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-fill: #F39C12;
+}
+
+/* screen title like login/register/difficulty */
+.screen-title {
+    -fx-font-family: "Georgia";
+    -fx-font-size: 65px;
+    -fx-font-weight: normal;
+    -fx-font-style: italic;
+    -fx-fill: #F39C12;
+}
+
+/* buttons */
+
+.start-button {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #F39C12;
+    -fx-font-family: "Arial";
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-border-color: #F39C12;
+    -fx-border-width: 3px;
+    -fx-border-radius: 30px;
+    -fx-background-radius: 30px;
+    -fx-padding: 15px 80px;
+    -fx-cursor: hand;
+}
+
+.start-button:hover {
+    -fx-background-color: #2a2a2a;
+}
+
+.back-button {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #F39C12;
+    -fx-font-family: "Arial";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-border-color: #F39C12;
+    -fx-border-width: 2px;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
+    -fx-padding: 12px 35px;
+    -fx-cursor: hand;
+}
+
+.back-button:hover {
+    -fx-background-color: #2a2a2a;
+}
+
+.settings-button {
+    -fx-background-color: #f39d12b7;
+    -fx-text-fill: #1a1a1a;
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12px;
+    -fx-padding: 0px 10px;
+    -fx-cursor: hand;
+}
+
+.settings-button:hover {
+    -fx-background-color: #f5b041da;
+}
+
+/* main menu buttons */
+.menu-button {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #F39C12;
+    -fx-font-family: "Arial";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-border-color: #F39C12;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 18px 30px;
+    -fx-pref-width: 200px;
+    -fx-cursor: hand;
+}
+
+.menu-button:hover {
+    -fx-background-color: #2a2a2a;
+}
+
+/* difficulty button*/
+.difficulty-button {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #F39C12;
+    -fx-font-family: "Arial";
+    -fx-font-size: 22px;
+    -fx-font-weight: normal;
+    -fx-border-color: #F39C12;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 15px 50px;
+    -fx-pref-width: 180px;
+    -fx-cursor: hand;
+}
+
+.difficulty-button:hover {
+    -fx-background-color: #2a2a2a;
+}
+
+/* hard button */
+.difficulty-button-hard {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #E74C3C;
+    -fx-font-family: "Arial";
+    -fx-font-size: 22px;
+    -fx-font-weight: normal;
+    -fx-border-color: #F39C12;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 15px 50px;
+    -fx-pref-width: 180px;
+    -fx-cursor: hand;
+}
+
+.difficulty-button-hard:hover {
+    -fx-background-color: #2a2a2a;
+}
+
+/* Form buttons (Login, Register) */
+.form-button {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #F39C12;
+    -fx-font-family: "Arial";
+    -fx-font-size: 18px;
+    -fx-font-weight: normal;
+    -fx-border-color: #F39C12;
+    -fx-border-width: 2px;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
+    -fx-padding: 12px 50px;
+    -fx-cursor: hand;
+}
+
+.form-button:hover {
+    -fx-background-color: #2a2a2a;
+}
+
+/* Delete button (X) for saves */
+.delete-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #F39C12;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-border-color: #F39C12;
+    -fx-border-width: 2px;
+    -fx-border-radius: 50%;
+    -fx-background-radius: 50%;
+    -fx-min-width: 50px;
+    -fx-min-height: 50px;
+    -fx-max-width: 50px;
+    -fx-max-height: 50px;
+    -fx-cursor: hand;
+}
+
+.delete-button:hover {
+    -fx-background-color: rgba(243, 156, 18, 0.2);
+}
+
+/* panel and boxes */
+
+/* transparent box */
+.dialog-box {
+    -fx-background-color: rgba(15, 15, 20, 0.92);
+    -fx-background-radius: 15px;
+    -fx-border-color: rgba(255, 255, 255, 0.646);
+    -fx-border-radius: 15px;
+    -fx-border-width: 2px;
+}
+
+.title-banner {
+    -fx-background-color: rgba(15, 15, 20, 0.92);
+    -fx-background-radius: 5px;
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-radius: 5px;
+    -fx-border-width: 2px;
+}
+
+.leaderboard-panel {
+    -fx-background-color: rgba(70, 100, 140, 0.85);
+    -fx-background-radius: 15px;
+}
+
+/* save box */
+.save-entry {
+    -fx-background-color: rgba(15, 15, 20, 0.95);
+    -fx-background-radius: 8px;
+    -fx-border-color: #F39C12;
+    -fx-border-radius: 8px;
+    -fx-border-width: 2px;
+    -fx-padding: 15px 25px;
+    -fx-cursor: hand;
+}
+
+.save-entry:hover {
+    -fx-background-color: rgba(35, 35, 45, 0.95);
+}
+
+/* certificate box */
+.certificate-box {
+    -fx-background-color: rgba(15, 15, 25, 0.92);
+    -fx-background-radius: 15px;
+    -fx-border-color: rgba(255, 255, 255, 0.4);
+    -fx-border-width: 3px;
+    -fx-border-radius: 15px;
+}
+
+/* text field */
+
+.gold-text-field {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #F39C12;
+    -fx-prompt-text-fill: #F39C12;
+    -fx-border-color: #F39C12;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-padding: 12px 15px;
+    -fx-pref-width: 250px;
+}
+
+.gold-text-field:focused {
+    -fx-border-color: #F5B041;
+    -fx-background-color: #252525;
+}
+
+.gold-password-field {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #F39C12;
+    -fx-prompt-text-fill: #F39C12;
+    -fx-border-color: #F39C12;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-padding: 12px 15px;
+    -fx-pref-width: 250px;
+}
+
+.gold-password-field:focused {
+    -fx-border-color: #F5B041;
+    -fx-background-color: #252525;
+}
+
+/* labels */
+
+.label-gold {
+    -fx-font-family: "Arial";
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F39C12;
+}
+
+.label-white {
+    -fx-font-size: 22px;
+    -fx-text-fill: white;
+}
+
+.label-gray {
+    -fx-font-size: 18px;
+    -fx-text-fill: #888888;
+}
+
+.leaderboard-title {
+    -fx-font-family: "Arial";
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F39C12;
+}
+
+.leaderboard-name {
+    -fx-font-family: "Arial";
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.leaderboard-score {
+    -fx-font-family: "Arial";
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F39C12;
+}
+
+.time-label {
+    -fx-font-family: "Georgia";
+    -fx-font-size: 40px;
+    -fx-font-style: italic;
+    -fx-fill: #90EE90;
+}
+
+.time-label-red {
+    -fx-font-family: "Georgia";
+    -fx-font-size: 40px;
+    -fx-font-style: italic;
+    -fx-fill: #E74C3C;
+}
+
+.error-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #E74C3C;
+}
+
+.register-link {
+    -fx-text-fill: #5DADE2;
+    -fx-font-size: 14px;
+}
+
+.register-link:hover {
+    -fx-text-fill: #85C1E9;
+}
+
+/* save entries */
+
+.save-name {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F39C12;
+}
+
+.save-time {
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+}
+
+.save-room {
+    -fx-font-size: 16px;
+    -fx-text-fill: #AAAAAA;
+}
+
+/* certificate */
+
+.certificate-title {
+    -fx-font-family: "Georgia";
+    -fx-font-size: 60px;
+    -fx-font-weight: bold;
+    -fx-fill: #F39C12;
+}
+
+.certificate-star {
+    -fx-font-size: 50px;
+    -fx-fill: #F39C12;
+}
+
+.certificate-presented {
+    -fx-font-family: "Georgia";
+    -fx-font-size: 26px;
+    -fx-font-style: italic;
+    -fx-fill: #F39C12;
+}
+
+.certificate-label {
+    -fx-font-family: "Arial";
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-fill: #F39C12;
+}
+
+.certificate-value {
+    -fx-font-family: "Arial";
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-fill: white;
+}
+
+/* settings */
+
+.settings-label {
+    -fx-font-family: "Arial";
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+}
+
+.slider .track {
+    -fx-background-color: #555555;
+    -fx-pref-height: 8px;
+    -fx-background-radius: 4px;
+}
+
+.slider .thumb {
+    -fx-background-color: white;
+    -fx-background-radius: 50%;
+    -fx-pref-width: 20px;
+    -fx-pref-height: 20px;
+}
+
+/* scrollpane */
+
+.scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}

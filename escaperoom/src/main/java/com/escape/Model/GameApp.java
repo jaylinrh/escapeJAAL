@@ -85,6 +85,9 @@ public PuzzleManager puzzleManager;
         
         // Add canvas to pane
         this.getChildren().add(canvas);
+        this.setPrefSize(screenWidth, screenHeight);
+        this.setMinSize(screenWidth, screenHeight);
+        this.setMaxSize(screenWidth, screenHeight);
         
         // Initialize game components
         puzzleManager = new PuzzleManager(this);
@@ -154,12 +157,20 @@ public PuzzleManager puzzleManager;
     tileM.loadMap(mapPath);
     player.setCurrentRoom(room);
 
+    User user = Facade.getInstance().getCurrentUser();
+    if (user != null) {
+        user.setCurrentRoomID(roomId);
+    }
+
     //  initialize the Specific Puzzle for this Room
     // This replaces the hardcoded "if (room_foyer)" checks
     switch (roomId) {
         case "room_foyer":
             // Activate it immediately
             puzzleManager.activatePuzzle("room_foyer"); 
+            if (puzzleManager.puzzles.containsKey("room_foyer")) {
+                puzzleManager.puzzles.get("room_foyer").onRoomLoaded();
+            }
             break;
 
         case "room_parlor":
@@ -168,6 +179,7 @@ public PuzzleManager puzzleManager;
             LibraryPuzzle bookPuzzle = new LibraryPuzzle(this);
             puzzleManager.puzzles.put("room_parlor", bookPuzzle);
             puzzleManager.activatePuzzle("room_parlor");
+            bookPuzzle.onRoomLoaded();
             
             break;
 
@@ -323,6 +335,7 @@ public PuzzleManager puzzleManager;
                         // change these numbers to where you want to spawn in the Parlor.
                         player.worldX = tileSize * 2; 
                         player.worldY = tileSize * 10;
+                        savePlayerPosition();
                     }
                 }
 
@@ -420,6 +433,13 @@ public PuzzleManager puzzleManager;
             state.setWorldX(player.worldX);
             state.setWorldY(player.worldY);
             state.setDirection(player.direction);
+
+            Room currentRoom = player.getCurrentRoom();
+            if (currentRoom != null) {
+                currentUser.setCurrentRoomID(currentRoom.getRoomId());
+            }
+            facade.saveUserProgress();
+
         }
     }
     

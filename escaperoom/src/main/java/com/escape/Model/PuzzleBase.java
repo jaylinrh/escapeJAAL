@@ -27,4 +27,6 @@ public interface PuzzleBase {
     void reset();
     
     void onComplete(Facade facade);
+    
+    default void onRoomLoaded() {}
 }
