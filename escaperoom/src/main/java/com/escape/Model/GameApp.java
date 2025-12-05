@@ -172,8 +172,10 @@ public PuzzleManager puzzleManager;
             break;
 
         case "room_library": // Make sure this matches the ID in rooms.json
-        System.out.println("LOADING LIBRARY PUZZLE");
-        break;
+            System.out.println("LOADING LIBRARY PUZZLE");
+            puzzleManager.activatePuzzle("room_library");
+            
+            break;
             
         default:
             break;

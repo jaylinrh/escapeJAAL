@@ -28,6 +28,11 @@ public class Items {
         addItem("letter_a", "Book 'A'", "A heavy book with 'A' on the spine.", "Part of the library code.");
         addItem("letter_r_2", "Book 'R'", "A heavy book with'R' on the spine.", "Part of the library code."); // 2nd R
         addItem("letter_y", "Book 'Y'", "A heavy book with 'Y' on the spine.", "Part of the library code.");
+        addItem("lighter", "lighter", "An old, worn lighter. It looks like it is on its last life.", "Part of the library puzzle");
+        addItem("record", "record", "The blackened record is marred with scratches and char marks...", "Part of the library puzzle");
+        addItem("fragment_a", "fragment 'A'", "A torn piece of a photo.", "Part of the library puzzle");
+        addItem("fragment_b", "fragment 'B'", "A torn piece of a photo.", "Part of the library puzzle");
+        addItem("fragment_c", "fragment 'C'", "A torn piece of a photo.", "Part of the library puzzle");
     }
     
     private void addItem(String itemId, String name, String hint, String description) {

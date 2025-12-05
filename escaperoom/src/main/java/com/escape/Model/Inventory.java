@@ -44,4 +44,5 @@ public class Inventory {
         return String.format("{\"inventoryId\":\"%s\",\"maxCapacity\":%d,\"items\":%s}", 
         inventoryId, maxCapacity, Items.toString());
     }
+    
 }

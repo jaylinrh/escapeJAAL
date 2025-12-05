@@ -16,6 +16,7 @@ public class InteractableObject {
 
     private Item containedItem = null;
     private Image containedImage = null;
+    private boolean lit = false;
 
     private ObjectType type;
 
@@ -33,7 +34,8 @@ public class InteractableObject {
         PUZZLE_PIECE,
         DOOR,
         INTERACTIVE,
-        SLOT
+        SLOT,
+        TORCH
     }
     
     public InteractableObject(String objectId, String name, String description,
@@ -121,7 +123,7 @@ public class InteractableObject {
                 }
                 break;
 
-                case ITEM:
+            case ITEM:
             case PUZZLE_PIECE:
                 if (item != null) {
                     facade.pickupItem(item.getItemId());
@@ -131,12 +133,28 @@ public class InteractableObject {
                     collected = true; // Visually remove from floor
                 }
                 break;
-                
+            
             case CLUE:
+
             case DOOR:
             case INTERACTIVE:
                 System.out.println(name + ": " + description);
                 break;
+            case TORCH:
+                Inventory playerInv1 = facade.getCurrentUser().getInventory();
+                boolean hasLighter = false;
+                for(Item i : playerInv1.getItems()) {
+                    if(i.getItemId().startsWith("lighter")) {
+                        hasLighter = true;
+                        break;
+                    }
+                }
+                if (hasLighter == true && this.containedImage.equals(new Image(getClass().getResourceAsStream("/items/unlit.png")))) {
+                    this.containedImage = new Image(getClass().getResourceAsStream("/items/lit.png"));
+                    this.lit = true;
+                } else {
+                    System.out.println("the torchlight burns with an ethereal light");
+                }
         }
     }
 
@@ -160,6 +178,7 @@ public class InteractableObject {
     public Item getItem() { return item; }
     public void setItem(Item item) { this.item = item; }
     public Item getContainedItem() { return containedItem;}
+    public boolean getLit() {return lit;}
 }
 
 
