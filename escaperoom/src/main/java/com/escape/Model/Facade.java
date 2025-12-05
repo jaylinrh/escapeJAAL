@@ -1,6 +1,7 @@
 package com.escape.Model;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Facade {
     private static Facade instance;
@@ -8,7 +9,7 @@ public class Facade {
     UserList userList;
     private RoomList roomList;
     private Items items;
-    
+    private GameSave currentSave;
     private User currentUser;
     private Progression progression;
     
@@ -38,7 +39,12 @@ public class Facade {
             if (user.getUserName().equals(username) && 
                 user.getPassword().equals(password)) {
                 this.currentUser = user;
-                this.progression = new Progression(user);
+                this.currentSave = user.getCurrentSave();
+                if (currentSave != null) {
+                    this.progression = new Progression(currentUser);
+                } else {
+                    this.progression = null;
+                }
                 return true;
             }
         }
@@ -263,6 +269,71 @@ public class Facade {
         if (currentUser != null) {
             currentUser.setSfx(sfx);
         }
+    }
+
+    public GameSave createNewGame(String difficulty) {
+        if (currentUser == null) return null;
+        
+        int saveNumber = currentUser.getGameSaves().size() + 1;
+        String saveName = "Save " + saveNumber;
+        
+        GameSave newSave = new GameSave(saveName, difficulty);
+        currentUser.addGameSave(newSave);
+        currentUser.setCurrentSaveId(newSave.getSaveId());
+        currentSave = newSave;
+        
+        progression = new Progression(currentUser);
+        
+        saveUserProgress();
+        
+        System.out.println("Created new game: " + saveName + " (" + difficulty + ")");
+        return newSave;
+    }
+
+    public boolean loadGameSave(UUID saveId) {
+        if (currentUser == null) return false;
+        
+        GameSave save = currentUser.getGameSaveById(saveId);
+        if (save == null) {
+            System.err.println("Save not found: " + saveId);
+            return false;
+        }
+        
+        currentUser.setCurrentSaveId(saveId);
+        currentSave = save;
+        save.setLastPlayedAt(System.currentTimeMillis());
+        
+        progression = new Progression(currentUser);
+        
+        System.out.println("Loaded game: " + save.getSaveName());
+        return true;
+    }
+
+    public boolean deleteGameSave(UUID saveId) {
+        if (currentUser == null) return false;
+        
+        currentUser.removeGameSave(saveId);
+        
+        if (currentSave != null && currentSave.getSaveId().equals(saveId)) {
+            currentSave = null;
+        }
+        
+        saveUserProgress();
+        System.out.println("Deleted save: " + saveId);
+        return true;
+    }
+
+    public GameSave getCurrentSave() {
+        return currentSave;
+    }
+
+    public ArrayList<GameSave> getUserSaves() {
+        if (currentUser == null) return new ArrayList<>();
+        return currentUser.getGameSaves();
+    }
+
+    public boolean userHasSaves() {
+        return currentUser != null && currentUser.hasSaves();
     }
     
     public void getLeaderboard() {

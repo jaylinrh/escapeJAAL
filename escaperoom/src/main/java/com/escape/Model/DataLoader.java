@@ -44,84 +44,6 @@ public class DataLoader extends DataConstants {
                     String username = (String) userJSON.get(USER_USERNAME);
                     String password = (String) userJSON.get(USER_PASSWORD);
                     int level = ((Long) userJSON.get(USER_LEVEL)).intValue();
-                    String currentRoomId = (String) userJSON.get(USER_CURRENT_ROOM_ID);
-
-                    JSONObject playerStateJSON = (JSONObject) userJSON.get(USER_PLAYER_STATE);
-
-                    int worldX = ((Long) playerStateJSON.get(WORLD_X)).intValue();
-                    int worldY = ((Long) playerStateJSON.get(WORLD_Y)).intValue();
-                    int speed = ((Long) playerStateJSON.get(SPEED)).intValue();
-                    String direction = (String) playerStateJSON.get(DIRECTION);
-                    boolean collisionOn = (Boolean) playerStateJSON.get(COLLISION_ON);
-
-                    JSONObject solidAreaJSON = (JSONObject) playerStateJSON.get(SOLID_AREA);
-
-                    int solidX = ((Long) solidAreaJSON.get(X)).intValue();
-                    int solidY = ((Long) solidAreaJSON.get(Y)).intValue();
-                    int solidWidth = ((Long) solidAreaJSON.get(WIDTH)).intValue();
-                    int solidHeight = ((Long) solidAreaJSON.get(HEIGHT)).intValue();
-                    SolidArea solidArea = new SolidArea(solidX, solidY, solidWidth, solidHeight);
-
-                    JSONObject spriteImagesJSON = (JSONObject) playerStateJSON.get(SPRITE_IMAGES);
-
-                    String u1 = (String) spriteImagesJSON.get(U1);
-                    String u2 = (String) spriteImagesJSON.get(U2);
-                    String d1 = (String) spriteImagesJSON.get(D1);
-                    String d2 = (String) spriteImagesJSON.get(D2);
-                    String l1 = (String) spriteImagesJSON.get(L1);
-                    String l2 = (String) spriteImagesJSON.get(L2);
-                    String r1 = (String) spriteImagesJSON.get(R1);
-                    String r2 = (String) spriteImagesJSON.get(R2);
-
-                    SpriteImages spriteImages = new SpriteImages(u1, u2, d1, d2, l1, l2, r1, r2);
-
-                    PlayerState playerState = new PlayerState(worldX, worldY, speed, direction, solidArea, collisionOn, spriteImages);
-
-                    JSONObject inventoryJSON = (JSONObject) userJSON.get(USER_INVENTORY);
-                    String inventoryId = (String) inventoryJSON.get(INVENTORY_ID);
-                    int maxCapacity = ((Long) inventoryJSON.get(MAX_CAPACITY)).intValue();
-
-                    Inventory inventory = new Inventory(inventoryId, maxCapacity);
-
-                   
-                    JSONArray itemsJSON = (JSONArray) inventoryJSON.get(ITEMS);
-                    
-
-                    for (int j = 0; j < itemsJSON.size(); j++) {
-                        JSONObject itemJSON = (JSONObject) itemsJSON.get(j);
-                        String itemId = (String) itemJSON.get(ITEM_ID);
-                        String itemName = (String) itemJSON.get(NAME);
-                        String itemHint = (String) itemJSON.get(HINT);
-                        String itemDesc = (String) itemJSON.get(DESCRIPTION);
-
-                       Item item = new Item(itemId, itemName, itemHint, itemDesc);
-                       inventory.addItem(item);
-                    }
-
-                    HashSet<String> visitedRooms = new HashSet<>();
-                    JSONArray visitedRoomsJSON = (JSONArray) userJSON.get(VISITED_ROOMS);
-                    if (visitedRoomsJSON != null) {
-                        for (int j = 0; j < visitedRoomsJSON.size(); j++) {
-                            visitedRooms.add((String) visitedRoomsJSON.get(j));
-                        }
-                    }
-
-                    HashSet<String> completedRooms = new HashSet<>();
-                    JSONArray completedRoomsJSON = (JSONArray) userJSON.get(COMPLETED_ROOMS);
-                    if (completedRoomsJSON != null) {
-                        for (int j = 0; j < completedRoomsJSON.size(); j++) {
-                            completedRooms.add((String) completedRoomsJSON.get(j));
-                        }
-                    }
-
-                    HashSet<String> solvedPuzzles = new HashSet<>();
-                    JSONArray solvedPuzzlesJSON = (JSONArray) userJSON.get(SOLVED_PUZZLES);
-                    if (solvedPuzzlesJSON != null) {
-                        for (int j = 0; j < solvedPuzzlesJSON.size(); j++) {
-                            solvedPuzzles.add((String) solvedPuzzlesJSON.get(j));
-                        }
-                    }
-
                     double volume = 50.0;
                     double sfx = 50.0;
 
@@ -131,8 +53,26 @@ public class DataLoader extends DataConstants {
                     if (userJSON.get(SFX) != null) {
                         sfx = ((Number) userJSON.get(SFX)).doubleValue();
                     }
+                    ArrayList<GameSave> gameSaves = new ArrayList<>();
+                    JSONArray savesJSON = (JSONArray) userJSON.get(GAME_SAVES);
+                    
+                    if (savesJSON != null) {
+                        for (int j = 0; j < savesJSON.size(); j++) {
+                            JSONObject saveJSON = (JSONObject) savesJSON.get(j);
+                            GameSave save = loadGameSave(saveJSON);
+                            if (save != null) {
+                                gameSaves.add(save);
+                            }
+                        }
+                    }
 
-                    User player = new User(id, username, password, level, currentRoomId, playerState, inventory, visitedRooms, completedRooms, solvedPuzzles, volume, sfx);
+                    UUID currentSaveId = null;
+                    String currentSaveIdStr = (String) userJSON.get(CURRENT_SAVE_ID);
+                    if (currentSaveIdStr != null && !currentSaveIdStr.isEmpty()) {
+                        currentSaveId = UUID.fromString(currentSaveIdStr);
+                    }
+
+                    User player = new User(id, username, password, level, volume, sfx, gameSaves, currentSaveId);
                     users.add(player);
                 }
                 reader.close();
@@ -144,7 +84,93 @@ public class DataLoader extends DataConstants {
 
             return users;
         
-    } 
+    }
+
+    private static GameSave loadGameSave(JSONObject saveJSON) {
+        try {
+            UUID saveId = UUID.fromString((String) saveJSON.get(SAVE_ID));
+            String saveName = (String) saveJSON.get(SAVE_NAME);
+            String difficulty = (String) saveJSON.get(DIFFICULTY);
+            long createdAt = ((Long) saveJSON.get(CREATED_AT)).longValue();
+            long lastPlayedAt = ((Long) saveJSON.get(LAST_PLAYED_AT)).longValue();
+            String currentRoomId = (String) saveJSON.get(USER_CURRENT_ROOM_ID);
+            long playTimeSeconds = saveJSON.get(PLAY_TIME_SECONDS) != null 
+                ? ((Long) saveJSON.get(PLAY_TIME_SECONDS)).longValue() : 0;
+
+            JSONObject playerStateJSON = (JSONObject) saveJSON.get(USER_PLAYER_STATE);
+            PlayerState playerState = loadPlayerState(playerStateJSON);
+
+            JSONObject inventoryJSON = (JSONObject) saveJSON.get(USER_INVENTORY);
+            Inventory inventory = loadInventory(inventoryJSON);
+
+            HashSet<String> visitedRooms = loadStringSet((JSONArray) saveJSON.get(VISITED_ROOMS));
+            HashSet<String> completedRooms = loadStringSet((JSONArray) saveJSON.get(COMPLETED_ROOMS));
+            HashSet<String> solvedPuzzles = loadStringSet((JSONArray) saveJSON.get(SOLVED_PUZZLES));
+
+            return new GameSave(saveId, saveName, difficulty, createdAt, lastPlayedAt,
+                            currentRoomId, playerState, inventory,
+                            visitedRooms, completedRooms, solvedPuzzles, playTimeSeconds);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static PlayerState loadPlayerState(JSONObject playerStateJSON) {
+        int worldX = ((Long) playerStateJSON.get(WORLD_X)).intValue();
+        int worldY = ((Long) playerStateJSON.get(WORLD_Y)).intValue();
+        int speed = ((Long) playerStateJSON.get(SPEED)).intValue();
+        String direction = (String) playerStateJSON.get(DIRECTION);
+        boolean collisionOn = (Boolean) playerStateJSON.get(COLLISION_ON);
+
+        JSONObject solidAreaJSON = (JSONObject) playerStateJSON.get(SOLID_AREA);
+        int solidX = ((Long) solidAreaJSON.get(X)).intValue();
+        int solidY = ((Long) solidAreaJSON.get(Y)).intValue();
+        int solidWidth = ((Long) solidAreaJSON.get(WIDTH)).intValue();
+        int solidHeight = ((Long) solidAreaJSON.get(HEIGHT)).intValue();
+        SolidArea solidArea = new SolidArea(solidX, solidY, solidWidth, solidHeight);
+
+        JSONObject spriteImagesJSON = (JSONObject) playerStateJSON.get(SPRITE_IMAGES);
+        String u1 = (String) spriteImagesJSON.get(U1);
+        String u2 = (String) spriteImagesJSON.get(U2);
+        String d1 = (String) spriteImagesJSON.get(D1);
+        String d2 = (String) spriteImagesJSON.get(D2);
+        String l1 = (String) spriteImagesJSON.get(L1);
+        String l2 = (String) spriteImagesJSON.get(L2);
+        String r1 = (String) spriteImagesJSON.get(R1);
+        String r2 = (String) spriteImagesJSON.get(R2);
+        SpriteImages spriteImages = new SpriteImages(u1, u2, d1, d2, l1, l2, r1, r2);
+
+        return new PlayerState(worldX, worldY, speed, direction, solidArea, collisionOn, spriteImages);
+    }
+
+    private static Inventory loadInventory(JSONObject inventoryJSON) {
+        String inventoryId = (String) inventoryJSON.get(INVENTORY_ID);
+        int maxCapacity = ((Long) inventoryJSON.get(MAX_CAPACITY)).intValue();
+        Inventory inventory = new Inventory(inventoryId, maxCapacity);
+
+        JSONArray itemsJSON = (JSONArray) inventoryJSON.get(ITEMS);
+        for (int j = 0; j < itemsJSON.size(); j++) {
+            JSONObject itemJSON = (JSONObject) itemsJSON.get(j);
+            String itemId = (String) itemJSON.get(ITEM_ID);
+            String itemName = (String) itemJSON.get(NAME);
+            String itemHint = (String) itemJSON.get(HINT);
+            String itemDesc = (String) itemJSON.get(DESCRIPTION);
+            Item item = new Item(itemId, itemName, itemHint, itemDesc);
+            inventory.addItem(item);
+        }
+        return inventory;
+    }
+
+    private static HashSet<String> loadStringSet(JSONArray jsonArray) {
+        HashSet<String> set = new HashSet<>();
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.size(); i++) {
+                set.add((String) jsonArray.get(i));
+            }
+        }
+        return set;
+    }
 
     public static ArrayList<Tile> getTiles() {
         ArrayList<Tile> tiles = new ArrayList<Tile>();

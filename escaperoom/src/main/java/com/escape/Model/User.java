@@ -8,15 +8,11 @@ public class User {
 	private String username;
 	private String password;
 	private UUID UserID;
-	private String currentRoomId;
 	Player Player;
-	PlayerState playerState;
-	Inventory inventory;
 	GameApp ga;
 	KeyHandler kh;
-	private HashSet<String> visitedRooms;
-	private HashSet<String> completedRooms;
-	private HashSet<String> solvedPuzzles;
+	private ArrayList<GameSave> gameSaves;
+    private UUID currentSaveId;
 	private double volume;
 	private double sfx;
 
@@ -28,19 +24,58 @@ public class User {
 	//	this.password = password;
 	//	this.UserID = UUID.randomUUID();
 	//}
-	public User(UUID id, String username, String password, int level, String currentRoomId, PlayerState playerState, Inventory inventory, HashSet<String> visitedRooms, HashSet<String> completedRooms, HashSet<String> solvedPuzzles, double volume, double sfx) {
+	public User(UUID id, String username, String password, int level, double volume, double sfx, ArrayList<GameSave> gameSaves, UUID currentSaveId) {
 		this.UserID = id;
 		this.username = username;
 		this.password = password;
 		this.currentLevel = level;
-		this.currentRoomId = currentRoomId;
-		this.inventory = inventory;
-		this.playerState = playerState;
-		this.visitedRooms = visitedRooms != null ? visitedRooms : new HashSet<>();
-		this.completedRooms = completedRooms != null ? completedRooms : new HashSet<>();
-		this.solvedPuzzles = solvedPuzzles != null ? solvedPuzzles : new HashSet<>();
+		this.volume = volume;
+		this.sfx = sfx;
+		this.gameSaves = gameSaves != null ? gameSaves : new ArrayList<>();
+		this.currentSaveId = currentSaveId;
 		//Player = new Player(ga, kh);
 	}
+
+	public ArrayList<GameSave> getGameSaves() { 
+        return gameSaves; 
+    }
+    
+    public void addGameSave(GameSave save) {
+        gameSaves.add(save);
+    }
+    
+    public void removeGameSave(UUID saveId) {
+        gameSaves.removeIf(save -> save.getSaveId().equals(saveId));
+        if (currentSaveId != null && currentSaveId.equals(saveId)) {
+            currentSaveId = null;
+        }
+    }
+    
+    public GameSave getGameSaveById(UUID saveId) {
+        for (GameSave save : gameSaves) {
+            if (save.getSaveId().equals(saveId)) {
+                return save;
+            }
+        }
+        return null;
+    }
+    
+    public GameSave getCurrentSave() {
+        if (currentSaveId == null) return null;
+        return getGameSaveById(currentSaveId);
+    }
+    
+    public void setCurrentSaveId(UUID saveId) {
+        this.currentSaveId = saveId;
+    }
+    
+    public UUID getCurrentSaveId() {
+        return currentSaveId;
+    }
+    
+    public boolean hasSaves() {
+        return !gameSaves.isEmpty();
+    }
 	
 	public void getData() {
 		ArrayList<User> users = DataLoader.getUsers();
@@ -70,11 +105,15 @@ public class User {
 	}
 
 	public String getCurrentRoomID() {
-		return currentRoomId;
+		GameSave save = getCurrentSave();
+		return save != null ? save.getCurrentRoomId() : "room_exterior";
 	}
 
 	public void setCurrentRoomID(String roomId) {
-		this.currentRoomId = roomId;
+		GameSave save = getCurrentSave();
+		if (save != null) {
+			save.setCurrentRoomId(roomId);
+		}
 	}
 
 	public Player getPlayer() {
@@ -82,11 +121,13 @@ public class User {
 	}
 
 	public PlayerState getPlayerState() {
-		return playerState;
+		GameSave save = getCurrentSave();
+		return save != null ? save.getPlayerState() : null;
 	}
 
 	public Inventory getInventory() {
-		return inventory;
+		GameSave save = getCurrentSave();
+		return save != null ? save.getInventory() : null;
 	}
 	
 	public void addLevel() {
@@ -102,47 +143,70 @@ public class User {
 	}
 
 	public HashSet<String> getVisitedRooms() {
-    return visitedRooms;
+		GameSave save = getCurrentSave();
+		return save != null ? save.getVisitedRooms() : new HashSet<>();
 	}
 
 	public void setVisitedRooms(HashSet<String> visitedRooms) {
-		this.visitedRooms = visitedRooms;
+		GameSave save = getCurrentSave();
+		if (save != null) {
+			save.setVisitedRooms(visitedRooms);
+		}
 	}
 
 	public HashSet<String> getCompletedRooms() {
-		return completedRooms;
+		GameSave save = getCurrentSave();
+		return save != null ? save.getCompletedRooms() : new HashSet<>();
 	}
 
 	public void setCompletedRooms(HashSet<String> completedRooms) {
-		this.completedRooms = completedRooms;
+		GameSave save = getCurrentSave();
+		if (save != null) {
+			save.setCompletedRooms(completedRooms);
+		}
 	}
 
 	public HashSet<String> getSolvedPuzzles() {
-		return solvedPuzzles;
+		GameSave save = getCurrentSave();
+		return save != null ? save.getSolvedPuzzles() : new HashSet<>();
 	}
 
 	public void setSolvedPuzzles(HashSet<String> solvedPuzzles) {
-		this.solvedPuzzles = solvedPuzzles;
+		GameSave save = getCurrentSave();
+		if (save != null) {
+			save.setSolvedPuzzles(solvedPuzzles);
+		}
 	}
 
 	public void addVisitedRoom(String roomId) {
-		visitedRooms.add(roomId);
+		GameSave save = getCurrentSave();
+		if (save != null) {
+			save.getVisitedRooms().add(roomId);
+		}
 	}
 
 	public void addCompletedRoom(String roomId) {
-		completedRooms.add(roomId);
+		GameSave save = getCurrentSave();
+		if (save != null) {
+			save.getCompletedRooms().add(roomId);
+		}
 	}
 
 	public void addSolvedPuzzle(String puzzleId) {
-		solvedPuzzles.add(puzzleId);
+		GameSave save = getCurrentSave();
+		if (save != null) {
+			save.getSolvedPuzzles().add(puzzleId);
+		}
 	}
 
 	public boolean hasVisitedRoom(String roomId) {
-		return visitedRooms.contains(roomId);
+		GameSave save = getCurrentSave();
+		return save != null && save.getVisitedRooms().contains(roomId);
 	}
 
 	public boolean hasSolvedPuzzle(String puzzleId) {
-		return solvedPuzzles.contains(puzzleId);
+		GameSave save = getCurrentSave();
+		return save != null && save.getSolvedPuzzles().contains(puzzleId);
 	}
 
 	public double getVolume() {
@@ -163,7 +227,7 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "Player: " + username + " (Level " +currentLevel + ", Room: " + currentRoomId + ")";
+		return "Player: " + username + " (Level " +currentLevel + ", Saves: " + gameSaves.size() + ")";
 	}
 	
 }

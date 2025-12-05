@@ -1,10 +1,10 @@
 package com.escape.Controller;
 
+import com.escape.Model.Facade;
 import com.escape.Model.SceneManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -40,6 +40,7 @@ public class DifficultySelectController implements Initializable {
     }
 
     private void startGameWithDifficulty(String difficulty, int timeMinutes) {
+        Facade.getInstance().createNewGame(difficulty);
         SceneManager sceneManager = SceneManager.getInstance();
         sceneManager.setSelectedDifficulty(difficulty);
         sceneManager.setDifficultyTimeLimit(timeMinutes);
