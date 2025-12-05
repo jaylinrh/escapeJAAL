@@ -155,18 +155,13 @@ public class UI {
     gc.strokeRoundRect(x, y, width, height, 35, 35);
     }
 
-        // add these two helper methods to set the cutscene image
+
     private Image cutsceneImage = null; 
     
     public void setCutsceneImage(Image img) {
         this.cutsceneImage = img;
     }
 
-    /**
-     * convenience: load an image from a resource or file path
-     * example usage: ui.setCutsceneImageFromPath("/images/scene1.png");
-     * or a file path: ui.setCutsceneImageFromPath("file:/C:/myimages/scene1.png");
-     */
     public void setCutsceneImageFromPath(String path) {
         try {
         InputStream is = getClass().getResourceAsStream(path);
@@ -180,11 +175,11 @@ public class UI {
     }
     }
 
-    // replace the empty implementation with this:
+ 
     public void drawcutsceneScene(GraphicsContext gc) {
-        // 1) draw background image stretched to screen (or a fallback)
+
         if (cutsceneImage != null && !cutsceneImage.isError()) {
-            // drawImage(Image img, double x, double y, double w, double h)
+ 
             gc.drawImage(cutsceneImage, 0, 0, ga.screenWidth, ga.screenHeight);
         } else {
             // fallback background if no image available
@@ -192,34 +187,34 @@ public class UI {
             gc.fillRect(0, 0, ga.screenWidth, ga.screenHeight);
         }
 
-        // 2) draw a semi-transparent overlay to ensure dialogue is readable
+        //semi-transparent overlay to ensure dialogue is readable
         double overlayHeight = ga.tileSize * 4; // same height you use elsewhere
         double overlayY = ga.screenHeight - overlayHeight - ga.tileSize / 2;
         gc.setFill(new Color(0, 0, 0, 0.45)); // translucent black overlay
         gc.fillRoundRect(ga.tileSize, overlayY, ga.screenWidth - (ga.tileSize * 2), overlayHeight, 20, 20);
 
-        // 3) draw dialogue sub-window using your helper so style matches other windows
+        //dialogue sub-window using drawsubwindow method
         int x = ga.tileSize;
         int y = (int) overlayY;
         int width = ga.screenWidth - (ga.tileSize * 2);
         int height = (int) overlayHeight;
         drawSubWindow(gc, x, y, width, height);
 
-        // 4) draw the current dialogue text inside the subwindow
+        // draws  the current dialogue text inside the subwindow
         gc.setFont(Font.font("Arial", FontWeight.NORMAL, 28));
         gc.setFill(Color.WHITE);
 
         // text padding
         int textX = x + ga.tileSize / 2;
         int textY = y + ga.tileSize;
-        // handle multi-line text (split on newline if you set currentText with '\n')
+        // handle multi-line text
         String[] lines = currentText.split("\n");
-        int lineHeight = 36; // adjust to your font size
+        int lineHeight = 36;
         for (int i = 0; i < lines.length; i++) {
             gc.fillText(lines[i], textX, textY + (i * lineHeight));
         }
 
-        // 5) draw a small "press key to continue" hint in the bottom-right of the dialogue box
+       
         gc.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         gc.setFill(Color.web("#FFD700")); // gold hint color
         String hint = "Press SPACE to continue";
