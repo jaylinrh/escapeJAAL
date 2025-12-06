@@ -66,10 +66,11 @@ public class TileSteppingPuzzle {
                     if (ga != null) {
                         UI ui = ga.ui; 
                         List<String> list = new ArrayList<>(); 
-                        list.add("this haunted house was originally the mansion of the Aurele family before they abandoned it in 1891.");
+                        list.add("This haunted house was originally the mansion of the Aurele family.");
+                        list.add("They abandoned it in 1881 though.");
                         list.add("I came in just to take a look, but I'm getting out immediately after.");
 
-                        ui.setCutsceneImageFromPath("/com/escape/images/bkg.png");
+                        ui.setCutsceneImageFromPath("/com/escape/images/cutscene_lia.png");
                         ui.dialogues = list.toArray(new String[0]);
                         ga.gameState = ga.cutsceneState;
                         System.out.println("Cutscene");
