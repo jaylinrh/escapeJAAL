@@ -41,16 +41,25 @@ public class Player extends Entity {
 
     public void loadSprites() {
         try {
-            // Load images using JavaFX Image class
+            // Load images using JavaFX Image 
             String imagePath = "/com/escape/images/player.png";
-            u1 = new Image(getClass().getResourceAsStream(imagePath));
-            u2 = new Image(getClass().getResourceAsStream(imagePath));
-            d1 = new Image(getClass().getResourceAsStream(imagePath));
-            d2 = new Image(getClass().getResourceAsStream(imagePath));
-            l1 = new Image(getClass().getResourceAsStream(imagePath));
-            l2 = new Image(getClass().getResourceAsStream(imagePath));
-            r1 = new Image(getClass().getResourceAsStream(imagePath));
-            r2 = new Image(getClass().getResourceAsStream(imagePath));
+            String d1path  = "/com/escape/images/d1.png";
+            String d2path  = "/com/escape/images/d1.png";
+            String u1path  = "/com/escape/images/u1.png";
+            String u2path  = "/com/escape/images/u1.png";
+            String l1path  = "/com/escape/images/l1.png";
+            String l2path  = "/com/escape/images/l1.png";
+            String r1path  = "/com/escape/images/r1.png";
+            String r2path  = "/com/escape/images/r1.png";
+            
+            u1 = new Image(getClass().getResourceAsStream(u1path));
+            u2 = new Image(getClass().getResourceAsStream(u2path));
+            d1 = new Image(getClass().getResourceAsStream(d1path));
+            d2 = new Image(getClass().getResourceAsStream(d2path));
+            l1 = new Image(getClass().getResourceAsStream(l1path));
+            l2 = new Image(getClass().getResourceAsStream(l2path));
+            r1 = new Image(getClass().getResourceAsStream(r1path));
+            r2 = new Image(getClass().getResourceAsStream(r2path));
         } catch(Exception e) {
             e.printStackTrace();
         }
