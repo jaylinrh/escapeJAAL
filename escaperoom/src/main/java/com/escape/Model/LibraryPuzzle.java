@@ -125,6 +125,9 @@ public class LibraryPuzzle extends AbstractPuzzle {
         System.out.println("LIBRARY UNLOCKED!");
         // have a '10' tile image (open door) 
         gameApp.tileM.setMapTile(24, 0, 10);
+        Facade facade = Facade.getInstance();
+        facade.solvePuzzle(puzzleId);
+        facade.saveUserProgress();
     }
 
     @Override

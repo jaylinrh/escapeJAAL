@@ -138,6 +138,9 @@ public class LibraryItemsPuzzle extends AbstractPuzzle {
         System.out.println("GREENHOUSE UNLOCKED!");
         // have a '10' tile image (open door) 
         gameApp.tileM.setMapTile(24, 0, 10);
+        Facade facade = Facade.getInstance();
+        facade.solvePuzzle(puzzleId);
+        facade.saveUserProgress();
     }
 
 

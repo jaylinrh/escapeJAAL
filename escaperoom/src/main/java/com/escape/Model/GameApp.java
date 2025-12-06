@@ -357,12 +357,14 @@ public PuzzleManager puzzleManager;
         if (currentRoom == null) return;
         
         String roomId = currentRoom.getRoomId();
+        Facade facade = Facade.getInstance();
         
         switch (roomId) {
             case "room_exterior":
                 // exterior to foyer
                 if (tileNum == 10) {
                     System.out.println("Entering Foyer...");
+                    facade.completeRoom(roomId);
                     loadRoom("room_foyer");
                     player.worldX = tileSize * 24;
                     player.worldY = tileSize * 45;
@@ -374,6 +376,7 @@ public PuzzleManager puzzleManager;
                 // foyer to parlor
                 if (tileNum == 10) {
                     System.out.println("Entering Parlor...");
+                    facade.completeRoom(roomId);
                     loadRoom("room_parlor");
                     player.worldX = tileSize * 2;
                     player.worldY = tileSize * 10;
@@ -385,6 +388,7 @@ public PuzzleManager puzzleManager;
                 // parlor → library
                 if (tileNum == 10) {
                     System.out.println("Entering Library...");
+                    facade.completeRoom(roomId);
                     loadRoom("room_library");
                     player.worldX = tileSize * 24;
                     player.worldY = tileSize * 45;
@@ -396,6 +400,7 @@ public PuzzleManager puzzleManager;
                 // library → cellar
                 if (tileNum == 10) {
                     System.out.println("Entering Cellar...");
+                    facade.completeRoom(roomId);
                     loadRoom("room_cellar");
                     player.worldX = tileSize * 24;
                     player.worldY = tileSize * 45;
