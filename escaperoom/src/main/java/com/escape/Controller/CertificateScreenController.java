@@ -49,7 +49,7 @@ public class CertificateScreenController {
 
         // date
         LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd, yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         dateLabel.setText(today.format(formatter));
     }
 
