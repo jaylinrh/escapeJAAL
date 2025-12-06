@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Set;
 
 public class TileSteppingPuzzle {
-    
+    GameApp ga = GameApp.getInstance();
+
     private Set<TilePosition> requiredTiles;
     private Set<TilePosition> activatedTiles;
     private int tileSize;
@@ -27,6 +28,23 @@ public class TileSteppingPuzzle {
         requiredTiles.add(new TilePosition(col, row));
     }
     
+    public void spawnBook(String itemId, int col, int row) {
+        Item itemData = Items.getInstance().getItemById(itemId);
+        if (itemData == null) return;
+        
+        InteractableObject bookObj = new InteractableObject(
+            itemId, 
+            itemData.getName(), 
+            itemData.getDescription(), 
+            col * ga.tileSize, 
+            row * ga.tileSize, 
+            "/items/" + itemId + ".png", 
+            InteractableObject.ObjectType.ITEM
+        );
+        bookObj.setItem(itemData);
+        ga.gameObjects.add(bookObj);
+    }
+    
     public boolean update(int playerWorldX, int playerWorldY) {
         //use center of player
         int centerX = playerWorldX + (tileSize / 2);
@@ -44,13 +62,13 @@ public class TileSteppingPuzzle {
             System.out.println("Activated Tile at: " + gridX + ", " + gridY);
             
             if(gridX == 24 && gridY == 24) {
-                    GameApp ga = GameApp.getInstance(); // ONLY IF you use a singleton for GameApp
+                   
                     if (ga != null) {
                         UI ui = ga.ui; 
                         List<String> list = new ArrayList<>(); 
-                        list.add("hi");
-                        list.add("stuff");
-                        
+                        list.add("this haunted house was originally the mansion of the Aurele family before they abandoned it in 1891.");
+                        list.add("I came in just to take a look, but I'm getting out immediately after.");
+
                         ui.setCutsceneImageFromPath("/com/escape/images/bkg.png");
                         ui.dialogues = list.toArray(new String[0]);
                         ga.gameState = ga.cutsceneState;

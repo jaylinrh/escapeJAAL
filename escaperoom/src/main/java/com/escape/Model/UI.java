@@ -27,7 +27,6 @@ public class UI {
     }
 
     public void draw(GraphicsContext gc) {
-
         gc.setFont(arial_40);
         gc.setFill(Color.WHITE);
         

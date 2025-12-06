@@ -44,7 +44,33 @@ public class DataWriter extends DataConstants {
         userDetails.put(USER_LEVEL, player.getLevel());
         userDetails.put(USER_CURRENT_ROOM_ID, player.getCurrentRoomID());
         
-        PlayerState ps = player.getPlayerState();
+        JSONArray savesArray = new JSONArray();
+        for (GameSave save : player.getGameSaves()) {
+            savesArray.add(getGameSaveJSON(save));
+        }
+        userDetails.put(GAME_SAVES, savesArray);
+
+        if (player.getCurrentSaveId() != null) {
+            userDetails.put(CURRENT_SAVE_ID, player.getCurrentSaveId().toString());
+        } else {
+            userDetails.put(CURRENT_SAVE_ID, "");
+        }
+        
+        return userDetails;
+    }
+
+    private static JSONObject getGameSaveJSON(GameSave save) {
+        JSONObject saveJSON = new JSONObject();
+        
+        saveJSON.put(SAVE_ID, save.getSaveId().toString());
+        saveJSON.put(SAVE_NAME, save.getSaveName());
+        saveJSON.put(DIFFICULTY, save.getDifficulty());
+        saveJSON.put(CREATED_AT, save.getCreatedAt());
+        saveJSON.put(LAST_PLAYED_AT, save.getLastPlayedAt());
+        saveJSON.put(USER_CURRENT_ROOM_ID, save.getCurrentRoomId());
+        saveJSON.put(PLAY_TIME_SECONDS, save.getPlayTimeSeconds());
+        
+        PlayerState ps = save.getPlayerState();
         JSONObject playerStateJSON = new JSONObject();
         playerStateJSON.put(WORLD_X, ps.getWorldX());
         playerStateJSON.put(WORLD_Y, ps.getWorldY());
@@ -60,7 +86,6 @@ public class DataWriter extends DataConstants {
         solidAreaJSON.put(HEIGHT, sa.getHeight());
         playerStateJSON.put(SOLID_AREA, solidAreaJSON);
         
-        SpriteImages si = ps.getSpriteImages();
         JSONObject spritesJSON = new JSONObject();
         spritesJSON.put(U1, "/images/player.png");
         spritesJSON.put(U2, "/images/player.png");
@@ -72,9 +97,9 @@ public class DataWriter extends DataConstants {
         spritesJSON.put(R2, "/images/player.png");
         playerStateJSON.put(SPRITE_IMAGES, spritesJSON);
         
-        userDetails.put(USER_PLAYER_STATE, playerStateJSON);
+        saveJSON.put(USER_PLAYER_STATE, playerStateJSON);
         
-        Inventory inv = player.getInventory();
+        Inventory inv = save.getInventory();
         JSONObject inventoryJSON = new JSONObject();
         inventoryJSON.put(INVENTORY_ID, inv.getInventoryId());
         inventoryJSON.put(MAX_CAPACITY, inv.getMaxCapacity());
@@ -89,31 +114,29 @@ public class DataWriter extends DataConstants {
             itemsArray.add(itemJSON);
         }
         inventoryJSON.put(ITEMS, itemsArray);
+        saveJSON.put(USER_INVENTORY, inventoryJSON);
         
-        userDetails.put(USER_INVENTORY, inventoryJSON);
-
         JSONArray visitedRoomsArray = new JSONArray();
-        for (String roomId : player.getVisitedRooms()) {
+        for (String roomId : save.getVisitedRooms()) {
             visitedRoomsArray.add(roomId);
         }
-        userDetails.put(VISITED_ROOMS, visitedRoomsArray);
+        saveJSON.put(VISITED_ROOMS, visitedRoomsArray);
 
         JSONArray completedRoomsArray = new JSONArray();
-        for (String roomId : player.getCompletedRooms()) {
+        for (String roomId : save.getCompletedRooms()) {
             completedRoomsArray.add(roomId);
         }
-        userDetails.put(COMPLETED_ROOMS, completedRoomsArray);
+        saveJSON.put(COMPLETED_ROOMS, completedRoomsArray);
 
         JSONArray solvedPuzzlesArray = new JSONArray();
-        for (String puzzleId : player.getSolvedPuzzles()) {
+        for (String puzzleId : save.getSolvedPuzzles()) {
             solvedPuzzlesArray.add(puzzleId);
         }
-        userDetails.put(SOLVED_PUZZLES, solvedPuzzlesArray);
-        userDetails.put(VOLUME, player.getVolume());
-        userDetails.put(SFX, player.getSfx());
+        saveJSON.put(SOLVED_PUZZLES, solvedPuzzlesArray);
         
-        return userDetails;
+        return saveJSON;
     }
+
     public static JSONArray saveRooms() {
         RoomList games = RoomList.getInstance();
         ArrayList<Room> roomList = games.getRooms();

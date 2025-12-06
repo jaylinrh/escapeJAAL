@@ -44,34 +44,17 @@ public class UserList {
         if(haveUser(username)) {
             return false;
         }
-        SolidArea solidArea = new SolidArea(8, 16, 32, 32);
-        SpriteImages sprites = new SpriteImages(
-            "/images/player.png", "/images/player.png",
-            "/images/player.png", "/images/player.png",
-            "/images/player.png", "/images/player.png",
-            "/images/player.png", "/images/player.png"
-        );
         
-        PlayerState playerState = new PlayerState(
-            1200, 2160, 4, "down", solidArea, false, sprites
-        );
-
-        Inventory inventory = new Inventory(UUID.randomUUID().toString(), 10);
-
         UUID id = UUID.randomUUID();
-                User newUser = new User(
-            UUID.randomUUID(),
+        User newUser = new User(
+            id,
             username,
             password,
             1,
-            "room_exterior",
-            playerState,
-            inventory,
-            new HashSet<>(),
-            new HashSet<>(),
-            new HashSet<>(),
             50.0,
-            50.0
+            50.0,
+            new ArrayList<>(),
+            null
         );
         userList.add(newUser);
         return true;

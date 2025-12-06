@@ -15,7 +15,7 @@ public class TileManager {
 
     public TileManager(GameApp ga) {
         this.ga = ga;
-        tile = new Tile[12];
+        tile = new Tile[20];
         mapTileNum = new int[ga.worldCols][ga.worldRows];   
         getTileImage();
     }
@@ -72,6 +72,11 @@ public class TileManager {
             tile[11] = new Tile();
             tile[11].image = new Image(getClass().getResourceAsStream("/tiles/tile_muddy_path.png"));
             tile[11].collision = false;
+
+            tile[12] = new Tile();
+            tile[12].image = new Image(getClass().getResourceAsStream("/tiles/tile_carpet_red.png"));
+            tile[12].collision = false;
+
         } catch(Exception e) {
             e.printStackTrace();
         }

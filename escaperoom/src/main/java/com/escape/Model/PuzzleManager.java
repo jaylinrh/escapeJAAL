@@ -26,7 +26,6 @@ public class PuzzleManager {
     
 
     private void initializePuzzles() {
-        puzzles.put("room_foyer", new FoyerPuzzle(gameApp));
     }
     
     public void activatePuzzle(String roomId) {

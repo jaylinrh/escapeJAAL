@@ -29,23 +29,40 @@
             <Text text="Saves" styleClass="screen-title"/>
         </HBox>
 
-        <!-- saves list -->
-        <VBox AnchorPane.topAnchor="140" 
+        <!-- saves list with dialog box -->
+        <VBox AnchorPane.topAnchor="120" 
               AnchorPane.bottomAnchor="50" 
-              AnchorPane.leftAnchor="300" 
-              AnchorPane.rightAnchor="300"
-              alignment="TOP_CENTER"
-              spacing="15">
+              AnchorPane.leftAnchor="0" 
+              AnchorPane.rightAnchor="0"
+              alignment="CENTER"
+              pickOnBounds="false">
             
-            <!-- save entries -->
-            <VBox fx:id="savesContainer" spacing="15" alignment="TOP_CENTER"/>
-            
-            <!-- no saves message (shown when empty) -->
-            <Label fx:id="noSavesLabel" 
-                   text="No saved games found" 
-                   styleClass="label-gray" 
-                   visible="false"/>
-            
+            <!-- transparent box -->
+            <VBox styleClass="dialog-box"
+                  spacing="15" 
+                  alignment="TOP_CENTER"
+                  prefWidth="500"
+                  maxWidth="500"
+                  prefHeight="450"
+                  maxHeight="450">
+                
+                <padding>
+                    <Insets top="30" bottom="30" left="40" right="40"/>
+                </padding>
+                
+                <ScrollPane fitToWidth="true" 
+                            styleClass="scroll-pane"
+                            VBox.vgrow="ALWAYS">
+                    <VBox fx:id="savesContainer" spacing="15" alignment="TOP_CENTER"/>
+                </ScrollPane>
+                
+                <!-- no saves message (shown when empty) -->
+                <Label fx:id="noSavesLabel" 
+                       text="No saved games found" 
+                       styleClass="label-gray" 
+                       visible="false"/>
+                
+            </VBox>
         </VBox>
 
         <Button text="Back" 

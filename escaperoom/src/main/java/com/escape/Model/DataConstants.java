@@ -110,5 +110,14 @@ public class DataConstants {
     protected static final String VOLUME = "volume";
     protected static final String SFX = "sfx";
 
+    protected static final String GAME_SAVES = "gameSaves";
+    protected static final String CURRENT_SAVE_ID = "currentSaveId";
+    protected static final String SAVE_ID = "saveId";
+    protected static final String SAVE_NAME = "saveName";
+    protected static final String DIFFICULTY = "difficulty";
+    protected static final String CREATED_AT = "createdAt";
+    protected static final String LAST_PLAYED_AT = "lastPlayedAt";
+    protected static final String PLAY_TIME_SECONDS = "playTimeSeconds";
+
 
 }

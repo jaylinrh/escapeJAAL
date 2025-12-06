@@ -149,7 +149,7 @@ public PuzzleManager puzzleManager;
                 //  If user exists, just log them in.
                 facade.loginUser("Tester", "password");
             }
-            loadRoom("room_foyer");
+            loadRoom("room_exterior");
         }
     this.requestFocus();
     
@@ -158,83 +158,89 @@ public PuzzleManager puzzleManager;
      public void loadRoom(String roomId) {
         puzzleManager.exitPuzzle();
         gameObjects.clear();
-//  Get Room Data
-    RoomList roomList = RoomList.getInstance();
-    Room room = roomList.getRoomById(roomId);
+        //  Get Room Data
+        RoomList roomList = RoomList.getInstance();
+        Room room = roomList.getRoomById(roomId);
     
-    if (room == null) {
-        System.err.println("ERROR: Room not found in RoomList: " + roomId);
-        return;
-    }
-    
-    //  load the Map File
-    String mapPath = "/maps/" + room.getMapFile();
-    tileM.loadMap(mapPath);
-    player.setCurrentRoom(room);
-
-    User user = Facade.getInstance().getCurrentUser();
-    if (user != null) {
-        user.setCurrentRoomID(roomId);
-    }
-
-    //  initialize the Specific Puzzle for this Room
-    // This replaces the hardcoded "if (room_foyer)" checks
-    switch (roomId) {
-        case "room_foyer":
-            // Activate it immediately
-            puzzleManager.activatePuzzle("room_foyer"); 
-            if (puzzleManager.puzzles.containsKey("room_foyer")) {
-                puzzleManager.puzzles.get("room_foyer").onRoomLoaded();
-            }
-            break;
-
-        case "room_parlor":
-           System.out.println(" Loading Parlor Book Puzzle");
-            // same class, just activated in the Parlor now
-            LibraryPuzzle bookPuzzle = new LibraryPuzzle(this);
-            puzzleManager.puzzles.put("room_parlor", bookPuzzle);
-            puzzleManager.activatePuzzle("room_parlor");
-            bookPuzzle.onRoomLoaded();
-            
-            break;
-
-        case "room_library": // Make sure this matches the ID in rooms.json
-            System.out.println("LOADING LIBRARY PUZZLE");
-            LibraryItemsPuzzle cipherPuzzle = new LibraryItemsPuzzle(this);
-            puzzleManager.puzzles.put("room_library",cipherPuzzle);
-            puzzleManager.activatePuzzle("room_library");
-            cipherPuzzle.onRoomLoaded();
-            break;
-            
-        default:
-            break;
-    }
-
-    //  handle Room Visit Logic (Dialogues, etc.)
-    Facade facade = Facade.getInstance();
-    Progression progression = facade.getProgression();
-    
-    boolean hasVisitedBefore = (progression != null && progression.hasVisitedRoom(roomId));
-    
-    if (hasVisitedBefore) {
-        gameState = playState;
-    } else {
-        // Show dialogue for first visit if available
-        if (room.getDialogues() != null && !room.getDialogues().isEmpty()) {
-            ui.dialogues = room.getDialogues().toArray(new String[0]);
-            ui.currentDialogueIndex = 0;
-            ui.currentText = ui.dialogues[0];
-            gameState = dialogueState;
-        } else {
-            gameState = playState;
+        if (room == null) {
+            System.err.println("ERROR: Room not found in RoomList: " + roomId);
+            return;
         }
+    
+        //  load the Map File
+        String mapPath = "/maps/" + room.getMapFile();
+        tileM.loadMap(mapPath);
+        player.setCurrentRoom(room);
+
+        User user = Facade.getInstance().getCurrentUser();
+        if (user != null) {
+            user.setCurrentRoomID(roomId);
+        }
+
+        //  initialize the Specific Puzzle for this Room
+        // This replaces the hardcoded "if (room_foyer)" checks
+        switch (roomId) {
+            case "room_foyer":
+                // Activate it immediately
+                if (!puzzleManager.puzzles.containsKey("room_foyer")) {
+                    puzzleManager.puzzles.put("room_foyer", new FoyerPuzzle(this));    
+                }
+                puzzleManager.activatePuzzle("room_foyer"); 
+                if (puzzleManager.puzzles.containsKey("room_foyer")) {
+                    puzzleManager.puzzles.get("room_foyer").onRoomLoaded();
+                }
+                break;
+
+            case "room_parlor":
+            System.out.println(" Loading Parlor Book Puzzle");
+                // same class, just activated in the Parlor now
+                LibraryPuzzle bookPuzzle = new LibraryPuzzle(this);
+                puzzleManager.puzzles.put("room_parlor", bookPuzzle);
+                puzzleManager.activatePuzzle("room_parlor");
+                bookPuzzle.onRoomLoaded();
+                
+                break;
+
+            case "room_library": // Make sure this matches the ID in rooms.json
+                System.out.println("LOADING LIBRARY PUZZLE");
+                LibraryItemsPuzzle cipherPuzzle = new LibraryItemsPuzzle(this);
+                puzzleManager.puzzles.put("room_library",cipherPuzzle);
+                puzzleManager.activatePuzzle("room_library");
+                cipherPuzzle.onRoomLoaded();
+                break;
+                
+            default:
+                break;
+        }
+
+        //  handle Room Visit Logic (Dialogues, etc.)
+        Facade facade = Facade.getInstance();
+        Progression progression = facade.getProgression();
         
-        // Mark room as visited
+        boolean hasVisitedBefore = false;
         if (progression != null) {
-            progression.visitRoom(roomId);
-            facade.saveUserProgress();
+            hasVisitedBefore = progression.hasVisitedRoom(roomId);
         }
-    }
+    
+        if (hasVisitedBefore) {
+            gameState = playState;
+        } else {
+            // Show dialogue for first visit if available
+            if (room.getDialogues() != null && !room.getDialogues().isEmpty()) {
+                ui.dialogues = room.getDialogues().toArray(new String[0]);
+                ui.currentDialogueIndex = 0;
+                ui.currentText = ui.dialogues[0];
+                gameState = dialogueState;
+            } else {
+                gameState = playState;
+            }
+            
+            // Mark room as visited
+            if (progression != null) {
+                progression.visitRoom(roomId);
+                facade.saveUserProgress();
+            }
+        }
     
     //  load Objects
     // loadRoomObjects(room); // Uncomment when ready to use.

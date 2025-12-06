@@ -31,6 +31,8 @@ public class FoyerPuzzle extends AbstractPuzzle {
         tileSteppingPuzzle.addTargetTile(30, 38);
         tileSteppingPuzzle.addTargetTile(24, 24);
 
+        tileSteppingPuzzle.spawnBook("letter_l",   22, 22);
+
         Progression prog = Facade.getInstance().getProgression();
         if (prog != null && prog.hasSolvedPuzzle(puzzleId)) {
             System.out.println("Foyer puzzle already solved - opening door");
@@ -40,6 +42,7 @@ public class FoyerPuzzle extends AbstractPuzzle {
         System.out.println("Foyer Puzzle Initialized.");
     }
 
+    
     public void onRoomLoaded() {
         if (solved && gameApp.tileM != null) {
             System.out.println("Opening foyer door (puzzle was already solved)");
