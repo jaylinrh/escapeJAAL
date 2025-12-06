@@ -132,6 +132,12 @@ public void stopMenuMusic() {
         switchToScene("MainMenu");
     }
 
+    public void setMusicVolume(double volume) {
+        if (menuMusicPlayer != null) {
+            menuMusicPlayer.setVolume(volume / 100.0);
+        }
+    }
+
     public void onAppClose() {
     if (gameApp != null) {
         System.out.println("Saving progress before exit...");

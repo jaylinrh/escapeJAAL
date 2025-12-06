@@ -46,8 +46,7 @@ public class SettingsScreenController implements Initializable {
     }
 
     private void applyVolume(double volume) {
-        // TODO implement volume control when audio is added
-        System.out.println("Volume set to: " + volume);
+        SceneManager.getInstance().setMusicVolume(volume);
     }
 
     private void applySFX(double sfx) {
