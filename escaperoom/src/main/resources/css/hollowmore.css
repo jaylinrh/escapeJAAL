@@ -358,35 +358,53 @@
 
 .certificate-title {
     -fx-font-family: "Georgia";
-    -fx-font-size: 60px;
+    -fx-font-size: 72px;
     -fx-font-weight: bold;
-    -fx-fill: #F39C12;
+    -fx-fill: white;
 }
 
 .certificate-star {
-    -fx-font-size: 50px;
+    -fx-font-size: 60px;
     -fx-fill: #F39C12;
 }
 
 .certificate-presented {
     -fx-font-family: "Georgia";
-    -fx-font-size: 26px;
+    -fx-font-size: 28px;
     -fx-font-style: italic;
-    -fx-fill: #F39C12;
+    -fx-text-fill: #F39C12;
 }
 
 .certificate-label {
     -fx-font-family: "Arial";
-    -fx-font-size: 22px;
+    -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-fill: #F39C12;
+    -fx-text-fill: #F39C12;
 }
 
 .certificate-value {
     -fx-font-family: "Arial";
-    -fx-font-size: 22px;
+    -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-fill: white;
+    -fx-text-fill: white;
+}
+
+.cert-label {
+    -fx-font-family: "Arial";
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F39C12;
+}
+
+.cert-value {
+    -fx-font-family: "Arial";
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.certificate-grid {
+    -fx-padding: 20px 0px;
 }
 
 /* settings */

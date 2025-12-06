@@ -1,67 +1,60 @@
 package com.escape.Controller;
 
 import com.escape.Model.Facade;
-import com.escape.Model.Progression;
+import com.escape.Model.GameSave;
 import com.escape.Model.SceneManager;
 import com.escape.Model.User;
+
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-
-public class CertificateScreenController implements Initializable {
+public class CertificateScreenController {
 
     @FXML private Label presentedToLabel;
-    @FXML private Label hintsLabel;
-    @FXML private Label itemsLabel;
-    @FXML private Label timeLabel;
     @FXML private Label difficultyLabel;
-    @FXML private Label puzzlesLabel;
-    @FXML private Label roomsLabel;
-    @FXML private Button mainMenuButton;
+    @FXML private Label timeLabel;
+    @FXML private Label dateLabel;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    @FXML
+    public void initialize() {
         populateCertificate();
     }
 
     private void populateCertificate() {
-        SceneManager sceneManager = SceneManager.getInstance();
         Facade facade = Facade.getInstance();
-        
-        String playerName = sceneManager.getCurrentUsername();
-        if (playerName == null || playerName.isEmpty()) {
-            playerName = "Player";
-        }
-        presentedToLabel.setText("Presented to \"" + playerName + "\"");
-        
-        String difficulty = sceneManager.getSelectedDifficulty();
-        difficultyLabel.setText(difficulty != null ? difficulty : "Medium");
-        
-        Progression progression = facade.getProgression();
-        
-        if (progression != null) {
-            itemsLabel.setText(String.format("%02d", progression.getItemsCollected()));
-            puzzlesLabel.setText(String.format("%02d", progression.getPuzzlesSolved()));
-            roomsLabel.setText(String.format("%02d", progression.getRoomsCompleted()));
-            timeLabel.setText(progression.getFormattedPlayTime());
-            
-            // Hints used (placeholder - implement hint tracking)
-            hintsLabel.setText("00");
+        User currentUser = facade.getCurrentUser();
+        GameSave currentSave = facade.getCurrentSave();
+
+        // username
+        if (currentUser != null) {
+            presentedToLabel.setText(currentUser.getUserName());
         } else {
-            itemsLabel.setText("00");
-            puzzlesLabel.setText("00");
-            roomsLabel.setText("00");
-            timeLabel.setText("00:00:00");
-            hintsLabel.setText("00");
+            presentedToLabel.setText("Brave Escapee");
         }
+
+        // difficulty
+        if (currentSave != null) {
+            difficultyLabel.setText("Difficulty: " + currentSave.getDifficulty());
+            
+            // play time
+            String formattedTime = currentSave.getFormattedPlayTime();
+            timeLabel.setText("Time: " + formattedTime);
+        } else {
+            difficultyLabel.setText("Difficulty: Unknown");
+            timeLabel.setText("Time: --:--");
+        }
+
+        // date
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd, yyyy");
+        dateLabel.setText(today.format(formatter));
     }
 
     @FXML
-    private void onMainMenuClicked() {
+    private void onReturnToMenu() {
         SceneManager.getInstance().switchToScene("MainMenu");
     }
 }

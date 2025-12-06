@@ -192,7 +192,7 @@ public PuzzleManager puzzleManager;
                 break;
 
             case "room_parlor":
-            System.out.println(" Loading Parlor Book Puzzle");
+                System.out.println(" Loading Parlor Book Puzzle");
                 // same class, just activated in the Parlor now
                 LibraryPuzzle bookPuzzle = new LibraryPuzzle(this);
                 puzzleManager.puzzles.put("room_parlor", bookPuzzle);
@@ -207,6 +207,10 @@ public PuzzleManager puzzleManager;
                 puzzleManager.puzzles.put("room_library",cipherPuzzle);
                 puzzleManager.activatePuzzle("room_library");
                 cipherPuzzle.onRoomLoaded();
+                break;
+
+            case "room_cellar": 
+                System.out.println("entering cellar - final room");
                 break;
                 
             default:
@@ -336,62 +340,88 @@ public PuzzleManager puzzleManager;
         int playerCol = playerCenterX / tileSize;
         int playerRow = playerCenterY / tileSize;
         
-        // ensure we are within map bounds to avoid crash
-        if (playerCol >= 0 && playerCol < worldCols && 
-            playerRow >= 0 && playerRow < worldRows) {
-            
-            int tileNum = tileM.mapTileNum[playerCol][playerRow];
-            
-            // check if it's a special transition tile
-            if (tileM.tile[tileNum] != null && tileM.tile[tileNum].isSpecial) {
-
-                Room currentRoom = getCurrentRoom();
-                
-                //  logic for Foyer to Parlor 
-                if (currentRoom != null && currentRoom.getRoomId().equals("room_foyer")) {
-                    // If we stepped on the newly opened door (Tile 10)
-                    if (tileNum == 10) {
-                        System.out.println("Entering Parlor...");
-                        loadRoom("room_parlor"); 
-                        
-                        
-                        // change these numbers to where you want to spawn in the Parlor.
-                        player.worldX = tileSize * 2; 
-                        player.worldY = tileSize * 10;
-                        savePlayerPosition();
-                    }
-                }
-
-                // PARLOR -> LIBRARY
-            else if (currentRoom.getRoomId().equals("room_parlor")) {
-                if (tileNum == 10) { // If standing on the Open Door
-                    System.out.println("Entering the Library...");
-                    loadRoom("room_library"); 
-                    
-                    // Spawn player inside the Library (adjust coords as needed)
-                    player.worldX = tileSize * 24; 
-                    player.worldY = tileSize * 45; // spawning at bottom
-                }
-            }
-            else if (currentRoom.getRoomId().equals("room_library")) {
-                if (tileNum == 10) {
-                    System.out.println("Entering the Greenhouse...");
-                    loadRoom("room_greenhouse");
-                    player.worldX = tileSize*24;
-                    player.worldY = tileSize*45;
-                }
-            }
-                
-                //  Logic for Exterior -> Foyer (Existing logic)
-                else if (currentRoom != null && currentRoom.getRoomId().equals("room_exterior")) {
-                    loadRoom("room_foyer");
-                    // move player to Foyer entrance
-                    player.worldX = tileSize * 24; 
-                    player.worldY = tileSize * 45;
-                }
-            }
-
+        // ensure we are within map bounds
+        if (playerCol < 0 || playerCol >= worldCols || 
+            playerRow < 0 || playerRow >= worldRows) {
+            return;
         }
+        
+        int tileNum = tileM.mapTileNum[playerCol][playerRow];
+        
+        // check if it's a special transition tile
+        if (tileM.tile[tileNum] == null || !tileM.tile[tileNum].isSpecial) {
+            return;
+        }
+
+        Room currentRoom = getCurrentRoom();
+        if (currentRoom == null) return;
+        
+        String roomId = currentRoom.getRoomId();
+        
+        switch (roomId) {
+            case "room_exterior":
+                // exterior to foyer
+                if (tileNum == 10) {
+                    System.out.println("Entering Foyer...");
+                    loadRoom("room_foyer");
+                    player.worldX = tileSize * 24;
+                    player.worldY = tileSize * 45;
+                    savePlayerPosition();
+                }
+                break;
+                
+            case "room_foyer":
+                // foyer to parlor
+                if (tileNum == 10) {
+                    System.out.println("Entering Parlor...");
+                    loadRoom("room_parlor");
+                    player.worldX = tileSize * 2;
+                    player.worldY = tileSize * 10;
+                    savePlayerPosition();
+                }
+                break;
+                
+            case "room_parlor":
+                // parlor → library
+                if (tileNum == 10) {
+                    System.out.println("Entering Library...");
+                    loadRoom("room_library");
+                    player.worldX = tileSize * 24;
+                    player.worldY = tileSize * 45;
+                    savePlayerPosition();
+                }
+                break;
+                
+            case "room_library":
+                // library → cellar
+                if (tileNum == 10) {
+                    System.out.println("Entering Cellar...");
+                    loadRoom("room_cellar");
+                    player.worldX = tileSize * 24;
+                    player.worldY = tileSize * 45;
+                    savePlayerPosition();
+                }
+                break;
+                
+            case "room_cellar":
+                // cellar to certificate
+                if (tileNum == 10) {
+                    System.out.println("GAME COMPLETE! Showing certificate...");
+                    completeGame();
+                }
+                break;
+        }
+    }
+
+    private void completeGame() {
+        stopGameThread();
+        
+        Facade facade = Facade.getInstance();
+        if (facade.getProgression() != null) {
+            facade.getProgression().completeRoom("room_cellar");
+        }
+        facade.saveUserProgress();
+        SceneManager.getInstance().showCertificate();
     }
 
     private void savePlayerPosition() {
